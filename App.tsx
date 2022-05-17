@@ -5,8 +5,8 @@ import { DMSans_400Regular, useFonts } from '@expo-google-fonts/dm-sans';
 import AppLoading from 'expo-app-loading';
 import {ThemeProvider} from 'styled-components/native'
 import theme from './src/theme';
-import { SignIn } from './src/screens/SignIn';
-
+import {PasswordReset} from './src/screens/PasswordReset';
+import {AuthProvider} from './src/hooks/auth'
 export default function App() {
   const[fontsLoaded]=useFonts({
     DMSans_400Regular,
@@ -18,8 +18,10 @@ export default function App() {
   return (
     <ThemeProvider theme={theme} >
      <StatusBar style='light' translucent
-      backgroundColor='transparent'/> 
-     <SignIn/>
+      backgroundColor='#000'/> 
+     <AuthProvider>
+      <PasswordReset/>
+     </AuthProvider>
     </ThemeProvider >
   );
 }

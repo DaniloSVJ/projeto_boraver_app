@@ -1,12 +1,13 @@
 import React from 'react'
 import BrandImg from '../../assets/boraver_admin_logo.png'
 import {KeyboardAvoidingView,Platform} from 'react-native'
-import {Container,ContainerBody, DivViewTop,Content,Brand,ForgotPassordLabel,ForgotPassordButton,} from './styles'
+import {Container,ContainerBody, ViewButton,DivViewTop,Content,Brand,ForgotPassordLabel,ForgotPassordButton} from './styles'
 import { Input } from '../../components/Input'
 import { Button } from '../../components/Button'
-export function SignIn(){
+
+export function PasswordReset(){
     return (
-      <Container>
+      <Container >
          <DivViewTop>
          <Brand source={BrandImg} />
          </DivViewTop> 
@@ -24,29 +25,19 @@ export function SignIn(){
                <Content>
                   
                   <Input 
-                     placeholder='E-mail'
+                     placeholder='E-mail cadastrado'
                      type='secondary' 
                      autoCorrect={false}
                      autoCapitalize='none'
                   />    
-                  <Input 
-                     placeholder='Senha'
-                     type='secondary' 
-                     secureTextEntry
-                  />
-                 
-                  <Button
-                  
-                     title="Entrar"
-                     type='secondary' isLoading={false}   
+                  <ViewButton>
+                     <Button
+                        
+                        title="Redefinir Senha"
+                        type='secondary' isLoading={false}  
                      
-                  />
-                    
-                  <ForgotPassordButton>
-                     <ForgotPassordLabel>
-                     Esqueceu sua senha? Clique Aqui! 
-                     </ForgotPassordLabel>
-                  </ForgotPassordButton>
+                     />
+                  </ViewButton>
                </Content>      
             </KeyboardAvoidingView>
          </ContainerBody>

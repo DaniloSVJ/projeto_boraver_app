@@ -2,12 +2,12 @@ export default {
   COLORS: {
     BACKGROUND: '#F7F7F7',
 
-    PRIMARY_900: '#B83341',
-    PRIMARY_800: '#E03F50',
+    PRIMARY_900: '#3C2E54',
+    PRIMARY_800: '#7e33ff',
     PRIMARY_100: '#D16470',
     PRIMARY_50: '#FFABB3',
 
-    SECONDARY_900: '#572D31',
+    SECONDARY_900: '#363636',
     SECONDARY_500: '#7A6769',
     SECONDARY_400: '#93797B',
 
@@ -19,7 +19,7 @@ export default {
     ALERT_50: '#F3EFE5',
 
     SHAPE: '#DCDCDC',
-    TITLE: '#FFF',
+    TITLE: '#4A4A4A',
 
     GRADIENT: ['#B83341', '#E03F50'],
   },
