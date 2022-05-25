@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "exporeactnative",
-    "slug": "exporeactnative",
+    "displayName": "exporeactnative",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"

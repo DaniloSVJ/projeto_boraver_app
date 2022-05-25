@@ -1,26 +1,16 @@
-import React from 'react'
-import {RectButtonProps} from 'react-native-gesture-handler'
-import { Container, Title,Load, TypeProps } from './style';
+import React from 'react';
+import { RectButtonProperties } from 'react-native-gesture-handler';
 
+import { Container, ButtonText } from './styles';
 
-type Props = RectButtonProps &{
-   
-    title: string;
-    type?: TypeProps;
-    isLoading: boolean;
-};
-
-
-export function Button ({
-    title, 
-    type = 'primary', 
-    isLoading=false , 
-    ...rest
-
-}:Props){
-    return(
-        <Container type={type} enabled={isLoading} {...rest}>
-            {isLoading ? 'resre' : <Title>{title}</Title>}
-        </Container>    
-    )
+interface ButtonProps extends RectButtonProperties {
+  children: string;
 }
+
+const Button: React.FC<ButtonProps> = ({ children, ...rest }) => (  
+  <Container {...rest}>
+    <ButtonText>{children}</ButtonText>
+  </Container>
+);
+
+export default Button;

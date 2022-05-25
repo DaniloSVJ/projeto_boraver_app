@@ -1,29 +1,26 @@
+import 'react-native-gesture-handler';
+
 import React from 'react';
-import {StatusBar} from 'expo-status-bar'
-import {DMSerifDisplay_400Regular} from '@expo-google-fonts/dm-serif-display'
-import { DMSans_400Regular, useFonts } from '@expo-google-fonts/dm-sans';
-import AppLoading from 'expo-app-loading';
-import {ThemeProvider} from 'styled-components/native'
-import theme from './src/theme';
-import {PasswordReset} from './src/screens/PasswordReset';
+import { View, StatusBar } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import {Home} from './src/screens/pages/Home';
+import {Splas} from './src/screens/pages/Splas';
+import {Profile} from './src/screens/pages/Profile';
+import PasswordReset from './src/screens/pages/PasswordReset';
+import {SignUp} from './src/screens/pages/SignUp';
+import {SignUpStep2} from './src/screens/pages/SignUpStep2';
 import {AuthProvider} from './src/hooks/auth'
-export default function App() {
-  const[fontsLoaded]=useFonts({
-    DMSans_400Regular,
-    DMSerifDisplay_400Regular
-  })
-  if(!fontsLoaded){
-    return < AppLoading/>
-  }
-  return (
-    <ThemeProvider theme={theme} >
-     <StatusBar style='light' translucent
-      backgroundColor='#000'/> 
-     <AuthProvider>
-      <PasswordReset/>
-     </AuthProvider>
-    </ThemeProvider >
-  );
-}
+import {Routes} from './src/routes';
+import {SignIn} from './src/screens/pages/SignIn'
+const App: React.FC = () => (
+  <NavigationContainer>
+    <StatusBar barStyle="light-content" backgroundColor="#312e38" />
+    <AuthProvider>
+      <View style={{ flex: 1, backgroundColor: '#312e38' }}>     
+        <Routes />
+      </View>     
+    </AuthProvider>
+  </NavigationContainer>
+);
 
-
+export default App;
