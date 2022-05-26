@@ -78,13 +78,13 @@ import React, {
     }, [fieldName, registerField]);
     const alterPassIcon = useCallback(async()=>
       {
-        //console.log("o boolean é"+String(seePassword))
+       
         if(icon=="eye-outline") {
           
           if(seePassword==true){
             icon='eye-off-outline'
             await setIconI('eye-off-outline')
-          //  console.log('veio aqui true')
+        
 
           }
           
@@ -92,11 +92,11 @@ import React, {
         if(icon=="eye-off-outline") {
           if (seePassword==false){
             icon="eye-outline"
-           // console.log('veio aqui false2')
+          
             await setIconI("eye-outline")
           } 
         }
-       // console.log(iconI)
+     
       },[])
       
     return (
@@ -130,12 +130,11 @@ import React, {
                   await setIconI("eye-outline")
                   sendData(false)
                 }
-               // console.log("oque é isso: >>>"+String(name)+"dfdfdfd")
+              
           
             }
             alterar()
-           // console.log(seePassword)
-            //alterPassIcon()
+
 
           }}
           name={iconI}

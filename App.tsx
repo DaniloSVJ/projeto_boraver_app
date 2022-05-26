@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 
-import React from 'react';
+import React,{useEffect} from 'react';
 import { View, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import {Home} from './src/screens/pages/Home';
@@ -12,7 +12,10 @@ import {SignUpStep2} from './src/screens/pages/SignUpStep2';
 import {AuthProvider} from './src/hooks/auth'
 import {Routes} from './src/routes';
 import {SignIn} from './src/screens/pages/SignIn'
-const App: React.FC = () => (
+const App: React.FC = () =>{ 
+  
+  
+  return(
   <NavigationContainer>
     <StatusBar barStyle="light-content" backgroundColor="#312e38" />
     <AuthProvider>
@@ -22,5 +25,5 @@ const App: React.FC = () => (
     </AuthProvider>
   </NavigationContainer>
 );
-
+}
 export default App;

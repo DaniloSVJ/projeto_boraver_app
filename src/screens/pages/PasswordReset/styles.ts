@@ -75,10 +75,9 @@ export const ForgotPassordLabel = styled.Text`
     font-size: 14px;
 
     ${({theme})=> css`
-        font-family:Montserrat;
+        font-family:Montserrat-Regular;
         color: ${theme.COLORS.TITLE};
         font-size: 12px;
     `}
 
 `
-// font-family: ${theme.FONTS.TITLE};

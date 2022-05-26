@@ -29,6 +29,9 @@ export function SignUpStep2(){
       
       
      }
+     function backsignup3() {
+      navigate('SignUpStep3');
+     }
     return (
       <Container >
           
@@ -65,12 +68,12 @@ export function SignUpStep2(){
             >  
              
                <Content>
-                <Form ref={formRef} onSubmit={alterar}> 
+                <Form ref={formRef} onSubmit={backsignup3}> 
                   <Input 
-                     placeholder='E-mail cadastrado'
+                     placeholder='Nome Completo'
                      autoCorrect={false}
                      autoCapitalize="none"
-                     keyboardType="email-address"
+                     
                      sendData={alterar}  
                      name={"text"}
                      icon=""
@@ -114,11 +117,11 @@ export function SignUpStep2(){
                      returnKeyType="next"
                   />            
 
-                  <ViewButton>
-                     <Button>
+                  
+                   <Button onPress={() => formRef.current?.submitForm()}>
                         Continuar  
                      </Button>
-                  </ViewButton>
+                  
                  </Form> 
                </Content>      
             </KeyboardAvoidingView>

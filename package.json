@@ -3,6 +3,9 @@
     "name": "exporeactnative",
     "slug": "my-app"
   },
+  "splash": {
+    "image": "./assets/Tela_splas.png"
+  },
   "name": "exporeactnative",
   "version": "1.0.0",
   "main": "index.js",
@@ -11,6 +14,18 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web"
+  },
+  "ios": {
+    "supportsTablet": true,
+    "config": {
+      "googleMobileAdsAppId": "ca-app-pub-xxxxxx"
+    }
+  },
+  "android": {
+    "package": "com.x.yyyyy",
+    "config": {
+      "googleMobileAdsAppId": "ca-app-pub-xxxxxx"
+    }
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.17.10",

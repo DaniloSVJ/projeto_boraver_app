@@ -31,7 +31,7 @@ export const TextInput = styled.TextInput`
   flex: 1;
   color:#3C2E54;
   font-size: 13px;
-  font-family: 'Montserrat';
+  font-family: 'Montserrat-Regular';
   border: none	;
   border-color: #fff;  
 `;
@@ -47,9 +47,4 @@ export const Icon = styled(FeatherIcon)`
 `;
 
 
-// ${({theme, type})=> css`
-// font-family: ${theme.FONTS.TEXT};
-// border: 1px solid ${theme.COLORS.SHAPE};
-// color: ${type === 'primary' ? theme.COLORS.SECONDARY_900: theme.COLORS.TITLE}
-// `};
 

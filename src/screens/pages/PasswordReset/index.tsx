@@ -48,11 +48,11 @@ const PasswordReset: React.FC = () =>
                     
                      returnKeyType="next"
                   />    
-                  <ViewButton>
+                  
                      <Button>
                      Redefinir Senha
                      </Button>
-                  </ViewButton>
+                  
                   </Form>   
                </Content>      
             </KeyboardAvoidingView>

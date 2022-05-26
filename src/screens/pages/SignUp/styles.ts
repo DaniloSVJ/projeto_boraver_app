@@ -91,7 +91,7 @@ export const ViewButton = styled.View`
 
 export const TextStep = styled.Text`
     margin-top: 37px;
-    font-family: 'Montserrat';
+    font-family: 'Montserrat-Regular';
     align-self: center;
     font-style: normal;
     color: #fff;
@@ -101,4 +101,3 @@ export const TextStep = styled.Text`
 
 `
 
-// font-family: ${theme.FONTS.TITLE};

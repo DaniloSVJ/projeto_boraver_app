@@ -85,10 +85,10 @@ export function SignIn(){
       
      }
      function resetpassword() {
-      navigate('SignUpStep2');
+      navigate('SignUp');
      }
       return (
-      <>
+      <View>
          <KeyboardAvoidingView
                           
                            behavior={
@@ -99,13 +99,13 @@ export function SignIn(){
                            enabled
          >  
           <ScrollView>
-         <DivViewTop>
-            <ViewArrow>
-               <Icon   name="close"   size={14} color="#fff"/>
-            </ViewArrow>
-            <View><Brand source={BrandImg} /></View>
-            
-         </DivViewTop> 
+          <DivViewTop>
+              <ViewArrow>
+                <Icon   name="close"   size={14} color="#fff"/>
+              </ViewArrow>
+              <View><Brand source={BrandImg} /></View>
+              
+          </DivViewTop> 
          <ContainerBody>
                <Content>
                      <Form ref={formRef} onSubmit={handleSignIn}>
@@ -138,11 +138,13 @@ export function SignIn(){
                            >
                               Entrar
                            </Button>
+                          
                             
                      </Form>   
                      <ForgotPassordButton>
-                     <ForgotPassordLabel>
-                     <TextLink onPress={resetpassword}>Clique Aqui!</TextLink>                       </ForgotPassordLabel>
+                      <ForgotPassordLabel onPress={resetpassword}>
+                        Clique Aqui!
+                        </ForgotPassordLabel>
                      </ForgotPassordButton>
                      
                </Content>      
@@ -150,6 +152,6 @@ export function SignIn(){
          </ContainerBody>
          </ScrollView>
          </KeyboardAvoidingView>  
-      </>   
+      </View>   
       )
 }

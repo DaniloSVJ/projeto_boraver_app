@@ -74,7 +74,7 @@ export const ForgotPassordButton = styled.TouchableOpacity`
 export const ForgotPassordLabel = styled.Text`
      
     font-size: 14px;
-    font-family:Montserrat;
+    font-family:Montserrat-Regular;
     color:#4A4A4A;
     font-size: 12px;
   
@@ -82,4 +82,3 @@ export const ForgotPassordLabel = styled.Text`
    
 
 `
-// font-family: ${theme.FONTS.TITLE};
