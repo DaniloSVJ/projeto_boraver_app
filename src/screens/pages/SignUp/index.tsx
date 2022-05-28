@@ -1,5 +1,5 @@
 import React,{useRef,useCallback,useState} from 'react'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, } from '@react-navigation/native';
 import * as Yup from 'yup';
 
 import {Form} from '@unform/mobile'
@@ -41,10 +41,10 @@ import Icon2  from 'react-native-vector-icons/Ionicons';
 
 import api from '../../../service/api'
 type Nav = {
-   navigate: (value: string) => void;
+   navigate: (value: string, {}) => void;
 }
 interface SignUpFormData {
-   name: string;
+  
    email: string;
    password: string;
  }
@@ -58,12 +58,11 @@ export function SignUp(){
  
    const handleSignUp = useCallback(
      async (data: SignUpFormData) => {
-       try {
-         console.log('veio aqui') 
+     
+         
          formRef.current?.setErrors({});
-         console.log('veio aqui2') 
+      
          const schema = Yup.object().shape({
-           
            email: Yup.string()
              .required('E-mail obrigatório')
              .email('Digite um e-mail válido'),
@@ -71,30 +70,29 @@ export function SignUp(){
          }
          
          );
-         console.log('veio aqui3') 
+         
+       
          await schema.validate(data, {
            abortEarly: false,
          });
-         console.log(data.email) 
-         await api.post('/api/v3/veremail/', data.email);
+       
+       
+         await api.post('/api/v3/veremail/',{
+            'email': data.email,
+         }).then(function (response) {
+            navigate("SignUpStep2",{ 'email': data.email,password: data.password})
+          }).catch(function(error){
+           
+            if(error.response.status==400){
+               Alert.alert('Este email já está sendo usado')
+            }else if(error.response.status==500){
+               Alert.alert('Estamos com problemas técnico. Por favor, tente mais tarde')
+            }else{
+               Alert.alert('Problema desconhecido. Por favor, contate o suporte')
+            }
+
+         })
          
-         navigate("SignUpStep2")
-         
-         console.log('veio aqui5') 
- 
-         
-       } catch (err) {
-         console.log('veio aqui6') 
-         if (err instanceof Yup.ValidationError) {
-           const errors = getValidationErrors(err);
- 
-           formRef.current?.setErrors(errors);
-           console.log('veio aqui7')
-           return;
-         }
-         console.log('veio aqui8')
-        
-       }
      },
      [navigate],
    );
@@ -104,7 +102,7 @@ export function SignUp(){
      }
 
    async function backsing(){
-      navigate("SignIn")
+      navigate("SignIn",{})
    }  
  
     return (

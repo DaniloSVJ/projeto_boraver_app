@@ -31,7 +31,7 @@ export const TextInput = styled.TextInput`
   flex: 1;
   color:#3C2E54;
   font-size: 13px;
-  font-family: 'Montserrat-Regular';
+  font-family: 'Montserrat_400Regular';
   border: none	;
   border-color: #fff;  
 `;

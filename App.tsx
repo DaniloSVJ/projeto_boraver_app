@@ -1,28 +1,67 @@
 import 'react-native-gesture-handler';
 
-import React,{useEffect} from 'react';
+import React,{useEffect,useState,useCallback} from 'react';
 import { View, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import {Home} from './src/screens/pages/Home';
-import {Splas} from './src/screens/pages/Splas';
-import {Profile} from './src/screens/pages/Profile';
-import PasswordReset from './src/screens/pages/PasswordReset';
-import {SignUp} from './src/screens/pages/SignUp';
-import {SignUpStep2} from './src/screens/pages/SignUpStep2';
+import AppLoading from 'expo-app-loading';
+
 import {AuthProvider} from './src/hooks/auth'
 import {Routes} from './src/routes';
-import {SignIn} from './src/screens/pages/SignIn'
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import * as SplashScreen from 'expo-splash-screen';
+import * as Font from 'expo-font';
+import { Montserrat_400Regular } from '@expo-google-fonts/montserrat';
+
+
 const App: React.FC = () =>{ 
   
-  
+  const [appIsReady, setAppIsReady] = useState(false);
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+        await Font.loadAsync({
+          Montserrat_400Regular
+        });
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+
+    prepare();
+  }, [])
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return (
+      <StatusBar  translucent backgroundColor="transparent" />
+    );
+  }
+  //backgroundColor="#3C2D55"
+
   return(
+
   <NavigationContainer>
-    <StatusBar barStyle="light-content" backgroundColor="#312e38" />
+    <GestureHandlerRootView
+    onLayout={onLayoutRootView}
+    style={{ flex: 1 }}
+    >
+
+      <StatusBar  translucent backgroundColor="transparent" />
     <AuthProvider>
-      <View style={{ flex: 1, backgroundColor: '#312e38' }}>     
+      <View style={{ flex: 1, backgroundColor: '#ffff' }}>     
         <Routes />
       </View>     
     </AuthProvider>
+    </GestureHandlerRootView>
   </NavigationContainer>
 );
 }

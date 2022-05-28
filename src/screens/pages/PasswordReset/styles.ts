@@ -1,6 +1,4 @@
-import styled, {css} from 'styled-components/native'
-import {LinearGradient} from 'expo-linear-gradient'
-import {getBottomSpace} from  'react-native-iphone-x-helper'
+import styled from 'styled-components/native'
 
 
 export const Container =styled.View`
@@ -23,7 +21,7 @@ export const ViewArrow = styled.View`
 export const DivViewTop =styled.View`
     display:flex;
     top: 0;
-    margin-top: 0px
+    margin-top: 0px;
     height: 344px;
     weigth: 100%;
     background-color: #3C2E54;
@@ -31,13 +29,7 @@ export const DivViewTop =styled.View`
 `
 
 
-export const Content = styled.ScrollView.attrs({
-    showsVerticalScrollIndicator: false,
-    contentContainerStyle:{
-        paddingBottom: getBottomSpace() + 48
-    },
-
-})`
+export const Content = styled.ScrollView`
     width: 100%;
     padding: 0 32px;
     margin-top: -29px
@@ -46,9 +38,7 @@ export const Content = styled.ScrollView.attrs({
     
 `
 
-export const Brand = styled.Image.attrs({
-    resizeMode: 'contain'
-})`
+export const Brand = styled.Image`
     align-self: center;
     width: 95px;
     height: 90px;
@@ -72,12 +62,9 @@ export const ViewButton = styled.View`
 
 export const ForgotPassordLabel = styled.Text`
      
-    font-size: 14px;
-
-    ${({theme})=> css`
-        font-family:Montserrat-Regular;
-        color: ${theme.COLORS.TITLE};
+        font-size: 14px;
+        font-family:'Montserrat_400Regular';
+        color: #4A4A4A;
         font-size: 12px;
-    `}
-
+    
 `

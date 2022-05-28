@@ -5,9 +5,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import {Alert,View} from 'react-native'
 import {
    KeyboardAvoidingView,
-   Text,
+   StyleSheet,
    Platform,  
    TextInput,
+
 } from 'react-native'
 
 import {Form} from '@unform/mobile'
@@ -23,6 +24,7 @@ import Icon  from 'react-native-vector-icons/Ionicons';
 import { ScrollView } from 'react-native-gesture-handler'
 import * as Yup from 'yup';
 import {useAuth} from '../../../hooks/auth'
+import { setStatusBarBackgroundColor } from 'expo-status-bar';
 interface SignInFormData {
    email: string;
    password: string;
@@ -40,7 +42,11 @@ export function SignIn(){
       const {navigate} = useNavigation<Nav>();
 
       const { signIn } = useAuth();
-
+      const styles = StyleSheet.create({
+        container: {
+          backgroundColor: '#ffffff',
+          height: '100%'
+        },})
       const handleSignIn = useCallback(
       async (data: SignInFormData) => {
         try {
@@ -62,6 +68,7 @@ export function SignIn(){
             password: data.password,
           });
         } catch (err) {
+          
           if (err instanceof Yup.ValidationError) {
             const errors = getValidationErrors(err);
   
@@ -88,7 +95,7 @@ export function SignIn(){
       navigate('SignUp');
      }
       return (
-      <View>
+      <View style={styles.container}>
          <KeyboardAvoidingView
                           
                            behavior={
@@ -98,17 +105,18 @@ export function SignIn(){
                            }
                            enabled
          >  
-          <ScrollView>
-          <DivViewTop>
+          <ScrollView > 
+          <DivViewTop >
               <ViewArrow>
                 <Icon   name="close"   size={14} color="#fff"/>
               </ViewArrow>
               <View><Brand source={BrandImg} /></View>
               
-          </DivViewTop> 
-         <ContainerBody>
+          </DivViewTop > 
+         <ContainerBody >
+
                <Content>
-                     <Form ref={formRef} onSubmit={handleSignIn}>
+                     <Form  ref={formRef} onSubmit={handleSignIn}>
                           <Input 
                               
                               autoCorrect={false}

@@ -15,11 +15,12 @@ export function AuthRoutes(){
   return (
   <Navigator screenOptions={{ headerShown: false }}>
    <Group>
+      <Screen name="SignUpStep3" component={SignUpStep3}   />
       <Screen name="SignIn" component={SignIn} />
       <Screen name="SignUp" component={SignUp} />
       <Screen name="PasswordReset" component={PasswordReset}/>
       <Screen name="SignUpStep2" component={SignUpStep2}   />
-      <Screen name="SignUpStep3" component={SignUpStep3}   />
+     
     </Group>
   </Navigator>
 )

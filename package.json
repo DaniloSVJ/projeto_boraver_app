@@ -3,9 +3,6 @@
     "name": "exporeactnative",
     "slug": "my-app"
   },
-  "splash": {
-    "image": "./assets/Tela_splas.png"
-  },
   "name": "exporeactnative",
   "version": "1.0.0",
   "main": "index.js",
@@ -15,23 +12,13 @@
     "ios": "expo run:ios",
     "web": "expo start --web"
   },
-  "ios": {
-    "supportsTablet": true,
-    "config": {
-      "googleMobileAdsAppId": "ca-app-pub-xxxxxx"
-    }
-  },
-  "android": {
-    "package": "com.x.yyyyy",
-    "config": {
-      "googleMobileAdsAppId": "ca-app-pub-xxxxxx"
-    }
-  },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.17.10",
     "@babel/runtime": "^7.17.9",
     "@expo-google-fonts/dm-sans": "^0.2.2",
     "@expo-google-fonts/dm-serif-display": "^0.2.2",
+    "@expo-google-fonts/inter": "^0.2.2",
+    "@expo-google-fonts/montserrat": "^0.2.2",
     "@react-native-async-storage/async-storage": "^1.17.4",
     "@react-native-community/netinfo": "^8.3.0",
     "@react-navigation/native": "^6.0.10",

@@ -1,16 +1,14 @@
 {
   "expo": {
     "name": "exporeactnative",
-    "displayName": "exporeactnative",
+    "slug": "exporeactnative",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
-  },
-  "splash": {
-    "image": "./assets/Tela_splas.png"
-  },
-  "rnpm":{
-    "assets":["./src/assets/fonts/"]
+    ],
+    "splash": {
+      "image": "./src/assets/Tela_splas.png"
+    }
   }
 }
+

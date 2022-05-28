@@ -1,17 +1,15 @@
-import styled, {css} from 'styled-components/native'
-import {LinearGradient} from 'expo-linear-gradient'
-import {getBottomSpace} from  'react-native-iphone-x-helper'
-import { Button } from '../../components/Button'
+import styled from 'styled-components/native'
+
 
 
 export const Container =styled.View`
-    background-color: #FFF;
+background-color: #3C2E54;
 
 `
 export const TextLink = styled.TouchableOpacity``;
 
 export const ContainerBody =styled.View`
-    background-color: #FFF;
+    background-color: #ffffff;
     padding: 0px;
     margin-left:20px;
     margin-right:20px;
@@ -28,7 +26,7 @@ export const DivViewTop =styled.View`
     display:flex;
     top: 0;
     height: 100%;
-    margin-top: 0px
+    margin-top: 0px;
     height: 344px;
     weigth: 100%;
     background-color: #3C2E54;
@@ -36,27 +34,17 @@ export const DivViewTop =styled.View`
 `
 
 
-export const Content = styled.ScrollView.attrs({
-    showsVerticalScrollIndicator: false,
-    contentContainerStyle:{
-        paddingBottom: getBottomSpace() + 48
-    },
-    
-
-})`
+export const Content = styled.ScrollView`
     width: 100%;
+   
     padding: 0 32px;
     margin-top: -29px;
-    &:hover #teste {
-        background-color: #fff;
-      }
+
     
   
 `
 
-export const Brand = styled.Image.attrs({
-    resizeMode: 'contain'
-})`
+export const Brand = styled.Image`
     align-self: center;
     width: 195px;
     height: 195px;
@@ -69,12 +57,13 @@ export const ForgotPassordButton = styled.TouchableOpacity`
     margin-top: 18px;
     align-self: center;
     margin-bottom: 2px;
+
 ` 
 
 export const ForgotPassordLabel = styled.Text`
      
     font-size: 14px;
-    font-family:Montserrat-Regular;
+    font-family:'Montserrat_400Regular';
     color:#4A4A4A;
     font-size: 12px;
   

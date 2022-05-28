@@ -1,11 +1,11 @@
-import React,{useRef} from 'react'
+import React,{useRef,useCallback} from 'react'
 
 import {Form} from '@unform/mobile'
 import {FormHandles} from "@unform/core"
 import { GiCircle } from "react-icons/gi";
 import {KeyboardAvoidingView,Platform} from 'react-native'
 import {Container,ContainerBody,Viewstep,View,ViewArrow, ViewButton,DivViewTop,Content,Brand,TextStep} from './styles'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,useRoute } from '@react-navigation/native';
 
 import  Input  from '../../../components/Input'
 import  Button  from '../../../components/Button'
@@ -13,25 +13,50 @@ import BrandImg from '../../../assets/boraver_admin_logo.png'
 import Icon  from 'react-native-vector-icons/FontAwesome';
 import Icon2  from 'react-native-vector-icons/Ionicons';
 
-type Nav = {
-   navigate: (value: string) => void;
-}
+import api from '../../../service/api'
 
+type Nav = {
+   navigate: (value: string,{}) => void;
+}
+interface RouteParams {
+   email: string;
+   password: string
+ }
+ interface SignUpFormData {
+      nome: string;
+      celular: string;
+      cidade: string;
+      estado: string;
+ }
 export function SignUpStep2(){
    const formRef = useRef<FormHandles>(null)
-    
+   const route = useRoute();
+   const params = route.params as RouteParams;
+   const handleSignUpStep3 = useCallback(
+      async (data: SignUpFormData) => {
+         navigate('SignUpStep3',{
+            email:params.email, 
+            password: params.password,
+            nome:data.nome,
+            celular:data.celular,
+            cidade:data.cidade,
+            estado: data.estado
+            
+          });
+      },
+      [])
+   
    const {navigate} = useNavigation<Nav>();
 
      function backsignup() {
-         navigate('SignUp');
+         navigate('SignUp',{});
      }
      async function alterar(val:boolean){
       
       
      }
-     function backsignup3() {
-      navigate('SignUpStep3');
-     }
+   
+
     return (
       <Container >
           
@@ -68,14 +93,14 @@ export function SignUpStep2(){
             >  
              
                <Content>
-                <Form ref={formRef} onSubmit={backsignup3}> 
+                <Form ref={formRef} onSubmit={handleSignUpStep3}> 
                   <Input 
                      placeholder='Nome Completo'
                      autoCorrect={false}
                      autoCapitalize="none"
                      
                      sendData={alterar}  
-                     name={"text"}
+                     name="nome"
                      icon=""
                      
                      returnKeyType="next"
@@ -87,7 +112,7 @@ export function SignUpStep2(){
                      autoCapitalize="none"
                      keyboardType="email-address"
                      sendData={alterar}  
-                     name={"text"}
+                     name="celular"
                      icon=""
               
                      returnKeyType="next"
@@ -98,7 +123,7 @@ export function SignUpStep2(){
                      autoCapitalize="none"
                     
                      sendData={alterar}  
-                     name={"text"}
+                     name="cidade"
                      icon=""
                     
                      returnKeyType="next"
@@ -111,7 +136,7 @@ export function SignUpStep2(){
                      autoCapitalize="none"
                      keyboardType="email-address"
                      sendData={alterar}  
-                     name={"test"}
+                     name="estado"
                      icon=""
                      
                      returnKeyType="next"
