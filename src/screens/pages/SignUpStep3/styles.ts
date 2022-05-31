@@ -81,27 +81,28 @@ export const TextStep = styled.Text`
     margin-top: 37px;
     font-family: 'Montserrat_400Regular';
     align-self: center;
-    font-style: normal;
+    
     color: #fff;
-    font-weight: 500;
+    
     font-size: 10px;
     line-height: 20px;
 
 `
 
 export const TermText = styled.Text`
-
+    margin-top: 26px ;
+    margin-bottom: 16px;
+    align-self: center;
+    font-weight: bold;
     font-family: 'Montserrat_400Regular';
-    font-style: normal;
-    font-weight: 700;
     font-size: 25px;
     line-height: 31px;
 
 `
 export const Title = styled.Text`
-
     font-family: 'Montserrat_400Regular';
-    font-style: normal;
+    margin-top: 24px ;
+    margin-bottom: 5px;    
     font-weight: bold;
     font-size: 12px;
     line-height: 21px;
@@ -111,7 +112,7 @@ export const Title = styled.Text`
 export const Paragraph = styled.Text`
 
     font-family: 'Montserrat_400Regular';
-    font-style: bold;
+    
     font-weight: 500;
     font-size: 12px;
     line-height: 21px;

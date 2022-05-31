@@ -11,7 +11,7 @@ import {
    Platform,  
    Alert,
    TextInput,
-   Text
+   ScrollView
 } from 'react-native'
 
 import {
@@ -51,6 +51,7 @@ interface SignUpFormData {
 export function SignUp(){
    const formRef = useRef<FormHandles>(null);
    const {navigate} = useNavigation<Nav>();
+   const navigation = useNavigation();
    const [seePassword,setSeePassword]= useState(true)
 
    const emailInputRef = useRef<TextInput>(null);
@@ -80,14 +81,18 @@ export function SignUp(){
          await api.post('/api/v3/veremail/',{
             'email': data.email,
          }).then(function (response) {
-            navigate("SignUpStep2",{ 'email': data.email,password: data.password})
+
+            navigate("SignUpStep2",{ 'email': data.email,'password': data.password})
           }).catch(function(error){
            
             if(error.response.status==400){
+               console.log('Este email já está sendo usado')
                Alert.alert('Este email já está sendo usado')
             }else if(error.response.status==500){
+               console.log('Estamos com problemas técnico. Por favor, tente mais tarde')
                Alert.alert('Estamos com problemas técnico. Por favor, tente mais tarde')
             }else{
+               console.log('Problema desconhecido. Por favor, contate o suporte')
                Alert.alert('Problema desconhecido. Por favor, contate o suporte')
             }
 
@@ -102,7 +107,7 @@ export function SignUp(){
      }
 
    async function backsing(){
-      navigate("SignIn",{})
+      navigation.goBack()
    }  
  
     return (
@@ -139,6 +144,7 @@ export function SignUp(){
                   undefined
                }
             >  
+          
              
                <Content>
                  <Form ref={formRef} onSubmit={handleSignUp}>
@@ -162,14 +168,15 @@ export function SignUp(){
                      secureTextEntry={seePassword}
                      returnKeyType="send"
                   />
-
+                     <ViewButton>  
                      
-                        <Button onPress={() => formRef.current?.submitForm()}>
+                        <Button background={"#3C2E54"} color={"#fff"} onPress={() => formRef.current?.submitForm()}>
                           Continuar
                         </Button>
-                     
+                     </ViewButton>  
                   </Form>   
-               </Content>      
+               </Content>  
+                  
             </KeyboardAvoidingView>
          </ContainerBody>
       </Container>   

@@ -9,6 +9,7 @@ export const Container =styled.View`
 export const ContainerBody =styled.View`
     background-color: #FFF;
     padding: 0px;
+    
     justify-content: center;
     margin-left:20px;
     margin-right:20px;
@@ -28,6 +29,7 @@ export const DivViewTop =styled.View`
 
 export const Content = styled.ScrollView`
     width: 100%;
+    height: 100%;
     padding: 0 32px;
     margin-top: -29px
   
@@ -74,7 +76,8 @@ export const ForgotPassordButton = styled.TouchableOpacity`
 ` 
 export const ViewButton = styled.View`
     diplay:flex;
-    margin-top:261px;
+    
+    margin-bottom:71px;
 
 
 

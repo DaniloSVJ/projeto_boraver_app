@@ -98,7 +98,8 @@ import React, {
         }
      
       },[])
-      
+   
+   
     return (
       <Container style={containerStyle} isFocused={isFocused} isErrored={!!error}>
      
@@ -107,16 +108,17 @@ import React, {
           ref={inputElementRef}
           keyboardAppearance="dark"
           placeholderTextColor="#000"
-         
+          
           defaultValue={defaultValue}
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           onChangeText={(value: string) => {
             inputValueRef.current.value = value;
           }}
-         
-
+          
           {...rest}
+
+        
         />
         <Icon
           onPress={()=>{

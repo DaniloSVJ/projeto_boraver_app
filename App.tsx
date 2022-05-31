@@ -10,7 +10,7 @@ import {Routes} from './src/routes';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
-import { Montserrat_400Regular } from '@expo-google-fonts/montserrat';
+import { Montserrat_400Regular,Montserrat_500Medium, Montserrat_100Thin,Montserrat_200ExtraLight } from '@expo-google-fonts/montserrat';
 
 
 const App: React.FC = () =>{ 
@@ -22,7 +22,9 @@ const App: React.FC = () =>{
       try {
         await SplashScreen.preventAutoHideAsync();
         await Font.loadAsync({
-          Montserrat_400Regular
+          Montserrat_100Thin,
+          Montserrat_200ExtraLight,
+          Montserrat_400Regular,
         });
       } catch (e) {
         console.warn(e);

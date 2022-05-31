@@ -5,7 +5,16 @@ interface ContainerProps {
   isFocused: boolean;
   isErrored: boolean;
 }
-
+interface TextInputProps {
+  ref:any;
+  keyboardAppearance:string;
+  placeholderTextColor:string;
+  defaultValue:any;
+  onFocus:boolean;
+  onBlur:boolean;
+  onChangeText:string;
+  
+}
 export const Container = styled.View<ContainerProps>`
   width: 100%;
   height: 47px;
@@ -26,6 +35,7 @@ export const Container = styled.View<ContainerProps>`
   
 
 `;
+
 
 export const TextInput = styled.TextInput`
   flex: 1;

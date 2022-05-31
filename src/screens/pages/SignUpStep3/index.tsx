@@ -1,115 +1,178 @@
-import React,{useRef,useCallback} from 'react'
-import {Form} from '@unform/mobile'
-import {FormHandles} from "@unform/core"
-import {KeyboardAvoidingView,Platform,ScrollView} from 'react-native'
-import {Container,ContainerBody,Viewstep,View,ViewArrow, ViewButton,DivViewTop,Content,Brand,TextStep,TermText,Title, Paragraph} from './styles'
+import React, { useRef, useCallback } from 'react'
+import { Form } from '@unform/mobile'
+import { FormHandles } from "@unform/core"
+import { FlatList, SafeAreaView, Alert, StyleSheet } from 'react-native'
+import { Container, ContainerBody, Viewstep, View, ViewArrow, ViewButton, DivViewTop, Content, Brand, TextStep, TermText, Title, Paragraph } from './styles'
 import { useNavigation, useRoute } from '@react-navigation/native';
 
-import  Input  from '../../../components/Input'
-import Icon  from 'react-native-vector-icons/FontAwesome';
-import Icon2  from 'react-native-vector-icons/Ionicons';
-import BrandImg from '../../../assets/4-mobile-cadastro3.png'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon2 from 'react-native-vector-icons/Ionicons';
 import Button from '../../../components/Button'
 
 import api from '../../../service/api'
 import Term from './Term'
 
 type Nav = {
-    navigate: (value: string,{}) => void;
- }
+   navigate: (value: string, { }) => void;
+}
 
- interface RouteParams {
-    email: string;
-    password: string;
-    nome: string;
-    celular: string;
-    estado: string;
-    cidade: string;
-  }
+interface RouteParams {
+   email: string;
+   password: string;
+   nome: string;
+   celular: string;
+   estado: string;
+   cidade: string;
+}
 
 
 
-export function SignUpStep3(){
-    const {navigate} = useNavigation<Nav>()
-    const formRef = useRef<FormHandles>(null)
-    const route = useRoute();
-    const params = route.params as RouteParams;
-    const handleSignUpStep3 = useCallback(
-       async () => {
-          navigate('SignUpStep3',{
-             email:params.email, 
-             password: params.password,
-             nome:params.nome,
-             celular:params.celular,
-             cidade:params.cidade,
-             estado: params.estado
-             
-           });
-       },
-       [])  
+export function SignUpStep3() {
+   const { navigate } = useNavigation<Nav>()
+   const formRef = useRef<FormHandles>(null)
+   const route = useRoute();
+   const params = route.params as RouteParams;
+   const handleSignUpStep3 = useCallback(
+      async () => {
+         formRef.current?.setErrors({});
 
-      function backsignup2 (){
-          navigate('SignUpStep2',{})
-      }   
+         if (params.nome == "") {
+            console.log("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
+            Alert.alert("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
+         } else if (params.celular == "") {
+            console.log("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
+            Alert.alert("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
+         } else if (params.cidade == "") {
+            console.log("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
+            Alert.alert("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
+         } else if (params.estado == "") {
+            console.log("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
+            Alert.alert("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
+         } else if (params.email == "") {
+            console.log("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
+            Alert.alert("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
+         } else if (params.password == "") {
+            console.log("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
+            Alert.alert("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
+         } else {
 
-    
-    return (
-        <Container >
-          
-        <DivViewTop>
-           <TextStep>
-              Etapa 3 de 3
-           </TextStep>
-           <Viewstep>
-              <View >
-               <Icon  name="circle-o"   size={7} color="#DF8747"/>
-              </View>
-              <View  >
-               <Icon name="circle-o"  size={7} color="#DF8747"/>
-              </View>
-              <View  >
-               <Icon name="circle"  size={7} color="#DF8747"/>
-              </View>
-           </Viewstep>
-           <ViewArrow>
-              <Icon2  name="chevron-back"   size={14} color="#fff"  onPress={backsignup2} />
-           </ViewArrow>
-          
+            console.log(params.email)
+            console.log(params.password)
+            console.log(params.nome)
+            console.log(params.celular)
+               console.log(params.cidade)
+                  console.log(params.estado)
+            await api.post('/api/v1/influencers/', {
+               nome: params.nome,
+               sobrenome : "",
+               celular: params.celular,
+               cpf_cnpj: "",
+               whatsapp :params.celular,
+               telegram : params.celular,
+               tel_fixo : "",
+               nascimento :"",
+               sexo: "",
+               email: params.email,
+               password: params.password,
+               endereco : "",
+               estado: params.estado,
+               cidade:params.cidade,
+               ver_endereco :false,
+               segmento:"",
+               redesociais :"",
+               sexo_publico :"",
+               qtd_seguidores :0,
+               faixa_etaria :"",
+               agencia_banco :"",
+               saldo:0,
+               conta_banco :"",
+               ativo: false
+							
 
-        </DivViewTop> 
-        <ContainerBody>
-  
+            }).then(function (response) {
+               navigate("SignUpStep4", {})
+            }).catch(function (error) {
+               console.error(error)
+               if (error.response.status == 400) {
+                  Alert.alert('Erro ao cadastrar, verifique seus dados e tente novamente. Se o problema persistir contate o suporte técnico')
+               } else if (error.response.status == 500) {
+                  Alert.alert('Estamos com problemas técnico. Por favor, tente mais tarde')
+               } else {
+                  Alert.alert('Problema desconhecido. Por favor, contate o suporte')
+               }
+            })
+         }
+      },
+      [])
 
-           <KeyboardAvoidingView
-              behavior={
-                 Platform.OS === 'ios' 
-                 ? 'padding':
-                 undefined
-              }
-           >  
-            
-              <Content>
-              <ScrollView>
-               <Form ref={formRef} onSubmit={handleSignUpStep3}> 
-                  
-                    <TermText>Termos de uso</TermText>
-                    <Paragraph>{Term.Paragraph_0}</Paragraph>
-                    <Title>{Term.Title_1}</Title> 
-                    <Paragraph>{Term.Paragraph_1}</Paragraph>
-                    <Title>{Term.Title_2}</Title> 
-                    <Paragraph>{Term.Paragraph_2}</Paragraph>
-                    <Title>{Term.Title_3}</Title> 
-                    <Paragraph>{Term.Paragraph_3}</Paragraph>
-                    <Button onPress={() => formRef.current?.submitForm()}>
-                        Aceitar e criar conta  
-                    </Button>
-                   
-                </Form> 
-                </ScrollView> 
-              </Content>      
-           </KeyboardAvoidingView>
-        </ContainerBody>
-     </Container>   
-    )
+   function backsignup2() {
+      navigate('SignUpStep2', {})
+   }
+   const styles = StyleSheet.create({
+
+      scrollView: {
+
+
+      },
+
+   });
+
+   return (
+      <Container >
+
+         <DivViewTop>
+            <TextStep>
+               Etapa 3 de 3
+            </TextStep>
+            <Viewstep>
+               <View >
+                  <Icon name="circle-o" size={7} color="#DF8747" />
+               </View>
+               <View  >
+                  <Icon name="circle-o" size={7} color="#DF8747" />
+               </View>
+               <View  >
+                  <Icon name="circle" size={7} color="#DF8747" />
+               </View>
+            </Viewstep>
+            <ViewArrow>
+               <Icon2 name="chevron-back" size={14} color="#fff" onPress={backsignup2} />
+            </ViewArrow>
+
+
+         </DivViewTop>
+
+         <ContainerBody>
+
+            <Content>
+               <SafeAreaView>
+
+
+                  <Form ref={formRef} onSubmit={handleSignUpStep3}>
+
+                     <TermText>Termos de uso</TermText>
+                     <Paragraph>{Term.Paragraph_0}</Paragraph>
+                     <Title>{Term.Title_1}</Title>
+                     <Paragraph>{Term.Paragraph_1}</Paragraph>
+                     <Title>{Term.Title_2}</Title>
+                     <Paragraph>{Term.Paragraph_2}</Paragraph>
+                     <Title>{Term.Title_3}</Title>
+                     <Paragraph>{Term.Paragraph_3}</Paragraph>
+                     <Button background={"#3C2E54"} color={"#fff"} onPress={() => formRef.current?.submitForm()}>
+                        Aceitar e criar conta
+                     </Button>
+                     <TermText></TermText>
+                     <TermText></TermText>
+                     <TermText></TermText>
+                  </Form>
+
+               </SafeAreaView>
+            </Content>
+
+
+         </ContainerBody>
+
+      </Container>
+   )
 
 }
