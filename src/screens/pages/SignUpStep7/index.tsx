@@ -166,7 +166,7 @@ export function SignUpStep2() {
                         placeholder='Celular'
                         autoCorrect={false}
                         autoCapitalize="none"
-                        keyboardType="email-address"
+                       
                         sendData={alterar}
                         name={"celular"}
                         icon=""
@@ -200,7 +200,7 @@ export function SignUpStep2() {
                      />
 
                      <ViewButton>
-                        <Button bordercolor={"#3C2E54"} background={"#3C2E54"} color={"#fff"} onPress={() => formRef.current?.submitForm()}>
+                        <Button background={"#3C2E54"} color={"#fff"} onPress={() => formRef.current?.submitForm()}>
                            Continuar
                         </Button>
                      </ViewButton>

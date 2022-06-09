@@ -1,5 +1,10 @@
 import styled from 'styled-components/native'
 
+
+interface Display{
+    display: string;
+}
+
 export const Container = styled.View`
     background-color: #fff;
     height:100%;
@@ -9,8 +14,11 @@ export const Container = styled.View`
     width: 100%;
 
 `
-
-export const Content = styled.View`
+export const InitilContent = styled.View<Display>`
+    
+`
+export const Content = styled.View<Display>`
+    ${(props) => (props.display==""?"":"display: "+props.display )};
     width: 100%;
     height: 100%
     background-color: #fff;
@@ -31,24 +39,20 @@ export const ItemList = styled.View`
 `
 
 export const TitleItem = styled.View`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-`
-export const ViewContentTitleItem = styled.View`
-    display: flex;
+    display:flex;
     flex-direction: row;
     justify-content: flex-start;
 
 `
-interface propsImage {
-    widthprops: string;
-    heightprops: string;
-}
-export const Image = styled.Image<propsImage>`
-    width: ${(props)=>props.widthprops}
-    height: ${(props)=>props.heightprops}
+export const ViewSubTitle = styled.View<Display>`
+    display: ${(props)=>(props.display==""?"flex;":props.display+";")}
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: 28px;
+`
+export const Image = styled.Image`
+    width: 13px;
+    height: 13px;
     top: 0px;
     left: 0px;
     margin-right: 13px;
@@ -136,8 +140,6 @@ export const HerderText2 = styled.Text`
     font-style: normal;
     font-weight: 400;
     font-size: 11px;
-    margin-top: 2px;
-    margin-left: 28px;
     color: #FFFFFF;
 `
 export const Header = styled.View`

@@ -20,6 +20,7 @@ interface RouteParams {
    email: string;
    password: string;
    nome: string;
+   sobrenome: string;
    celular: string;
    estado: string;
    cidade: string;
@@ -31,6 +32,7 @@ export function SignUpStep3() {
    const { navigate } = useNavigation<Nav>()
    const formRef = useRef<FormHandles>(null)
    const route = useRoute();
+
    const params = route.params as RouteParams;
    const handleSignUpStep3 = useCallback(
       async () => {
@@ -64,7 +66,7 @@ export function SignUpStep3() {
                   console.log(params.estado)
             await api.post('/api/v1/influencers/', {
                nome: params.nome,
-               sobrenome : "",
+               sobrenome : params.sobrenome,
                celular: params.celular,
                cpf_cnpj: "",
                whatsapp :params.celular,
@@ -158,7 +160,7 @@ export function SignUpStep3() {
                      <Paragraph>{Term.Paragraph_2}</Paragraph>
                      <Title>{Term.Title_3}</Title>
                      <Paragraph>{Term.Paragraph_3}</Paragraph>
-                     <Button background={"#3C2E54"} color={"#fff"} onPress={() => formRef.current?.submitForm()}>
+                     <Button bordercolor={"#3C2E54"} background={"#3C2E54"} color={"#fff"} onPress={() => formRef.current?.submitForm()}>
                         Aceitar e criar conta
                      </Button>
                      <TermText></TermText>

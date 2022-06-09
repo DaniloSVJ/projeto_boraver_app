@@ -23,8 +23,10 @@ interface RouteParams {
 }
 const styles = StyleSheet.create({
 
-   scrollView: {
-
+   Button: {
+      borderColor: "#fff",
+      borderStyle:"solid",
+      borderWidth: 1
 
    },
 
@@ -75,10 +77,10 @@ export function HomeAuth() {
 
             <Form ref={formRef} onSubmit={handleSignUpStep3}>
                <ViewButton>
-                  <Button background={"#fff"} color={"#000"}  onPress={() => route_direct("SignUp")}>
+                  <Button bordercolor={"#fff"} background={"#fff"} color={"#000"}  onPress={() => route_direct("SignUp")}>
                    Criar conta
                   </Button>
-                  <Button background={"#3C2E54"} color={"#fff"} style={styles.Button} onPress={() => route_direct("SignIn")}>
+                  <Button bordercolor={"#fff"} background={"#3C2E54"} color={"#fff"} style={styles.Button} onPress={() => route_direct("SignIn")}>
                    Entrar
                   </Button>
                </ViewButton>

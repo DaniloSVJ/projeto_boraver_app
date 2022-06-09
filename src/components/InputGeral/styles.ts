@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components/native';
 import FeatherIcon from 'react-native-vector-icons/Ionicons';
+import { TextInput as TextInputRN } from 'react-native';
 
 interface ContainerProps {
   isFocused: boolean;
@@ -27,7 +28,7 @@ export const Container = styled.View<ContainerProps>`
 
 `;
 
-export const TextInput = styled.TextInput`
+export const TextInput = styled(TextInputRN)`
   flex: 1;
   color:#3C2E54;
   font-size: 13px;

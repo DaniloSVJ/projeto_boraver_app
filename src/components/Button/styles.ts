@@ -6,6 +6,8 @@ interface Color{
 }
 interface Background{
   background: string;
+  bordercolor: string;
+
 }
 
 
@@ -17,6 +19,10 @@ export const Container = styled(RectButton)<Background>`
   margin-top: 9px;
   justify-content: center;
   align-items: center;
+
+  border-style:"solid";
+  border-width: 10px;
+
   
 `;
 
@@ -26,4 +32,6 @@ export const ButtonText = styled.Text<Color>`
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
+  
+
 `;

@@ -6,7 +6,7 @@ export const Container =styled.View`
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: start;
+    align-items: flex-start	;
     width: 100%;
 `
 export const Content = styled.View`
@@ -37,7 +37,7 @@ export const Brand = styled.Image`
     width: 195px;
     height: 195px;
     top: 5px;
-    margin-top: 29px;
+    margin-top: 100px;
     
     
 `
@@ -51,7 +51,7 @@ export const ViewButton = styled.View`
 
 
 export const Title = styled.Text`
-font-family: 'Montserrat_500Medium';
+    font-family: 'Montserrat_500Medium';
     font-style: normal;
     font-weight: 700;
     font-size: 25px;

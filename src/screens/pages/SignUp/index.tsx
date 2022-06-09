@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import {Form} from '@unform/mobile'
 import {FormHandles} from "@unform/core"
 import { GiCircle } from "react-icons/gi";
+import { useAuth } from '../../hooks/auth';
 
 import {
    KeyboardAvoidingView,
@@ -44,7 +45,7 @@ type Nav = {
    navigate: (value: string, {}) => void;
 }
 interface SignUpFormData {
-  
+   name: string;
    email: string;
    password: string;
  }
@@ -54,6 +55,7 @@ export function SignUp(){
    const navigation = useNavigation();
    const [seePassword,setSeePassword]= useState(true)
 
+   const nameInputRef = useRef<TextInput>(null);
    const emailInputRef = useRef<TextInput>(null);
    const passwordInputRef = useRef<TextInput>(null);
  
@@ -64,9 +66,11 @@ export function SignUp(){
          formRef.current?.setErrors({});
       
          const schema = Yup.object().shape({
+           name: Yup.string()
+            .required('Nome é obrigatório'), 
            email: Yup.string()
-             .required('E-mail obrigatório')
-             .email('Digite um e-mail válido'),
+            .required('E-mail é obrigatório')
+            .email('Digite um e-mail válido'),
            password: Yup.string().min(6, 'No mínimo 6 dígitos'),
          }
          
@@ -80,14 +84,15 @@ export function SignUp(){
        
          await api.post('/api/v3/veremail/',{
             'email': data.email,
+            'name': data.name
          }).then(function (response) {
 
-            navigate("SignUpStep2",{ 'email': data.email,'password': data.password})
+            navigate("SignUpStep2",{ 'nome': data.name, 'email': data.email,'password': data.password})
           }).catch(function(error){
-           
+            console.error(error)
             if(error.response.status==400){
-               console.log('Este email já está sendo usado')
-               Alert.alert('Este email já está sendo usado')
+               console.log(error.response.data.details)
+               Alert.alert(error.response.data.details)
             }else if(error.response.status==500){
                console.log('Estamos com problemas técnico. Por favor, tente mais tarde')
                Alert.alert('Estamos com problemas técnico. Por favor, tente mais tarde')
@@ -107,7 +112,7 @@ export function SignUp(){
      }
 
    async function backsing(){
-      navigation.goBack()
+      navigate("SignIn",{})
    }  
  
     return (
@@ -148,6 +153,16 @@ export function SignUp(){
              
                <Content>
                  <Form ref={formRef} onSubmit={handleSignUp}>
+                 <Input 
+                     ref={nameInputRef}
+                     autoCorrect={false}
+                     autoCapitalize="none"
+                     name="name"
+                     
+                     placeholder="Nome Usuário"
+                     returnKeyType="next"
+                  />               
+
                   <Input 
                      ref={emailInputRef}
                      autoCorrect={false}
@@ -162,15 +177,15 @@ export function SignUp(){
                      ref={passwordInputRef}
                      name='password'
                      sendData={alterar}
-                     
                      icon="eye-off-outline"
+                     
                      placeholder="Senha"
                      secureTextEntry={seePassword}
                      returnKeyType="send"
                   />
                      <ViewButton>  
                      
-                        <Button background={"#3C2E54"} color={"#fff"} onPress={() => formRef.current?.submitForm()}>
+                        <Button bordercolor={"#3C2E54"} background={"#3C2E54"} color={"#fff"} onPress={() => formRef.current?.submitForm()}>
                           Continuar
                         </Button>
                      </ViewButton>  

@@ -7,15 +7,17 @@ import React, {
     forwardRef,
     
   } from 'react';
-  import { TextInputProps } from 'react-native';
+  import { TextInputMask } from 'react-native-masked-text'
+
+  import { TextInputProps ,StyleSheet} from 'react-native';
   import { useField } from '@unform/core';
   
-  import { Container,  Icon,TextInput } from './styles';
+  import { Container ,TextInput} from './styles';
   
   interface InputProps extends TextInputProps {
     name: string;
-    icon: string;
-    sendData: Function;
+    mask: string;
+    
     containerStyle?: object;
   }
   
@@ -28,13 +30,12 @@ import React, {
   }
   
   const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
-    { name, icon,sendData, containerStyle = {}, ...rest },
+    { name,  mask,containerStyle = {}, ...rest },
     ref, 
   ) => {
-    const [iconI,setIconI] =useState(icon)
-    const [seePassword,setSeePassword] = useState(false)
+    
     const inputElementRef = useRef<any>(null);
-  
+
     const { registerField, defaultValue = '', fieldName, error } = useField(name);
     const inputValueRef = useRef<InputValueReference>({ value: defaultValue });
   
@@ -76,70 +77,38 @@ import React, {
         },
       });
     }, [fieldName, registerField]);
-    const alterPassIcon = useCallback(async()=>
-      {
-       
-        if(icon=="eye-outline") {
-          
-          if(seePassword==true){
-            icon='eye-off-outline'
-            await setIconI('eye-off-outline')
-        
+      
 
-          }
-          
-        }
-        if(icon=="eye-off-outline") {
-          if (seePassword==false){
-            icon="eye-outline"
-          
-            await setIconI("eye-outline")
-          } 
-        }
-     
-      },[])
-   
-   
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            color:"#3C2E54",
+            fontSize: 13,
+            fontFamily: 'Montserrat_400Regular',
+            border: 'none',
+            borderColor: "#fff"  
+        },
+      
+      });
     return (
       <Container style={containerStyle} isFocused={isFocused} isErrored={!!error}>
-        <TextInput
-          ref={inputElementRef}
-          keyboardAppearance="dark"
-          placeholderTextColor="#000"
-          
-          defaultValue={defaultValue}
-          onFocus={handleInputFocus}
-          onBlur={handleInputBlur}
-          onChangeText={(value: string) => {
-            inputValueRef.current.value = value;
-          }}
-          
-          {...rest}
      
-        />
-        <Icon
-          onPress={()=>{
-            async function alterar(){
-                if(iconI=="eye-outline"){
-                  await setSeePassword(true)
-                  setIconI('eye-off-outline')
-                  sendData(true)
-                }else if(iconI=="eye-off-outline"){
-                  await setSeePassword(false)
-                  await setIconI("eye-outline")
-                  sendData(false)
-                }
-              
-          
-            }
-            alterar()
-
-
-          }}
-          name={iconI}
-          size={20}
-          color={isFocused || isFilled ? '#ff9000' : '#666360'}
-        />
+  
+     <TextInput 
+        style={styles.container}
+        ref={inputElementRef}
+        keyboardAppearance="dark"
+        placeholderTextColor="#666360"
+        defaultValue={defaultValue}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
+        type={mask}
+        onChangeText={(value:string) => {
+          inputValueRef.current.value = value;
+        }}
+        {...rest}
+      />
+        
       </Container>
     );
   };

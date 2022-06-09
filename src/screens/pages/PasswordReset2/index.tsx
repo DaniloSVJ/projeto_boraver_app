@@ -75,7 +75,7 @@ export function PasswordReset2() {
 
             <Form ref={formRef} onSubmit={backlogin}>
                <ViewButton>
-                  <Button background={"#fff"} color={"#000"} style={styles.Button} onPress={() => formRef.current?.submitForm()}>
+                  <Button bordercolor={"#3C2E54"}  background={"#fff"} color={"#000"} style={styles.Button} onPress={() => formRef.current?.submitForm()}>
                      Voltar
                   </Button>
                </ViewButton>

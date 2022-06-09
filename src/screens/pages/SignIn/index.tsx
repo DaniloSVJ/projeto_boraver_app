@@ -14,6 +14,7 @@ import {
    Text,
    StyleSheet
 } from 'react-native'
+import { useAuth } from '../../../hooks/auth';
 
 import {
    Container,
@@ -42,11 +43,11 @@ import BrandImg from '../../../assets/boraver_admin_logo.png'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 
-import api from '../../../service/api'
+
 type Nav = {
    navigate: (value: string, { }) => void;
 }
-interface SignUpFormData {
+interface SignInFormData {
 
    email: string;
    password: string;
@@ -56,50 +57,51 @@ export function SignIn() {
    const { navigate } = useNavigation<Nav>();
    const navigation = useNavigation();
    const [seePassword, setSeePassword] = useState(true)
+   const { signIn } = useAuth();
 
    const emailInputRef = useRef<TextInput>(null);
    const passwordInputRef = useRef<TextInput>(null);
 
-   const handleSignUp = useCallback(
-      async (data: SignUpFormData) => {
-
-
-         formRef.current?.setErrors({});
-
-         const schema = Yup.object().shape({
+   const handleSignIn = useCallback(
+      async (data: SignInFormData) => {
+        try {
+          formRef.current?.setErrors({});
+  
+          const schema = Yup.object().shape({
             email: Yup.string()
-               .required('E-mail obrigatório')
-               .email('Digite um e-mail válido'),
-            password: Yup.string().min(6, 'No mínimo 6 dígitos'),
-         }
-
-         );
-
-
-         await schema.validate(data, {
+              .required('E-mail obrigatório')
+              .email('Digite um e-mail válido'),
+            password: Yup.string().required('Senha obrigatória'),
+          });
+  
+          await schema.validate(data, {
             abortEarly: false,
-         });
+          });
+  
+          await signIn({
+            email: data.email,
+            password: data.password,
+          });
 
-
-         await api.post('/api/v3/veremail/', {
-            'email': data.email,
-         }).then(function (response) {
-            navigate("SignUpStep2", { 'email': data.email, 'password': data.password })
-         }).catch(function (error) {
-
-            if (error.response.status == 400) {
-               Alert.alert('Você digitou o email ou senha errada. Verifique e tente novamente. ')
-            } else if (error.response.status == 500) {
-               Alert.alert('Estamos com problemas técnico. Por favor, tente mais tarde')
-            } else {
-               Alert.alert('Problema desconhecido. Por favor, contate o suporte')
-            }
-
-         })
-
+        } catch (err) {
+          if (err instanceof Yup.ValidationError) {
+            const errors = getValidationErrors(err);
+  
+            console.log(errors);
+  
+            formRef.current?.setErrors(errors);
+  
+            return;
+          }
+  
+          Alert.alert(
+            'Erro na autenticação',
+            'Ocorreu um erro ao fazer login, cheque as credenciais.',
+          );
+        }
       },
-      [navigate],
-   );
+      [signIn],
+    );
    async function alterar(val: boolean) {
       setSeePassword(val)
 
@@ -150,7 +152,7 @@ export function SignIn() {
 
 
                <Content>
-                  <Form ref={formRef} onSubmit={handleSignUp}>
+                  <Form ref={formRef} onSubmit={handleSignIn}>
                      <Input
                         ref={emailInputRef}
                         autoCorrect={false}
@@ -172,7 +174,7 @@ export function SignIn() {
                         returnKeyType="send"
                      />
                      <ViewButton>
-                        <Button background={"#3C2E54"} color={"#fff"} onPress={() => formRef.current?.submitForm()}>
+                        <Button bordercolor={"#3C2E54"} background={"#3C2E54"} color={"#fff"} onPress={() => formRef.current?.submitForm()}>
                            Entrar
                         </Button>
                      </ViewButton>

@@ -8,7 +8,9 @@
     ],
     "splash": {
       "image": "./src/assets/Tela_splas.png"
+    },
+    "android": {
+      "package": "boraver.com"
     }
   }
 }
-

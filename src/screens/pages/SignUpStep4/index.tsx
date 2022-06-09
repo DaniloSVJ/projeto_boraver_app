@@ -75,7 +75,7 @@ export function SignUpStep4() {
 
             <Form ref={formRef} onSubmit={handleSignUpStep3}>
                <ViewButton>
-                  <Button background={"#fff"} color={"#000"} style={styles.Button} onPress={() => formRef.current?.submitForm()}>
+                  <Button bordercolor={"#fff"} background={"#fff"} color={"#000"} style={styles.Button} onPress={() => formRef.current?.submitForm()}>
                      Concluído
                   </Button>
                </ViewButton>

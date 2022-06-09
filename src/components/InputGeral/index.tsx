@@ -14,8 +14,6 @@ import React, {
   
   interface InputProps extends TextInputProps {
     name: string;
-   
-    
     containerStyle?: object;
   }
   
@@ -87,8 +85,8 @@ import React, {
         defaultValue={defaultValue}
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
-        
-        onChangeText={(value) => {
+       
+        onChangeText={(value: string) => {
           inputValueRef.current.value = value;
         }}
         {...rest}

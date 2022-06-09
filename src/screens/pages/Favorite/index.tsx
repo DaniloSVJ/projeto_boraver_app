@@ -1,5 +1,4 @@
-// @ts-nocheck
-import React,{useEffect, useState} from 'react'
+import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 
 
@@ -36,21 +35,7 @@ import IconeFavorite from '../../../assets/icone_favorite.svg'
 
 import { ScrollView } from 'react-native-gesture-handler';
 import styled from 'styled-components';
-import { array } from 'yup';
-
-
-interface  Authprops  {
-    id: number;
-    name: string;
-    email:string;
-}
-export function Home() {
-    const {user} = useAuth()
-   
-     
-    
-    const [username,setusername] = useState()
-   
+export function Favorite() {
 
     const styles = StyleSheet.create(   {
        favorite:{
@@ -58,18 +43,14 @@ export function Home() {
        },
             
     })
-    
     return (
         <Container>
             <Header>
 
                 <View>
                     <WelcomeText>
-                        Olá, {user.name} 
+                        Salvos
                     </WelcomeText>
-                    <HerderText2>
-                        Confira os últimos jobs adicionados
-                    </HerderText2>
                 </View>
                 <ViewBell>
                     <NotificationBell qtd={100} />
@@ -92,7 +73,7 @@ export function Home() {
                             </ViewContentTitleItem>
 
                             <View style={styles.favorite}>
-                                <Fontisto name="favorite" size={20} bordercolor={"black"} color="#fff" />
+                                <Fontisto name="favorite" size={20} bordercolor={"black"} color="#000" />
                                 
                             </View>
                         </TitleItem>
@@ -127,11 +108,10 @@ export function Home() {
                             </ViewContentTitleItem>
 
                             <View style={styles.favorite}>
-                                <Fontisto name="favorite" size={20} bordercolor={"black"} color="#fff" />
+                                <Fontisto name="favorite" size={20} bordercolor={"black"} color="#black" />
                                 
                             </View>
                         </TitleItem>
-                                       
                         <Destaque>
                             <TextDestaque>Destaque</TextDestaque>
                         </Destaque>
@@ -163,7 +143,7 @@ export function Home() {
                             </ViewContentTitleItem>
 
                             <View style={styles.favorite}>
-                                <Fontisto name="favorite" size={20} bordercolor={"black"} color="#fff" />
+                                <Fontisto name="favorite" size={20} bordercolor={"black"} color="#000" />
                                 
                             </View>
                         </TitleItem>
