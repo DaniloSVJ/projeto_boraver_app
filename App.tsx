@@ -88,11 +88,13 @@ const App: React.FC = () =>{
     >
 
       <StatusBar  translucent backgroundColor="transparent" />
-    <AuthProvider>
-      <View style={{ flex: 1, backgroundColor: '#ffff' }}>     
+    
+      <View style={{ flex: 1, backgroundColor: '#ffff' }}>   
+      <AuthProvider>
         <Routes />
+      </AuthProvider>  
       </View>     
-    </AuthProvider>
+ 
     </GestureHandlerRootView>
   </NavigationContainer>
 );

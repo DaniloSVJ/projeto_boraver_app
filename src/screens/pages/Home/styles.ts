@@ -49,6 +49,7 @@ interface propsImage {
 export const Image = styled.Image<propsImage>`
     width: ${(props)=>props.widthprops}
     height: ${(props)=>props.heightprops}
+    background-color: #fff;
     top: 0px;
     left: 0px;
     margin-right: 13px;

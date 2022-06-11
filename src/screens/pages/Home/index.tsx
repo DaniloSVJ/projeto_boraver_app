@@ -1,12 +1,13 @@
-// @ts-nocheck
+
 import React, { useEffect, useState, useCallback } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 
 import { FiPower } from 'react-icons/fi';
 import IconFavorite from 'react-native-vector-icons/Fontisto';
+import { RectButton } from 'react-native-gesture-handler';
 
 import NotificationBell from '../../../components/NotificationBell'
-import { useAuth } from '../../../hooks/auth'
+import { AuthProvider, useAuth } from '../../../hooks/auth'
 import {
     TitleService,
     ViewContentTitleItem,
@@ -31,8 +32,9 @@ import {
 } from './styles'
 import { Fontisto } from '@expo/vector-icons';
 import Img from '../../../assets/avatar_user.png'
-import IconeFavorite from '../../../assets/icone_favorite.svg'
 
+import iconeFavorite from '../../../assets/marca-paginas.png'
+import iconeFavoriteTrue from '../../../assets/marca-paginas-true.png'
 import { ScrollView } from 'react-native-gesture-handler';
 import styled from 'styled-components';
 import { array } from 'yup';
@@ -86,34 +88,48 @@ interface solicitationI {
     criacao: string;
 }
 export function Home() {
-    const { user } = useAuth()
+    const { user, signIn } = useAuth()
+
     let idInfluencier = ([{
         id: 0,
-
     }])
-    const [idIn, setIdIn] = useState(0)
+    
+
+    const [bookmark, setBookmark] = useState(false)
     const [services, setService] = useState<solicitationI[]>([])
+
     useEffect(() => {
-        api.get(`/api/v3/influenciador/${user.id}/`).then((response) => {
-            setIdIn(response.data.id);
-        });
-        api.get(`/api/v3/solicitacao_servico/${12}/`)
-            .then((response) => {
-                setService(response.data);
+        async function load() {
+            const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
 
-            });
-    }, [idIn, user.id])
+            await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`,{
 
+            }).then((response) => {
+                    setService([response.data]);
 
-    console.log("bbbbbbbbbbbbrrrrrrrrrr")
-    console.log(services)
-    console.log("bbbbbbbbbbbbrrrrrrrrrr")
+                });
+               
+        }
+        load()
+    }, [])
+
     const styles = StyleSheet.create({
         favorite: {
             marginLeft: 5
         },
-
     })
+    async function addfavorite(id: number) {
+        const token = localStorage.getItem('@BoraVer:token')
+        console.log(token)
+        await api.put(`/api/v3/solicitacao/${id}/`, {
+            headers: {Authorization: `Basic ${token}`},
+            
+            
+            favorite: bookmark,
+        },
+        
+        )
+    }
     return (
         <Container>
             <Header>
@@ -134,7 +150,7 @@ export function Home() {
 
             <Content>
                 <ScrollView>
-                    {Object.keys(services).map((s, key) => (
+                    {services.map((s, key) => (
                         <ItemList key={key}>
                             <TitleItem>
                                 <ViewContentTitleItem>
@@ -148,7 +164,33 @@ export function Home() {
                                 </ViewContentTitleItem>
 
                                 <View style={styles.favorite}>
-                                    <Fontisto name="favorite" size={20} bordercolor={"black"} color="#fff" />
+                                    {
+                                        s.favorite == false
+                                            ?
+                                            <RectButton
+                                                onPress={() => {
+                                                    async function addf() {
+                                                        await setBookmark(true)
+                                                    }
+                                                    addf()
+                                                    addfavorite(s.id)
+                                                }
+                                                }>
+                                                <Image widthprops={"17px"} heightprops={"17px"} source={iconeFavorite} />
+                                            </RectButton>
+                                            :
+                                            <RectButton
+                                                onPress={() => {
+                                                    async function removef() {
+                                                        await setBookmark(false)
+                                                    }
+                                                    removef()
+                                                    addfavorite(1)
+                                                }
+                                                }>
+                                                <Image widthprops={"17px"} heightprops={"17px"} source={iconeFavoriteTrue} />
+                                            </RectButton>
+                                    }
 
                                 </View>
                             </TitleItem>
