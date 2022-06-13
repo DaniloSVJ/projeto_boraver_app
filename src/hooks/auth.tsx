@@ -39,8 +39,10 @@ export const AuthProvider: React.FC = ({ children }) => {
         '@BoraVer:user',
       ]);
 
-      if (token[1] && user[1])
+      if (token[1] && user[1]){
+        //api.defaults.headers.common['authorization'] = `Bearer ${token[1]}`;
         setData({ token: token[1], user: JSON.parse(user[1]) });
+      }
       setLoading(false);
     }
 
@@ -56,7 +58,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       ['@BoraVer:token', token],
       ['@BoraVer:user', JSON.stringify(user)],
     ]);
-
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     setData({ token, user });
   }, []);
 
@@ -76,7 +78,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
 function useAuth(): AuthContextData {
   const context = useContext(AuthContext);
-
+ 
   if (!context) throw new Error('useAuth must be used within an AuthProvider');
 
   return context;

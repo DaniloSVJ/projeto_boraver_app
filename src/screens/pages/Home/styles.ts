@@ -200,3 +200,29 @@ export const Paragraph = styled.Text`
     color: #FFFFFF;
 
 `
+export const ViewVazio = styled.View`
+    display: flex;
+    align-items: center;
+    text-align: center;
+`
+
+export const ImagemVazio = styled.Image`
+    width: 77px;
+    height: 72px;
+
+`
+
+export const TextVazioTitle = styled.Text`
+    font-family: 'Montserrat_500Medium';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 21px;
+`
+export const TextVazioSubTitle = styled.Text`
+    font-family: 'Montserrat_500Medium';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 15px;
+`

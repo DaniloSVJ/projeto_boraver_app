@@ -28,13 +28,20 @@ import {
     HerderText2,
     Container,
     Header,
-    WelcomeText
+    WelcomeText,
+    ViewVazio,
+    ImagemVazio,
+    TextVazioTitle,
+    TextVazioSubTitle,
+ 
 } from './styles'
 import { Fontisto } from '@expo/vector-icons';
 import Img from '../../../assets/avatar_user.png'
 
 import iconeFavorite from '../../../assets/marca-paginas.png'
 import iconeFavoriteTrue from '../../../assets/marca-paginas-true.png'
+import JobsVazio from '../../../assets/item-exclamacao.png'
+
 import { ScrollView } from 'react-native-gesture-handler';
 import styled from 'styled-components';
 import { array } from 'yup';
@@ -50,7 +57,7 @@ let solicitation = [{
     id: 0,
     cliente: 0,
     influencidor: 0,
-    descricao_servico: "",
+    descricao_servico: '',
     valor: 0,
     status: '',
     pendente: true,
@@ -87,28 +94,51 @@ interface solicitationI {
     carater: string;
     criacao: string;
 }
+type addPut = {
+    id: number;
+    cliente: number;
+    influencidor: number;
+    descricao_servico: string;
+    valor: number;
+    status: string;
+    pendente: boolean;
+    link_media: string;
+    favorite: boolean;
+    maiorvalor: number;
+    menorvalor: number;
+    destaque: boolean;
+    valorads: number;
+    estado: string;
+    cidade: string;
+    carater: string;
+    criacao: string;
+}
 export function Home() {
     const { user, signIn } = useAuth()
 
     let idInfluencier = ([{
         id: 0,
     }])
-    
+    const token = localStorage.getItem('@BoraVer:token')
 
+    //api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     const [bookmark, setBookmark] = useState(false)
+    const [render, setrender] = useState(false)
     const [services, setService] = useState<solicitationI[]>([])
-
+    const [idin, setIdin] = useState(0)
     useEffect(() => {
         async function load() {
             const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
-
-            await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`,{
+            setIdin(IdInfluencers.data.id)
+            await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`, {
 
             }).then((response) => {
-                    setService([response.data]);
+                setService([response.data]);
+                setBookmark(response.data.favorite)
+            }).catch(function(error){
+                setService([])
+            });
 
-                });
-               
         }
         load()
     }, [])
@@ -118,17 +148,43 @@ export function Home() {
             marginLeft: 5
         },
     })
-    async function addfavorite(id: number) {
-        const token = localStorage.getItem('@BoraVer:token')
-        console.log(token)
-        await api.put(`/api/v3/solicitacao/${id}/`, {
-            headers: {Authorization: `Basic ${token}`},
-            
-            
-            favorite: bookmark,
-        },
-        
+    async function addfavorite(data: addPut,favorite:boolean) {
+
+
+        //api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        await api.put(`/api/v3/solicitacao/${data.id}/`, {
+            id: data.id,
+            cliente: data.cliente,
+            influencidor: data.influencidor,
+            descricao_servico: data.descricao_servico,
+            valor: data.cliente,
+            status: data.status,
+            pendente: data.pendente,
+            link_media: data.link_media,
+            favorite: favorite,
+            maiorvalor: data.maiorvalor,
+            menorvalor: data.menorvalor,
+            destaque: data.destaque,
+            valorads: data.valorads,
+            estado: data.estado,
+            cidade: data.cidade,
+            carater: data.carater,
+            criacao: data.criacao
+
+        }
+
         )
+        await api.get(`/api/v3/solicitacao_servico/${idin}/`,)
+        .then((response) => {
+            setService([response.data]);
+            
+        }).catch(function(error){
+            setService([])
+        });
+        if (render == true) {
+           setrender(false)
+        } else { setrender(true) }
+      
     }
     return (
         <Container>
@@ -150,8 +206,8 @@ export function Home() {
 
             <Content>
                 <ScrollView>
-                    {services.map((s, key) => (
-                        <ItemList key={key}>
+                    {services.length > 0 ?services.map((s, key) => (
+                        <ItemList key={s.id}>
                             <TitleItem>
                                 <ViewContentTitleItem>
                                     <View>
@@ -165,31 +221,37 @@ export function Home() {
 
                                 <View style={styles.favorite}>
                                     {
-                                        s.favorite == false
-                                            ?
-                                            <RectButton
-                                                onPress={() => {
-                                                    async function addf() {
-                                                        await setBookmark(true)
+
+                                        <RectButton
+                                            onPress={() => {
+                                                async function alterar() {
+                                                     function addf() {
+                                                        if (bookmark == false) {
+                                                             setBookmark(true)
+                                                             addfavorite(s,true)
+                                                        } else {
+                                                             setBookmark(false)
+                                                             addfavorite(s,false)
+                                                        }
+
                                                     }
-                                                    addf()
-                                                    addfavorite(s.id)
+                                                    await addf()
+                                                    
                                                 }
-                                                }>
-                                                <Image widthprops={"17px"} heightprops={"17px"} source={iconeFavorite} />
-                                            </RectButton>
-                                            :
-                                            <RectButton
-                                                onPress={() => {
-                                                    async function removef() {
-                                                        await setBookmark(false)
-                                                    }
-                                                    removef()
-                                                    addfavorite(1)
-                                                }
-                                                }>
-                                                <Image widthprops={"17px"} heightprops={"17px"} source={iconeFavoriteTrue} />
-                                            </RectButton>
+                                                alterar()
+                                            }
+                                            }>
+
+                                            {[
+                                               
+                                               bookmark == false
+                                                    ? <Image key={s.id} widthprops={"17px"} heightprops={"17px"} source={iconeFavorite} />
+                                                    : <Image  key={s.id} widthprops={"17px"} heightprops={"17px"} source={iconeFavoriteTrue} />
+
+                                            ]}
+
+                                        </RectButton>
+
                                     }
 
                                 </View>
@@ -213,7 +275,23 @@ export function Home() {
                                 </ViewTime>
                             </Footer>
                         </ItemList>
-                    ))
+                    )):
+                    <ViewVazio>
+                        
+                        <View>
+                            <ImagemVazio source={JobsVazio} />
+                       </View>
+                       <View>
+                        <TextVazioTitle>
+                            Você não tem nenhuma solicitação de serviço
+                        
+                        </TextVazioTitle>
+                        <TextVazioSubTitle>
+                            Verifique se você seguiu a regra de ativação da conta. Ou sua conta ainda está em processo de ativação pela equipe do Boraver Influencer
+                        </TextVazioSubTitle>
+                        </View>
+                    </ViewVazio>
+
 
                     }
                     <View>

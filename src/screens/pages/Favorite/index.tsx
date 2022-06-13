@@ -1,56 +1,203 @@
-import React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
 
+import React, { useEffect, useState, useCallback } from 'react'
+import { Text, View, StyleSheet } from 'react-native'
 
 import { FiPower } from 'react-icons/fi';
 import IconFavorite from 'react-native-vector-icons/Fontisto';
+import { RectButton } from 'react-native-gesture-handler';
 
 import NotificationBell from '../../../components/NotificationBell'
-import { useAuth } from '../../../hooks/auth'
-import { 
-    TitleService, 
-    ViewContentTitleItem, 
+import { AuthProvider, useAuth } from '../../../hooks/auth'
+import {
+    TitleService,
+    ViewContentTitleItem,
     ViewBell,
-    TextFooter, 
-    ViewTime, 
-    Image, 
-    TitleItem, 
-    Ofert, 
-    Footer, 
-    Destaque, 
-    TextDestaque, 
-    Description, 
-    TextDescription, 
-    SubtitleService, 
-    ItemList, 
-    Content, 
-    HerderText2, 
-    Container, 
-    Header, 
-    WelcomeText 
+    TextFooter,
+    ViewTime,
+    Image,
+    TitleItem,
+    Ofert,
+    Footer,
+    Destaque,
+    TextDestaque,
+    Description,
+    TextDescription,
+    SubtitleService,
+    ItemList,
+    Content,
+    HerderText2,
+    Container,
+    Header,
+    WelcomeText,
+    ViewVazio,
+    ImagemVazio,
+    TextVazioTitle,
+    TextVazioSubTitle,
+
 } from './styles'
 import { Fontisto } from '@expo/vector-icons';
 import Img from '../../../assets/avatar_user.png'
-import IconeFavorite from '../../../assets/icone_favorite.svg'
 
+import iconeFavorite from '../../../assets/marca-paginas.png'
+import iconeFavoriteTrue from '../../../assets/marca-paginas-true.png'
+import pastaVazia from '../../../assets/1-mobile-favoritos2.png'
 import { ScrollView } from 'react-native-gesture-handler';
 import styled from 'styled-components';
+import { array } from 'yup';
+import api from '../../../service/api'
+import { string } from 'yup/lib/locale';
+import SolitationComponet from '../Home/SolitationComponet'
+interface Authprops {
+    id: number;
+    name: string;
+    email: string;
+}
+let solicitation = [{
+    id: 0,
+    cliente: 0,
+    influencidor: 0,
+    descricao_servico: '',
+    valor: 0,
+    status: '',
+    pendente: true,
+    link_media: '',
+    favorite: false,
+    maiorvalor: 0,
+    menorvalor: 0,
+    destaque: false,
+    valorads: 0,
+    estado: '',
+    cidade: '',
+    carater: '',
+    criacao: '',
+}]
+interface RepositoriesForms {
+    idIn: string;
+}
+interface solicitationI {
+    id: number;
+    cliente: number;
+    influencidor: number;
+    descricao_servico: string;
+    valor: number;
+    status: string;
+    pendente: boolean;
+    link_media: string;
+    favorite: boolean;
+    maiorvalor: number;
+    menorvalor: number;
+    destaque: boolean;
+    valorads: number;
+    estado: string;
+    cidade: string;
+    carater: string;
+    criacao: string;
+}
+type addPut = {
+    id: number;
+    cliente: number;
+    influencidor: number;
+    descricao_servico: string;
+    valor: number;
+    status: string;
+    pendente: boolean;
+    link_media: string;
+    favorite: boolean;
+    maiorvalor: number;
+    menorvalor: number;
+    destaque: boolean;
+    valorads: number;
+    estado: string;
+    cidade: string;
+    carater: string;
+    criacao: string;
+}
 export function Favorite() {
+    const { user, signIn } = useAuth()
 
-    const styles = StyleSheet.create(   {
-       favorite:{
-        marginLeft: 5
-       },
-            
+    let idInfluencier = ([{
+        id: 0,
+    }])
+    const token = localStorage.getItem('@BoraVer:token')
+
+    //api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const [bookmark, setBookmark] = useState(false)
+    const [render, setrender] = useState(false)
+    const [services, setService] = useState<solicitationI[]>([])
+    const [idin, setIdin] = useState(0)
+    useEffect(() => {
+        async function load() {
+            const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
+            setIdin(IdInfluencers.data.id)
+            await api.get(`/api/v3/solicitacao_servico_fa/${IdInfluencers.data.id}/`, {
+
+            }).then((response) => {
+                setService([response.data]);
+                setBookmark(response.data.favorite)
+            }).catch(function (error) {
+                setService([])
+            });
+
+        }
+        load()
+    }, [])
+
+    const styles = StyleSheet.create({
+        favorite: {
+            marginLeft: 5
+        },
     })
+    async function addfavorite(data: addPut, favorite: boolean) {
+
+        console.log('veio aqui como ' + favorite)
+
+        //api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        await api.put(`/api/v3/solicitacao/${data.id}/`, {
+            id: data.id,
+            cliente: data.cliente,
+            influencidor: data.influencidor,
+            descricao_servico: data.descricao_servico,
+            valor: data.cliente,
+            status: data.status,
+            pendente: data.pendente,
+            link_media: data.link_media,
+            favorite: favorite,
+            maiorvalor: data.maiorvalor,
+            menorvalor: data.menorvalor,
+            destaque: data.destaque,
+            valorads: data.valorads,
+            estado: data.estado,
+            cidade: data.cidade,
+            carater: data.carater,
+            criacao: data.criacao
+
+        }
+
+        )
+        await api.get(`/api/v3/solicitacao_servico_fa/${idin}/`,)
+            .then((response) => {
+                setService([response.data]);
+
+            })
+            .catch(function (error) {
+                setService([])
+            })
+        if (render == true) {
+            setrender(false)
+        } else { setrender(true) }
+
+    }
     return (
         <Container>
             <Header>
 
                 <View>
                     <WelcomeText>
-                        Salvos
+                        Olá, {user.name}
                     </WelcomeText>
+                    <HerderText2>
+                        Confira os últimos jobs adicionados
+                    </HerderText2>
                 </View>
                 <ViewBell>
                     <NotificationBell qtd={100} />
@@ -60,111 +207,99 @@ export function Favorite() {
 
             <Content>
                 <ScrollView>
-                    <ItemList>
-                        <TitleItem>
-                            <ViewContentTitleItem>
-                                <View>
-                                    <Image widthprops={"35px"} heightprops={"35px"}  source={Img} />
-                                </View>
-                                <View>
-                                    <TitleService>Provador em loja fitness</TitleService>
-                                    <SubtitleService>Orçamento R$50 - R$150</SubtitleService>
-                                </View>
-                            </ViewContentTitleItem>
 
-                            <View style={styles.favorite}>
-                                <Fontisto name="favorite" size={20} bordercolor={"black"} color="#000" />
-                                
-                            </View>
-                        </TitleItem>
-                        <Destaque>
-                            <TextDestaque>Destaque</TextDestaque>
-                        </Destaque>
-                        <Ofert>
-                            <TextDescription>69 Ofertas</TextDescription>
-                        </Ofert>
-                        <Description>
-                            <TextDescription>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.  leia mais</TextDescription>
-                        </Description>
-                        <Footer>
-                            <View>
-                                <TextFooter>Fortaleza  •  Serviços  •  2+</TextFooter>
-                            </View>
-                            <ViewTime>
-                                <TextDescription>2 horas atrás</TextDescription>
-                            </ViewTime>
-                        </Footer>
-                    </ItemList>
-                    <ItemList>
-                        <TitleItem>
-                            <ViewContentTitleItem>
-                                <View>
-                                    <Image widthprops={"35px"} heightprops={"35px"}  source={Img} />
-                                </View>
-                                <View>
-                                    <TitleService>Provador em loja fitness</TitleService>
-                                    <SubtitleService>Orçamento R$50 - R$150</SubtitleService>
-                                </View>
-                            </ViewContentTitleItem>
+                    {
 
-                            <View style={styles.favorite}>
-                                <Fontisto name="favorite" size={20} bordercolor={"black"} color="#black" />
-                                
-                            </View>
-                        </TitleItem>
-                        <Destaque>
-                            <TextDestaque>Destaque</TextDestaque>
-                        </Destaque>
-                        <Ofert>
-                            <TextDescription>69 Ofertas</TextDescription>
-                        </Ofert>
-                        <Description>
-                            <TextDescription>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.  leia mais</TextDescription>
-                        </Description>
-                        <Footer>
-                            <View>
-                                <TextFooter>Fortaleza  •  Serviços  •  2+</TextFooter>
-                            </View>
-                            <ViewTime>
-                                <TextDescription>2 horas atrás</TextDescription>
-                            </ViewTime>
-                        </Footer>
-                    </ItemList>
-                    <ItemList>
-                        <TitleItem>
-                            <ViewContentTitleItem>
-                                <View>
-                                    <Image widthprops={"35px"} heightprops={"35px"}  source={Img} />
-                                </View>
-                                <View>
-                                    <TitleService>Provador em loja fitness</TitleService>
-                                    <SubtitleService>Orçamento R$50 - R$150</SubtitleService>
-                                </View>
-                            </ViewContentTitleItem>
+                        services.length > 0 ? services.map((s, key) => (
 
-                            <View style={styles.favorite}>
-                                <Fontisto name="favorite" size={20} bordercolor={"black"} color="#000" />
-                                
-                            </View>
-                        </TitleItem>
-                        <Destaque>
-                            <TextDestaque>Destaque</TextDestaque>
-                        </Destaque>
-                        <Ofert>
-                            <TextDescription>69 Ofertas</TextDescription>
-                        </Ofert>
-                        <Description>
-                            <TextDescription>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.  leia mais</TextDescription>
-                        </Description>
-                        <Footer>
-                            <View>
-                                <TextFooter>Fortaleza  •  Serviços  •  2+</TextFooter>
-                            </View>
-                            <ViewTime>
-                                <TextDescription>2 horas atrás</TextDescription>
-                            </ViewTime>
-                        </Footer>
-                    </ItemList>
+                            <ItemList key={s.id}>
+                                <TitleItem>
+                                    <ViewContentTitleItem>
+                                        <View>
+                                            <Image widthprops={"35px"} heightprops={"35px"} source={Img} />
+                                        </View>
+                                        <View>
+                                            <TitleService>{'dfdfdfdf'}</TitleService>
+                                            <SubtitleService>Orçamento R${String(s.menorvalor)} - R${String(s.maiorvalor)}</SubtitleService>
+                                        </View>
+                                    </ViewContentTitleItem>
+
+                                    <View style={styles.favorite}>
+                                        {
+
+                                            <RectButton
+                                                onPress={() => {
+                                                    async function alterar() {
+                                                        async function addf() {
+                                                            if (bookmark == false) {
+                                                                await setBookmark(true)
+                                                                await console.log('pra ser true: ' + bookmark)
+                                                                addfavorite(s, true)
+                                                            } else {
+                                                                await setBookmark(false)
+                                                                await console.log('pra ser false: ' + bookmark)
+                                                                addfavorite(s, false)
+                                                            }
+
+                                                        }
+                                                        await addf()
+                                                        console.log('e agora é : ' + bookmark)
+
+                                                    }
+                                                    alterar()
+                                                }
+                                                }>
+
+                                                {[
+
+                                                    bookmark == false
+                                                        ? <Image key={s.id} widthprops={"17px"} heightprops={"17px"} source={iconeFavorite} />
+                                                        : <Image key={s.id} widthprops={"17px"} heightprops={"17px"} source={iconeFavoriteTrue} />
+
+                                                ]}
+
+                                            </RectButton>
+
+                                        }
+
+                                    </View>
+                                </TitleItem>
+                                {s.destaque == true ? (
+                                    <Destaque>
+                                        <TextDestaque>Destaque</TextDestaque>
+                                    </Destaque>)
+                                    : null
+                                }
+
+                                <Description>
+                                    <TextDescription>{s.descricao_servico}</TextDescription>
+                                </Description>
+                                <Footer>
+                                    <View>
+                                        <TextFooter>Fortaleza  •  Serviços  •  2+</TextFooter>
+                                    </View>
+                                    <ViewTime>
+                                        <TextDescription>2 horas atrás</TextDescription>
+                                    </ViewTime>
+                                </Footer>
+                            </ItemList>
+                        )) :
+                            <ViewVazio>
+                                <View>
+                                    <ImagemVazio source={pastaVazia} />
+                                </View>
+                                <View>
+                                    <TextVazioTitle>
+                                        Ainda não há items salvos
+                                    </TextVazioTitle>
+                                    <TextVazioSubTitle>
+                                        Explore e conquiste novos jobs. Ao tocar na etiqueta, você salva seus jobs favoritos aqui.
+                                    </TextVazioSubTitle>
+                                </View>
+                            </ViewVazio>
+
+
+                    }
                     <View>
                         <Text> </Text>
                         <Text> </Text>
@@ -173,7 +308,7 @@ export function Favorite() {
                         <Text> </Text>
                         <Text> </Text>
                         <Text> </Text>
-                        <Text> </Text>   
+                        <Text> </Text>
                     </View>
                 </ScrollView>
             </Content>

@@ -47,8 +47,8 @@ interface propsImage {
     heightprops: string;
 }
 export const Image = styled.Image<propsImage>`
-    width: ${(props)=>props.widthprops}
-    height: ${(props)=>props.heightprops}
+    width: ${(props) => props.widthprops}
+    height: ${(props) => props.heightprops}
     top: 0px;
     left: 0px;
     margin-right: 13px;
@@ -107,6 +107,33 @@ export const TextFooter = styled.Text`
 export const Ofert = styled.View`
     margin-bottom:10px;
 
+`
+
+export const ViewVazio = styled.View`
+    display: flex;
+    align-items: center;
+    text-align: center;
+`
+
+export const ImagemVazio = styled.Image`
+    width: 77px;
+    height: 72px;
+
+`
+
+export const TextVazioTitle = styled.Text`
+    font-family: 'Montserrat_500Medium';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 21px;
+`
+export const TextVazioSubTitle = styled.Text`
+    font-family: 'Montserrat_500Medium';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 15px;
 `
 
 export const Footer = styled.View`
