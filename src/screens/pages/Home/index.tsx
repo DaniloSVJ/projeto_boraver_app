@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState, useCallback } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
+import { useFocusEffect } from '@react-navigation/native';
 
 import { FiPower } from 'react-icons/fi';
 import IconFavorite from 'react-native-vector-icons/Fontisto';
@@ -33,7 +34,7 @@ import {
     ImagemVazio,
     TextVazioTitle,
     TextVazioSubTitle,
- 
+
 } from './styles'
 import { Fontisto } from '@expo/vector-icons';
 import Img from '../../../assets/avatar_user.png'
@@ -115,7 +116,6 @@ type addPut = {
 }
 export function Home() {
     const { user, signIn } = useAuth()
-
     let idInfluencier = ([{
         id: 0,
     }])
@@ -126,29 +126,30 @@ export function Home() {
     const [render, setrender] = useState(false)
     const [services, setService] = useState<solicitationI[]>([])
     const [idin, setIdin] = useState(0)
-    useEffect(() => {
-        async function load() {
-            const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
-            setIdin(IdInfluencers.data.id)
-            await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`, {
+    useFocusEffect(
+        useCallback(() => {
+            async function load() {
+                const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
+                setIdin(IdInfluencers.data.id)
+                api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`, {
 
-            }).then((response) => {
-                setService([response.data]);
-                setBookmark(response.data.favorite)
-            }).catch(function(error){
-                setService([])
-            });
+                }).then((response) => {
+                    setService([response.data]);
+                    setBookmark(response.data.favorite)
+                }).catch(function (error) {
+                    setService([])
+                });
 
-        }
-        load()
-    }, [])
-
+            }
+            load()
+        }, [user]),
+    )
     const styles = StyleSheet.create({
         favorite: {
             marginLeft: 5
         },
     })
-    async function addfavorite(data: addPut,favorite:boolean) {
+    async function addfavorite(data: addPut, favorite: boolean) {
 
 
         //api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -175,18 +176,21 @@ export function Home() {
 
         )
         await api.get(`/api/v3/solicitacao_servico/${idin}/`,)
-        .then((response) => {
-            setService([response.data]);
-            
-        }).catch(function(error){
-            setService([])
-        });
+            .then((response) => {
+                setService([response.data]);
+
+            }).catch(function (error) {
+                console.error(error)
+                setService([])
+            });
         if (render == true) {
-           setrender(false)
+            setrender(false)
         } else { setrender(true) }
-      
+
     }
+
     return (
+
         <Container>
             <Header>
 
@@ -206,7 +210,8 @@ export function Home() {
 
             <Content>
                 <ScrollView>
-                    {services.length > 0 ?services.map((s, key) => (
+
+                    {services.length > 0 ? services.map((s, key) => (
                         <ItemList key={s.id}>
                             <TitleItem>
                                 <ViewContentTitleItem>
@@ -225,28 +230,28 @@ export function Home() {
                                         <RectButton
                                             onPress={() => {
                                                 async function alterar() {
-                                                     function addf() {
+                                                    function addf() {
                                                         if (bookmark == false) {
-                                                             setBookmark(true)
-                                                             addfavorite(s,true)
+                                                            setBookmark(true)
+                                                            addfavorite(s, true)
                                                         } else {
-                                                             setBookmark(false)
-                                                             addfavorite(s,false)
+                                                            setBookmark(false)
+                                                            addfavorite(s, false)
                                                         }
 
                                                     }
                                                     await addf()
-                                                    
+
                                                 }
                                                 alterar()
                                             }
                                             }>
 
                                             {[
-                                               
-                                               bookmark == false
+
+                                                bookmark == false
                                                     ? <Image key={s.id} widthprops={"17px"} heightprops={"17px"} source={iconeFavorite} />
-                                                    : <Image  key={s.id} widthprops={"17px"} heightprops={"17px"} source={iconeFavoriteTrue} />
+                                                    : <Image key={s.id} widthprops={"17px"} heightprops={"17px"} source={iconeFavoriteTrue} />
 
                                             ]}
 
@@ -275,25 +280,26 @@ export function Home() {
                                 </ViewTime>
                             </Footer>
                         </ItemList>
-                    )):
-                    <ViewVazio>
-                        
-                        <View>
-                            <ImagemVazio source={JobsVazio} />
-                       </View>
-                       <View>
-                        <TextVazioTitle>
-                            Você não tem nenhuma solicitação de serviço
-                        
-                        </TextVazioTitle>
-                        <TextVazioSubTitle>
-                            Verifique se você seguiu a regra de ativação da conta. Ou sua conta ainda está em processo de ativação pela equipe do Boraver Influencer
-                        </TextVazioSubTitle>
-                        </View>
-                    </ViewVazio>
+                    )) :
+                        <ViewVazio>
+
+                            <View>
+                                <ImagemVazio source={JobsVazio} />
+                            </View>
+                            <View>
+                                <TextVazioTitle>
+                                    Você não tem nenhuma solicitação de serviço
+
+                                </TextVazioTitle>
+                                <TextVazioSubTitle>
+                                    Verifique se você seguiu a regra de ativação da conta. Ou sua conta ainda está em processo de ativação pela equipe do Boraver Influencer
+                                </TextVazioSubTitle>
+                            </View>
+                        </ViewVazio>
 
 
                     }
+
                     <View>
                         <Text> </Text>
                         <Text> </Text>
@@ -311,3 +317,4 @@ export function Home() {
     )
 
 }
+

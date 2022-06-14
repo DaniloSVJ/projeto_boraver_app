@@ -111,6 +111,11 @@ export const Ofert = styled.View`
 
 export const ViewVazio = styled.View`
     display: flex;
+    margin-top: 165px;
+    margin-left: 77px;
+    margin-right: 77px;
+    flex-direction:column;
+    justify-content:center;
     align-items: center;
     text-align: center;
 `

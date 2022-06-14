@@ -11,17 +11,19 @@ import IconSearch from 'react-native-vector-icons/FontAwesome';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {AntDesign} from "@expo/vector-icons"
 
-import { Home } from '../screens/pages/Home';
+import  {Home}  from '../screens/pages/Home';
 import { Search } from '../screens/pages/Search';
-import { Favorite } from '../screens/pages/Favorite';
+import Favorite  from '../screens/pages/Favorite';
 import { Profile } from '../screens/pages/Profile';
 
 
 import PasswordReset from '../screens/pages/PasswordReset';
 import { SignUp } from '../screens/pages/SignUp';
+import { Perfil } from '../screens/pages/Perfil';
 import { SignUpStep2 } from '../screens/pages/SignUpStep2';
 import { Splas } from '../screens/pages/Splas';
 import { access } from 'fs';
+
 import styled from 'styled-components';
 
 //const { Navigator, Screen, Group } = createNativeStackNavigator();
@@ -37,14 +39,13 @@ export function AppRoutes() {
       width: 18,
       height: 23,
       paddingLeft: 60,
-      paddingRight: 60,
+      paddingRight: 75,
       marginTop:7
     },
     favoriteIconDesactive:{
       width: 18,
       height: 23,
-      paddingLeft: 60,
-      paddingRight: 60
+   
     },
     Icon:{
       paddingLeft: 60,
@@ -151,7 +152,7 @@ export function AppRoutes() {
                   </View>
                 ),}}
       />
-      <Tab.Screen name="Profile" component={Profile} options={{
+      <Tab.Screen name="Perfil" component={Perfil} options={{
                 tabBarIcon: ({ color,size, focused }) => (
                   <View style={styles.borderDesactive}>
                     {
