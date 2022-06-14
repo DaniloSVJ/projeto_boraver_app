@@ -76,15 +76,18 @@ export function SignUpStep3() {
                sexo: "",
                email: params.email,
                password: params.password,
-               endereco : "",
+               
                estado: params.estado,
                cidade:params.cidade,
-               ver_endereco :false,
-               segmento:"",
-               redesociais :"",
-               sexo_publico :"",
-               qtd_seguidores :0,
-               faixa_etaria :"",
+           
+              
+               instagram: "",   
+               qtd_intagram: "", 
+               youtube:  "",  
+               qtd_youtube: "", 
+               tiktok:  "",  
+               qtd_tiktok: "", 
+              
                agencia_banco :"",
                saldo:0,
                conta_banco :"",

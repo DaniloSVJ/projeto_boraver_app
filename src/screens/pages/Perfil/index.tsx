@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, Button } from 'react-native'
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
+import { RectButton } from 'react-native-gesture-handler';
+
 import { useFocusEffect } from '@react-navigation/native';
 import avatar_user from '../../../assets/avatar_user.png'
 import { FormHandles } from "@unform/core"
@@ -19,12 +21,13 @@ import {
     ImagePerfil,
     ViewConteinerData,
     ViewBell,
-    ViewTime,
-    Image,
+    Label,
+    ViewEdit,
     Content,
     HerderText2,
     Container,
     Header,
+    TextDataPerfil,
     WelcomeText
 } from './styles'
 import Filter from '../../../assets/controler.png'
@@ -42,6 +45,27 @@ export function Perfil() {
     const [seeValue, setSeeValue] = useState(false)
     const [editValue, setEditValue] = useState(0)
     const [displayView, setDisplayView] = useState('flex')
+    const [editNome, setEditNome] = useState(false)
+    const [editCelula, setEditCelula] = useState(false)
+    const [editWhatsapp, setEditWhatsapp] = useState(false)
+    const [editTelegram, setEditTelegram] = useState(false)
+    const [ediTel_fixo, setEdiTel_fixo] = useState(false)
+    const [editSexo, setEditSexo] = useState(false)
+    const [editNascimento, setEditNascimento] = useState(false)
+    const [editEmail, setEditEmail] = useState(false)
+
+    const [editcpf_cnpj, setEditcpf_cnpj] = useState(false)
+
+    const [editEstado, setEditEstado] = useState(false)
+    const [editCidade, setEditCidade] = useState(false)
+    const [editInstagram, setEditInstagram] = useState(false)
+    const [editQtd_intagram, setEditQtd_intagram] = useState(false)
+    const [editYoutube, setEditYoutube] = useState(false)
+    const [editQtdYoutube, setEditQtdYoutube] = useState(false)
+    const [editTiktok, setEditTiktok] = useState(false)
+    const [editAgencia_banco, setEditAgencia_banco] = useState(false)
+    const [editConta_banco, setEditConta_banco] = useState(false)
+
 
 
 
@@ -57,13 +81,28 @@ export function Perfil() {
     const styles = StyleSheet.create({
         Eye: {
             marginLeft: 12,
-            marginTop: 11,
+            marginTop: 7,
 
         },
         EyeSlash: {
             marginLeft: 12,
-            marginTop: 8,
-        }
+            marginTop: 4,
+        },
+        AntDesignEye: {
+            display: 'flex',
+            marginTop: 29,
+            marginLeft: 12,
+            width: 60,
+            borderWidth: 1,
+            borderStyle:'solid',
+            borderRadius: 5,
+            textAlign: 'center',
+            padding: 3
+
+        },
+        AntDesignEyeSlash: {
+            display: 'none'
+        },
     })
     return (
         <Container>
@@ -71,7 +110,7 @@ export function Perfil() {
 
                 <View>
                     <WelcomeText>
-                        Seu Saldo:
+                        Saldo:
                     </WelcomeText>
                     <ViewSaldo>
 
@@ -107,10 +146,23 @@ export function Perfil() {
 
                         </ViewImagePerfil>
 
-                        <View>
-                            <Label>Nome Completo</Label>
-                            <Text>Gilherme Sampaio</Text>
-                        </View>
+                        <ViewEdit>
+                            <View>
+                                <Label>Nome Completo:</Label>
+                                <TextDataPerfil>Gilherme Sampaio</TextDataPerfil>
+                            </View>
+                            <View>
+                                <RectButton 
+                                    onPress={() => setEditNome(true)}
+                                    style={editNome == false 
+                                        ?styles.AntDesignEye 
+                                        :styles.AntDesignEyeSlash} 
+                                >
+                                    Editar
+                                </RectButton>
+
+                            </View>
+                        </ViewEdit>
                     </ViewConteinerData>
                 </ScrollView>
             </Content>

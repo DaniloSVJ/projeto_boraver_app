@@ -19,7 +19,7 @@ export const ViewConteinerData = styled.View`
     margin-right: 15px;
 `
 export const ViewImagePerfil = styled.View`
-
+    margin-bottom: 15px;
 ` 
 export const ViewSaldo = styled.View`
     margin-top:5px;
@@ -28,6 +28,14 @@ export const ViewSaldo = styled.View`
     flex-direction: row;
     justify-content: flex-start;
 `   
+export const ViewEdit = styled.View`
+    margin-top:5px;
+    margin-right:10px;
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+`   
+
 export const ImagePerfil = styled.Image`
     margin-top:50px;
     align-self: center;
@@ -85,10 +93,27 @@ export const Image = styled.Image`
     
 `
 
-export const ViewTime = styled.View`
+export const Label = styled.Text`
+    margin-top: 7px;
+    font-family: 'Montserrat_500Medium';
+    font-weight: bold;
+    font-size: 17px;
+`
+export const TextDataPerfil = styled.Text`
+    margin-top: 5px;
+    font-family: 'Montserrat_500Medium';
+    font-weight: normal;
+    font-size: 20px;
+`
+export const ButtonEdit = styled.Button<Display>`
+    display: ${props=> props.display}
+    wight: 100px;
+    border-radius: 5px;
+    backgroud-color: #fff;
+    border-width: 1px;
+    border-style: solid;
 
 `
-
 export const WelcomeText = styled.Text`
     font-family: 'Montserrat_500Medium';
     font-style: normal;
@@ -101,12 +126,11 @@ export const WelcomeText = styled.Text`
 
 `
 export const HerderText2 = styled.Text`
-    margin-top:10px;
     margin-left:100px;
-    font-family: 'Montserrat_300Medium';
+    font-family: 'Montserrat_500Medium';
     font-style: normal;
-    font-weight: 700;
-    font-size: 19px;
+   
+    font-size: 25px;
   
     color: #FFFFFF;
     margin-left: 28px;
