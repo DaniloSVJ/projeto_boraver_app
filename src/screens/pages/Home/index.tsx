@@ -1,14 +1,12 @@
 
-import React, { useEffect, useState, useCallback } from 'react'
+import React, {  useState, useCallback, useEffect } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native';
 
-import { FiPower } from 'react-icons/fi';
-import IconFavorite from 'react-native-vector-icons/Fontisto';
 import { RectButton } from 'react-native-gesture-handler';
 
 import NotificationBell from '../../../components/NotificationBell'
-import { AuthProvider, useAuth } from '../../../hooks/auth'
+import {  useAuth } from '../../../hooks/auth'
 import {
     TitleService,
     ViewContentTitleItem,
@@ -17,7 +15,7 @@ import {
     ViewTime,
     Image,
     TitleItem,
-    Ofert,
+    
     Footer,
     Destaque,
     TextDestaque,
@@ -36,7 +34,7 @@ import {
     TextVazioSubTitle,
 
 } from './styles'
-import { Fontisto } from '@expo/vector-icons';
+
 import Img from '../../../assets/avatar_user.png'
 
 import iconeFavorite from '../../../assets/marca-paginas.png'
@@ -44,38 +42,11 @@ import iconeFavoriteTrue from '../../../assets/marca-paginas-true.png'
 import JobsVazio from '../../../assets/item-exclamacao.png'
 
 import { ScrollView } from 'react-native-gesture-handler';
-import styled from 'styled-components';
-import { array } from 'yup';
+
 import api from '../../../service/api'
-import { string } from 'yup/lib/locale';
-import SolitationComponet from '../Home/SolitationComponet'
-interface Authprops {
-    id: number;
-    name: string;
-    email: string;
-}
-let solicitation = [{
-    id: 0,
-    cliente: 0,
-    influencidor: 0,
-    descricao_servico: '',
-    valor: 0,
-    status: '',
-    pendente: true,
-    link_media: '',
-    favorite: false,
-    maiorvalor: 0,
-    menorvalor: 0,
-    destaque: false,
-    valorads: 0,
-    estado: '',
-    cidade: '',
-    carater: '',
-    criacao: '',
-}]
-interface RepositoriesForms {
-    idIn: string;
-}
+
+
+
 interface solicitationI {
     id: number;
     cliente: number;
@@ -115,35 +86,51 @@ type addPut = {
     criacao: string;
 }
 export function Home() {
-    const { user, signIn } = useAuth()
-    let idInfluencier = ([{
-        id: 0,
-    }])
-    const token = localStorage.getItem('@BoraVer:token')
-
-    //api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const { user } = useAuth()
+    const [ idfdf, setdfdfdf ] = useState(user)
     const [bookmark, setBookmark] = useState(false)
+    useEffect(() => {
+        setService([])
+        async function load() {
+            const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
+            setIdin(IdInfluencers.data.id)
+            api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`, {
+
+            }).then((response) => {
+                setService([response.data]);
+                setBookmark(response.data.favorite)
+                console.log(services)
+            }).catch(function (error) {
+                setService([])
+            });
+
+        }
+        load()
+    }, [bookmark])
+ 
     const [render, setrender] = useState(false)
     const [services, setService] = useState<solicitationI[]>([])
     const [idin, setIdin] = useState(0)
     useFocusEffect(
         useCallback(() => {
+            setService([])
             async function load() {
                 const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
                 setIdin(IdInfluencers.data.id)
-                api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`, {
+                await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`, {
 
                 }).then((response) => {
                     setService([response.data]);
                     setBookmark(response.data.favorite)
+                    console.log(services)
                 }).catch(function (error) {
                     setService([])
                 });
 
             }
             load()
-        }, [user]),
-    )
+        }, [bookmark]),
+    );
     const styles = StyleSheet.create({
         favorite: {
             marginLeft: 5
@@ -178,7 +165,7 @@ export function Home() {
         await api.get(`/api/v3/solicitacao_servico/${idin}/`,)
             .then((response) => {
                 setService([response.data]);
-
+                console.log(services)
             }).catch(function (error) {
                 console.error(error)
                 setService([])

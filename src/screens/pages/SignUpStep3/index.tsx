@@ -20,7 +20,7 @@ interface RouteParams {
    email: string;
    password: string;
    nome: string;
-   sobrenome: string;
+   nomecompleto: string;
    celular: string;
    estado: string;
    cidade: string;
@@ -66,7 +66,7 @@ export function SignUpStep3() {
                   console.log(params.estado)
             await api.post('/api/v1/influencers/', {
                nome: params.nome,
-               sobrenome : params.sobrenome,
+               nomecompleto : params.nomecompleto,
                celular: params.celular,
                cpf_cnpj: "",
                whatsapp :params.celular,

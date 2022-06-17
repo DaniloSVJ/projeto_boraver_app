@@ -16,12 +16,13 @@ export const Container = styled(RectButton)<Background>`
   height: 47px;
   background:  ${(props) => (props.background )};
   border-radius: 10px;
+  border-color:  ${(props) => (props.bordercolor )};
   margin-top: 9px;
   justify-content: center;
   align-items: center;
 
   border-style:"solid";
-  border-width: 10px;
+  border-width: 1px;
 
   
 `;

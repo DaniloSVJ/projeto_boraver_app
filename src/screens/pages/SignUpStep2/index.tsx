@@ -26,7 +26,7 @@ interface RouteParams {
    password: string
 }
 interface SignUpFormData {
-   sobrenome: string;
+   nomecompleto: string;
    celular: string;
    cidade: string;
    estado: string;
@@ -46,7 +46,7 @@ export function SignUpStep2() {
 
          formRef.current?.setErrors({});
          console.log(data)
-         if(data.sobrenome==""){
+         if(data.nomecompleto==""){
             console.log("O nome é obrigatorio")
             Alert.alert("O nome é obrigatorio")
          }else if(data.celular==""){
@@ -70,7 +70,7 @@ export function SignUpStep2() {
             email: params.email ,
             password: params.password,
             nome: params.nome,
-            sobrenome: data.sobrenome,
+            nomecompleto: data.nomecompleto,
             celular: data.celular,
             cidade: data.cidade,
             estado: data.estado
@@ -145,7 +145,7 @@ export function SignUpStep2() {
                         autoCapitalize="none"
 
                         sendData={alterar}
-                        name={"sobrenome"}
+                        name={"nomecompleto"}
                         icon=""
 
                         returnKeyType="next"

@@ -40,7 +40,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       ]);
 
       if (token[1] && user[1]){
-        //api.defaults.headers.common['authorization'] = `Bearer ${token[1]}`;
+        api.defaults.headers.common['authorization'] = `Bearer ${token[1]}`;
         setData({ token: token[1], user: JSON.parse(user[1]) });
       }
       setLoading(false);
@@ -62,8 +62,10 @@ export const AuthProvider: React.FC = ({ children }) => {
     setData({ token, user });
   }, []);
 
-  const signOut = useCallback(async () => {
-    await AsyncStorage.multiRemove(['@BoraVer:token', '@BoraVer:user']);
+
+  const signOut = useCallback(() => {
+    localStorage.removeItem('@BoraVer:token');
+    localStorage.removeItem('@BoraVer:user');
 
     setData({} as AuthState);
   }, []);

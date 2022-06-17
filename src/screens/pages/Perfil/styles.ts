@@ -32,9 +32,17 @@ export const ViewEdit = styled.View`
     margin-top:5px;
     margin-right:10px;
     display:flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
-`   
+`
+export const ViewForm = styled.View`
+    margin-top:5px;
+    margin-right:10px;
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+`
+   
 
 export const ImagePerfil = styled.Image`
     margin-top:50px;
@@ -105,6 +113,7 @@ export const TextDataPerfil = styled.Text`
     font-weight: normal;
     font-size: 20px;
 `
+
 export const ButtonEdit = styled.Button<Display>`
     display: ${props=> props.display}
     wight: 100px;
