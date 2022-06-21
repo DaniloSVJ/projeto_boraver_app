@@ -6,6 +6,7 @@ import { FormHandles } from "@unform/core"
 import { Form } from '@unform/mobile'
 import CheckBox from '@react-native-community/checkbox';
 import IconFavorite from 'react-native-vector-icons/Fontisto';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 import NotificationBell from '../../../components/NotificationBell'
@@ -14,21 +15,32 @@ import { TitleService, InitilContent, ViewSubTitle, ViewBell, TextFooter, ViewTi
 import Filter from '../../../assets/controler.png'
 import { ScrollView } from 'react-native-gesture-handler';
 import Input from '../../../components/InputGeral'
-
+import api from '../../../service/api'
 interface SearchFormData {
 
 }
 
 export function Search() {
+    const { user } = useAuth()
 
     const formRef = useRef<FormHandles>(null);
     const emailInputRef = useRef<TextInput>(null);
-    const [toggleCheckBox, setToggleCheckBox] = useState(false)
+    const [qtdNote, setQtdNote] = useState(0)
 
     const [titleHeader, setTitleHeader] = useState("Buscar")
     const [displayView, setDisplayView] = useState('none')
     const [displayViewForm, setDisplayViewForm] = useState('flex')
-    useEffect(() => { }, [])
+    useFocusEffect(
+        useCallback(() => {
+            async function load() {
+                const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
+
+                const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
+                setQtdNote(note.data.count)
+            }
+            load()
+        }, [])
+    )
     const handleSearch = useCallback(
         async (data: SearchFormData) => {
             try {
@@ -63,13 +75,13 @@ export function Search() {
                     </ViewSubTitle>
                 </View>
                 <ViewBell>
-                    <NotificationBell qtd={100} />
+                    <NotificationBell qtd={qtdNote} />
                 </ViewBell>
 
             </Header>
             <InitilContent display={displayViewForm}>
                 <Form ref={formRef} onSubmit={handleSearch}>
-                    
+
                     <Input
                         ref={emailInputRef}
                         autoCorrect={false}

@@ -45,7 +45,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import api from '../../../service/api'
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Sair from  'react-native-vector-icons/Ionicons';
 
 
 interface solicitationI {
@@ -195,18 +195,16 @@ export function Home() {
 
         <Container>
             <Header>
-
+                <ViewBell>
+                    <Sair name="close"   size={14} color="#fff" />
+                </ViewBell>
                 <View>
                     <WelcomeText>
-                        Olá, {user.name}
+                        Comunicados
                     </WelcomeText>
-                    <HerderText2>
-                        Confira os últimos jobs adicionados
-                    </HerderText2>
+                    
                 </View>
-                <ViewBell>
-                    <NotificationBell qtd={qtdNote} />
-                </ViewBell>
+           
 
             </Header>
 

@@ -33,6 +33,8 @@ import {
     TextDataPerfil,
     WelcomeText
 } from './styles'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import Filter from '../../../assets/controler.png'
 import { ScrollView } from 'react-native-gesture-handler';
 import Input from '../../../components/InputGeral'
@@ -77,13 +79,12 @@ interface InfluencyData {
 
 export function Perfil() {
     const { user ,signOut } = useAuth()
-    let iduser = 0
-
+    
+   
     const formRef = useRef<FormHandles>(null);
     const emailInput0Ref = useRef<TextInput>(null);
     const [influencerInfo, setInfluencerInfo] = useState<InfluencyData>()
-    const [render, setrender] = useState(false)
-
+    const [qtdNote,setQtdNote]=useState(0) 
     const [nomeData, setNomeData] = useState("")
     const [celularData, setCelularData] = useState("")
     const [whatsappData, setWhatsappData] = useState("")
@@ -102,15 +103,18 @@ export function Perfil() {
     const [qtd_tiktokData, setQtd_tiktokData] = useState("")
     const [agencia_bancoData, setAgencia_bancoData] = useState("")
     const [conta_bancoData, setConta_bancoData] = useState("")
+    
     useFocusEffect(
         useCallback(() => {
             async function load() {
-
-                await api.get(`/api/v3/influenciador/${user.id}/`).then(
+               const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
+               await api.get(`/api/v3/influenciador/${user.id}/`).then(
                     (res) => {
                         setInfluencerInfo(res.data)
                     }
                 )
+                const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
+                setQtdNote(note.data.count)
             }
             load()
         }, [])
@@ -239,7 +243,7 @@ export function Perfil() {
                     </ViewSaldo>
                 </View>
                 <ViewBell>
-                    <NotificationBell qtd={100} />
+                    <NotificationBell qtd={qtdNote} />
                 </ViewBell>
 
             </Header>
@@ -263,7 +267,6 @@ export function Perfil() {
                                     <VEdit
                                         ref={nomeInputRef}
                                         sendData={setNomeData}
-
                                         name="nome"
                                         weight=''
                                         label='Nome Completo'
@@ -444,7 +447,7 @@ export function Perfil() {
                                         Salvar
                                     </Button>
                                     <Button bordercolor={"#DC143C"} background={"#DC143C"} color={"#fff"} onPress={signOut }>
-                                        Sair da Conta
+                                        Sair
                                     </Button>
 
                                     <Text> </Text>
@@ -454,11 +457,7 @@ export function Perfil() {
                                     <Text> </Text>
                                     <Text> </Text>
                                     <Text> </Text>
-                                    <Text> </Text>
-                                    <Text> </Text>
-                                    <Text> </Text>
-                                    <Text> </Text>
-                                    <Text> </Text>
+                                 
                                 </Form>
                                 : <Text></Text>
 

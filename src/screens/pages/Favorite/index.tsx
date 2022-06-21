@@ -101,7 +101,7 @@ const Favorite: React.FC = () => {
         id: 0,
     }])
     const token = localStorage.getItem('@BoraVer:token')
-    //api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const [qtdNote,setQtdNote]=useState(0)    
     const [bookmark, setBookmark] = useState(false)
     const [loadingrenderteste, setLoadingRender] = useState(false)
     const [services, setService] = useState<solicitationI[]>([])
@@ -123,6 +123,9 @@ const Favorite: React.FC = () => {
                         setService([])
                     }
                 });
+                const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
+                
+                setQtdNote(note.data.count)
 
             }
             load()
@@ -189,7 +192,7 @@ const Favorite: React.FC = () => {
 
                 </View>
                 <ViewBell>
-                    <NotificationBell qtd={100} />
+                    <NotificationBell qtd={qtdNote} />
                 </ViewBell>
 
             </Header>

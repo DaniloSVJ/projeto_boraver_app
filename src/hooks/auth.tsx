@@ -40,7 +40,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       ]);
 
       if (token[1] && user[1]){
-        api.defaults.headers.common['authorization'] = `Bearer ${token[1]}`;
+        api.defaults.headers.common['Authorization'] = `Bearer ${token[1]}`;
         setData({ token: token[1], user: JSON.parse(user[1]) });
       }
       setLoading(false);
@@ -58,7 +58,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       ['@BoraVer:token', token],
       ['@BoraVer:user', JSON.stringify(user)],
     ]);
-    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    //api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     setData({ token, user });
   }, []);
 
