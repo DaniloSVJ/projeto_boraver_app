@@ -4,7 +4,7 @@ import { Text, View, StyleSheet } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native';
 
 import { RectButton } from 'react-native-gesture-handler';
-
+import {Noti} from '../Noti'
 import NotificationBell from '../../../components/NotificationBell'
 import {  useAuth } from '../../../hooks/auth'
 import {
@@ -113,6 +113,8 @@ export function Home() {
                 setService([])
             });
 
+            console.log(user.id)
+
         }
         load()
     }, [bookmark])
@@ -204,15 +206,16 @@ export function Home() {
                         Confira os últimos jobs adicionados
                     </HerderText2>
                 </View>
+                
                 <ViewBell>
-                    <NotificationBell qtd={qtdNote} />
+                    <NotificationBell qtd={qtdNote}  />
                 </ViewBell>
 
             </Header>
 
             <Content>
                 <ScrollView>
-
+                   
                     {services.length > 0 ? services.map((s, key) => (
                         <ItemList key={s.id}>
                             <TitleItem>

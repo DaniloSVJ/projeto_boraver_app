@@ -147,7 +147,7 @@ export const Header = styled.View`
     height: 131px;
     display:flex;
     flex-direction: row;
-    justify-content: flex-start	;
+    justify-content: space-between;
 
 `
 export const ViewBell = styled.View`

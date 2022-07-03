@@ -68,29 +68,27 @@ export function SignUpStep3() {
                nome: params.nome,
                nomecompleto : params.nomecompleto,
                celular: params.celular,
-               cpf_cnpj: "",
-               whatsapp :params.celular,
+               //////////////////////
+               whatsapp : params.celular,
                telegram : params.celular,
                tel_fixo : "",
-               nascimento :"",
                sexo: "",
-               email: params.email,
-               password: params.password,
+               nascimento : ""  ,
+               email : params.email,
+               password : params.password,
+               cpf_cnpj : "" ,
+               estado : params.estado,
+               cidade : params.cidade,
+               instagram :  "", 
+               qtd_intagram :"", 
+               youtube :  "",  
+               qtd_youtube : "", 
+               tiktok :  "",  
+               qtd_tiktok : "",  
+               agencia_banco : "",  
+               conta_banco : "", 
+               saldo : 0,
                
-               estado: params.estado,
-               cidade:params.cidade,
-           
-              
-               instagram: "",   
-               qtd_intagram: "", 
-               youtube:  "",  
-               qtd_youtube: "", 
-               tiktok:  "",  
-               qtd_tiktok: "", 
-              
-               agencia_banco :"",
-               saldo:0,
-               conta_banco :"",
                ativo: false
 							
 

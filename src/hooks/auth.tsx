@@ -58,7 +58,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       ['@BoraVer:token', token],
       ['@BoraVer:user', JSON.stringify(user)],
     ]);
-    //api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     setData({ token, user });
   }, []);
 

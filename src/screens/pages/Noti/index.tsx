@@ -45,7 +45,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import api from '../../../service/api'
 
-import Sair from  'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 interface solicitationI {
@@ -91,127 +91,135 @@ interface teste{
     name:string;
     
 }
-export function Home() {
+export function Noti() {
     const  {user}  = useAuth()
     
-    const [bookmark, setBookmark] = useState(false)
+    
+
+
+    // const [bookmark, setBookmark] = useState(false)
   
-    useEffect(() => {
-        setService([])
-        async function load() {
+    // useEffect(() => {
+    //     setService([])
+    //     async function load() {
             
-            const IdInfluencers = 
-            await 
-            api.get(`/api/v3/influenciador/${user.id}/`)
-            setIdin(IdInfluencers.data.id)
-            api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`, 
-              ).then((response) => {
-                setService([response.data]);
-                setBookmark(response.data.favorite)
-                console.log(services)
-            }).catch(function (error) {
-                setService([])
-            });
+    //         const IdInfluencers = 
+    //         await 
+    //         api.get(`/api/v3/influenciador/${user.id}/`)
+    //         setIdin(IdInfluencers.data.id)
+    //         api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`, 
+    //           ).then((response) => {
+    //             setService([response.data]);
+    //             setBookmark(response.data.favorite)
+    //             console.log(services)
+    //         }).catch(function (error) {
+    //             setService([])
+    //         });
 
-        }
-        load()
-    }, [bookmark])
-    const [qtdNote,setQtdNote]=useState(0)    
-    const [render, setrender] = useState(false)
-    const [services, setService] = useState<solicitationI[]>([])
-    const [idin, setIdin] = useState(0)
+    //         console.log(user.id)
 
-    useFocusEffect(
-        useCallback(() => {
-            setService([])
-            async function load() {
-                const token = localStorage.getItem('@BoraVer:token');
-                const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
-                setIdin(IdInfluencers.data.id)
-                await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`, {
+    //     }
+    //     load()
+    // }, [bookmark])
+    // const [qtdNote,setQtdNote]=useState(0)    
+    // const [render, setrender] = useState(false)
+    // const [services, setService] = useState<solicitationI[]>([])
+    // const [idin, setIdin] = useState(0)
 
-                }).then((response) => {
-                    setService([response.data]);
-                    setBookmark(response.data.favorite)
-                    console.log(services)
-                }).catch(function (error) {
-                    setService([])
-                });
+    // useFocusEffect(
+    //     useCallback(() => {
+    //         setService([])
+    //         async function load() {
+    //             const token = localStorage.getItem('@BoraVer:token');
+    //             const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
+    //             setIdin(IdInfluencers.data.id)
+    //             await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`, {
 
-                const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
+    //             }).then((response) => {
+    //                 setService([response.data]);
+    //                 setBookmark(response.data.favorite)
+    //                 console.log(services)
+    //             }).catch(function (error) {
+    //                 setService([])
+    //             });
+
+    //             const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
                 
-                setQtdNote(note.data.count)
+    //             setQtdNote(note.data.count)
                
-            }
-            load()
-        }, [bookmark]),
-    );
-    const styles = StyleSheet.create({
-        favorite: {
-            marginLeft: 5
-        },
-    })
-    async function addfavorite(data: addPut, favorite: boolean) {
+    //         }
+    //         load()
+    //     }, [bookmark]),
+    // );
+    // const styles = StyleSheet.create({
+    //     favorite: {
+    //         marginLeft: 5
+    //     },
+    // })
+    // async function addfavorite(data: addPut, favorite: boolean) {
 
 
-        //api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        await api.put(`/api/v3/solicitacao/${data.id}/`, {
-            id: data.id,
-            cliente: data.cliente,
-            influencidor: data.influencidor,
-            descricao_servico: data.descricao_servico,
-            valor: data.cliente,
-            status: data.status,
-            pendente: data.pendente,
-            link_media: data.link_media,
-            favorite: favorite,
-            maiorvalor: data.maiorvalor,
-            menorvalor: data.menorvalor,
-            destaque: data.destaque,
-            valorads: data.valorads,
-            estado: data.estado,
-            cidade: data.cidade,
-            carater: data.carater,
-            criacao: data.criacao
+    //     //api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    //     await api.put(`/api/v3/solicitacao/${data.id}/`, {
+    //         id: data.id,
+    //         cliente: data.cliente,
+    //         influencidor: data.influencidor,
+    //         descricao_servico: data.descricao_servico,
+    //         valor: data.cliente,
+    //         status: data.status,
+    //         pendente: data.pendente,
+    //         link_media: data.link_media,
+    //         favorite: favorite,
+    //         maiorvalor: data.maiorvalor,
+    //         menorvalor: data.menorvalor,
+    //         destaque: data.destaque,
+    //         valorads: data.valorads,
+    //         estado: data.estado,
+    //         cidade: data.cidade,
+    //         carater: data.carater,
+    //         criacao: data.criacao
 
-        }
+    //     }
 
-        )
-        await api.get(`/api/v3/solicitacao_servico/${idin}/`,)
-            .then((response) => {
-                setService([response.data]);
-                console.log(services)
-            }).catch(function (error) {
-                console.error(error)
-                setService([])
-            });
-        if (render == true) {
-            setrender(false)
-        } else { setrender(true) }
+    //     )
+    //     await api.get(`/api/v3/solicitacao_servico/${idin}/`,)
+    //         .then((response) => {
+    //             setService([response.data]);
+    //             console.log(services)
+    //         }).catch(function (error) {
+    //             console.error(error)
+    //             setService([])
+    //         });
+    //     if (render == true) {
+    //         setrender(false)
+    //     } else { setrender(true) }
 
-    }
+    // }
 
     return (
 
         <Container>
             <Header>
-                <ViewBell>
-                    <Sair name="close"   size={14} color="#fff" />
-                </ViewBell>
+
                 <View>
                     <WelcomeText>
-                        Comunicados
+                        
                     </WelcomeText>
-                    
+                    <HerderText2>
+                        Confira os últimos jobs adicionados
+                    </HerderText2>
                 </View>
-           
+                
+                <ViewBell>
+                    {/* <NotificationBell qtd={qtdNote}  /> */}
+                </ViewBell>
 
             </Header>
 
             <Content>
                 <ScrollView>
 
-                    {services.length > 0 ? services.map((s, key) => (
+                    {/* {services.length > 0 ? services.map((s, key) => (
                         <ItemList key={s.id}>
                             <TitleItem>
                                 <ViewContentTitleItem>
@@ -309,7 +317,7 @@ export function Home() {
                         <Text> </Text>
                         <Text> </Text>
                         <Text> </Text>
-                    </View>
+                    </View> */}
                 </ScrollView>
             </Content>
 

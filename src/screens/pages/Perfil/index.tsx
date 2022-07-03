@@ -2,7 +2,9 @@ import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { Text, View, StyleSheet, TextInput, RefreshControlBase } from 'react-native'
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import { RectButton } from 'react-native-gesture-handler';
+
 import Button from '../../../components/Button';
+import { useNavigation, } from '@react-navigation/native';
 
 import { useFocusEffect } from '@react-navigation/native';
 import avatar_user from '../../../assets/avatar_user.png'
@@ -76,15 +78,18 @@ interface InfluencyData {
     atualizacao: string;
     ativo: boolean;
 }
-
+type Nav = {
+    navigate: (value: string, {}) => void;
+ }
 export function Perfil() {
     const { user ,signOut } = useAuth()
-    
-   
+    const {navigate} = useNavigation<Nav>();
+
+
     const formRef = useRef<FormHandles>(null);
     const emailInput0Ref = useRef<TextInput>(null);
     const [influencerInfo, setInfluencerInfo] = useState<InfluencyData>()
-    const [qtdNote,setQtdNote]=useState(0) 
+    const [qtdNote,setQtdNote]=useState(0)
     const [nomeData, setNomeData] = useState("")
     const [celularData, setCelularData] = useState("")
     const [whatsappData, setWhatsappData] = useState("")
@@ -103,7 +108,7 @@ export function Perfil() {
     const [qtd_tiktokData, setQtd_tiktokData] = useState("")
     const [agencia_bancoData, setAgencia_bancoData] = useState("")
     const [conta_bancoData, setConta_bancoData] = useState("")
-    
+
     useFocusEffect(
         useCallback(() => {
             async function load() {
@@ -215,7 +220,9 @@ export function Perfil() {
             agencia_bancoData, conta_bancoData
         ],
     );
-
+    async function notification(){
+        navigate("Notifications",{})
+     }
     return (
         <Container>
             <Header>
@@ -242,10 +249,11 @@ export function Perfil() {
                         </View>
                     </ViewSaldo>
                 </View>
-                <ViewBell>
+                <RectButton onPress={()=>navigate("Notifications",{})}>
+                <ViewBell >
                     <NotificationBell qtd={qtdNote} />
                 </ViewBell>
-
+                </RectButton>
             </Header>
 
             <Content display={displayView}>
@@ -457,7 +465,7 @@ export function Perfil() {
                                     <Text> </Text>
                                     <Text> </Text>
                                     <Text> </Text>
-                                 
+
                                 </Form>
                                 : <Text></Text>
 
