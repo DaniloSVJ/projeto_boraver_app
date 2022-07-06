@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet ,Image} from 'react-native'
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNavigationContainerRef } from '@react-navigation/native';
@@ -7,6 +7,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon2 from 'react-native-vector-icons/Foundation';
 import IconUser from 'react-native-vector-icons/FontAwesome';
 import IconFavorite from 'react-native-vector-icons/Fontisto';
+
+import { Ionicons } from '@expo/vector-icons';
 
 import IconSearch from 'react-native-vector-icons/FontAwesome';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -20,12 +22,25 @@ import Favorite from '../screens/pages/Favorite';
 import { Profile } from '../screens/pages/Profile';
 
 
+
+
 import PasswordReset from '../screens/pages/PasswordReset';
 import { SignUp } from '../screens/pages/SignUp';
 import { Perfil } from '../screens/pages/Perfil';
 import { SignUpStep2 } from '../screens/pages/SignUpStep2';
 import { Splas } from '../screens/pages/Splas';
 import { access } from 'fs';
+
+import iHomeR from '../assets/ihomeroxo.svg'
+import iHomeO from '../assets/ihomeorange.svg'
+
+import iPerfilR from '../assets/iperfilroxo.svg'
+import iPerfilO from '../assets/iperfilorange.svg'
+
+import ifavoriteR from '../assets/ifavoriteroxo.svg'
+import ifavoriteO from '../assets/ifavoriteorange.svg'
+
+
 
 import styled from 'styled-components';
 
@@ -49,13 +64,36 @@ export function AppRoutes() {
 
     },
     Icon: {
-      paddingLeft: 60,
-      paddingRight: 60,
-      marginTop: 7
+      marginTop: 8,
+      marginLeft: 33,
+      marginRight: 33,
+      
+      width: 18,
+      height:23,
+     
     },
     IconDesactive: {
-      paddingLeft: 60,
-      paddingRight: 60
+      marginTop: 8,
+      marginLeft: 33,
+      marginRight: 33,
+      width: 18,
+      height:23,
+      marginBottom: 8
+    },
+    IconPerfilA: {
+      marginTop: 5,
+      marginLeft: 33,
+      marginRight: 33,
+      width: 22,
+      height:25
+    },
+    IconPerfilD: {
+      marginTop: 7,
+      marginLeft: 33,
+      marginRight: 33,
+      width: 22,
+      height:25,
+      marginBottom: 8
     },
     borderActive: {
       borderTopColor: "#DF8747",
@@ -63,26 +101,49 @@ export function AppRoutes() {
       borderRightColor: '#3C2E54',
       borderLeftColor: '#3C2E54',
       borderTopWidth: 5,
-      marginTop: -15,
-
+      marginTop: -10,
+      marginLeft: 10,
+      marginRight: 10,
+      
       borderRadius: 5,
-      marginLeft: 30,
-      marginRight: 30
-
-
-
-
+      
     },
-    borderDesactive: {
-      borderTopColor: "#3C2E54",
+    borderActivePerfil: {
+      borderTopColor: "#DF8747",
       borderBottomColor: '#3C2E54',
       borderRightColor: '#3C2E54',
       borderLeftColor: '#3C2E54',
       borderTopWidth: 5,
       marginTop: -10,
+      marginLeft: 10,
+      marginRight: 10,
+      
       borderRadius: 5,
-      marginLeft: 30,
-      marginRight: 30
+      
+    },
+    borderDesactivePerfil: {
+      borderTopColor: "#3C2E54",
+      borderBottomColor: '#3C2E54',
+      borderRightColor: '#3C2E54',
+      borderLeftColor: '#3C2E54',
+      // borderTopWidth: 5,
+      marginTop: -10,
+      borderRadius: 5,
+      marginLeft: 33,
+      marginRight: 33
+      
+    },
+
+    borderDesactive: {
+      borderTopColor: "#3C2E54",
+      borderBottomColor: '#3C2E54',
+      borderRightColor: '#3C2E54',
+      borderLeftColor: '#3C2E54',
+      // borderTopWidth: 5,
+      marginTop: -10,
+      borderRadius: 5,
+      marginLeft: 33,
+      marginRight: 33
 
     },
   })
@@ -146,94 +207,7 @@ export function AppRoutes() {
       </SearchStack.Navigator>
     )
   }
-  function TabNavigation() {
-    return (
-      <Tab.Navigator
-
-        screenOptions={(
-
-
-          {
-            tabBarActiveTintColor: '#DF8747',
-            tabBarInactiveTintColor: '#5E448A',
-
-            headerShown: false,
-            tabBarShowLabel: false,
-            tabBarStyle: {
-
-              borderTopColor: '#3C2E54',
-              backgroundColor: '#3C2E54',
-              borderBottomColor: "#3C2E54"
-            },
-            tabBarIconStyle: {
-              borderEndColor: "",
-              borderStartColor: "",
-
-
-            }
-
-
-          })}
-
-
-      >
-
-        <Tab.Screen name="Home" component={Home} options={{
-          tabBarIcon: ({ color, size, focused }) => (
-            <View style={styles.borderDesactive}>
-
-              {
-                focused && <View style={styles.borderActive} >
-
-                </View>
-              }
-
-              <Icon2 style={focused ? styles.Icon : styles.IconDesactive} name={'home'} size={size} color={color} />
-
-
-
-
-            </View>
-          ),
-        }}
-        />
-        <Tab.Screen name="SearchScrenn" component={SearchScrenn} options={{
-          tabBarIcon: ({ color, size, focused }) => (
-            <View style={styles.borderDesactive}>
-              {
-                focused && <View style={styles.borderActive} />
-              }
-              <IconSearch style={focused ? styles.Icon : styles.IconDesactive} name={'search'} size={size} color={color} />
-            </View>
-          ),
-        }}
-        />
-        <Tab.Screen name="FavoriteScreen" component={FavoriteScreen} options={{
-          tabBarIcon: ({ color, size, focused }) => (
-            <View style={styles.borderDesactive}>
-              {
-                focused && <View style={styles.borderActive} />
-              }
-              <IconFavorite style={focused ? styles.favoriteIcon : styles.favoriteIconDesactive} name={'favorite'} size={size} color={color} />
-            </View>
-          ),
-        }}
-        />
-        <Tab.Screen name="Perfil" component={PerfilScreen} options={{
-          tabBarIcon: ({ color, size, focused }) => (
-            <View style={styles.borderDesactive}>
-              {
-                focused && <View style={styles.borderActive} />
-              }
-              <IconUser style={focused ? styles.Icon : styles.IconDesactive} name={'user'} size={size} color={color} />
-            </View>
-          ),
-        }}
-        />
-
-      </ Tab.Navigator>
-    )
-  }
+ 
   return (
 
     <Tab.Navigator
@@ -271,12 +245,7 @@ export function AppRoutes() {
 
               </View>
             }
-
-            <Icon2 style={focused ? styles.Icon : styles.IconDesactive} name={'home'} size={size} color={color} />
-
-
-
-
+            <Image style={focused ? styles.Icon : styles.IconDesactive} source={focused ? iHomeO: iHomeR} />
           </View>
         ),
       }}
@@ -298,18 +267,29 @@ export function AppRoutes() {
             {
               focused && <View style={styles.borderActive} />
             }
-            <IconFavorite style={focused ? styles.favoriteIcon : styles.favoriteIconDesactive} name={'favorite'} size={size} color={color} />
+            <Image style={focused ? styles.Icon : styles.IconDesactive} source={focused ? ifavoriteO: ifavoriteR} />
           </View>
         ),
       }}
       />
       <Tab.Screen name="PerfilScreen" component={PerfilScreen} options={{
         tabBarIcon: ({ color, size, focused }) => (
+          <View style={styles.borderDesactivePerfil}>
+            {
+              focused && <View style={styles.borderActivePerfil} />
+            }
+            <Image style={focused ? styles.IconPerfilA : styles.IconPerfilD} source={focused ? iPerfilO: iPerfilR} />
+          </View>
+        ),
+      }}
+      />
+    <Tab.Screen name="Noti" component={Noti} options={{
+        tabBarIcon: ({ color, size, focused }) => (
           <View style={styles.borderDesactive}>
             {
               focused && <View style={styles.borderActive} />
             }
-            <IconUser style={focused ? styles.Icon : styles.IconDesactive} name={'user'} size={size} color={color} />
+            <Ionicons style={focused ? styles.Icon : styles.IconDesactive} name="chatbubble-ellipses-sharp" size={24} color={focused? "#DF8747":"#5E448A"}/>
           </View>
         ),
       }}
