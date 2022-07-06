@@ -98,7 +98,15 @@ export function AppRoutes() {
 
 
   }
+  const Notif =  createNativeStackNavigator();
+  function Notifi() {
 
+    return (
+      <Notif.Navigator screenOptions={{ headerShown: false }}>
+        <Notif.Screen name="Notifications" component={Noti} />
+      </Notif.Navigator>
+    )
+  }
   const PerfilStack = createNativeStackNavigator();
   function PerfilScreen() {
 
@@ -106,7 +114,7 @@ export function AppRoutes() {
       <PerfilStack.Navigator screenOptions={{ headerShown: false }}>
 
         <PerfilStack.Screen name="Perfil" component={Perfil} />
-        <PerfilStack.Screen name="Notifications" component={Noti} />
+        <PerfilStack.Screen name="Notifications" component={Notifi} />
 
 
       </PerfilStack.Navigator>
@@ -119,7 +127,7 @@ export function AppRoutes() {
       <FavoriteStack.Navigator screenOptions={{ headerShown: false }}>
 
         <FavoriteStack.Screen name="Favorite" component={Favorite} />
-        <PerfilStack.Screen name="Notifications" component={Noti} />
+        <PerfilStack.Screen name="Notifications" component={Notifi} />
 
 
       </FavoriteStack.Navigator>
@@ -132,7 +140,7 @@ export function AppRoutes() {
       <SearchStack.Navigator screenOptions={{ headerShown: false }}>
 
         <SearchStack.Screen name="Search" component={Search} />
-        <PerfilStack.Screen name="Notifications" component={Noti} />
+        <PerfilStack.Screen name="Notifications" component={Notifi} />
 
 
       </SearchStack.Navigator>
