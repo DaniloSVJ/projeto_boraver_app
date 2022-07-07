@@ -16,12 +16,13 @@ import { AntDesign } from "@expo/vector-icons"
 
 import { Home } from '../screens/pages/Home';
 import { Noti } from '../screens/pages/Noti';
-
+import { OfferDetail } from '../screens/pages/OfferDetail';
 import { Search } from '../screens/pages/Search';
 import Favorite from '../screens/pages/Favorite';
 import { Profile } from '../screens/pages/Profile';
 
 import {Contact} from '../screens/pages/Contact';
+import {Contact2} from '../screens/pages/Contact2';
 
 
 import PasswordReset from '../screens/pages/PasswordReset';
@@ -167,6 +168,7 @@ export function AppRoutes() {
       <HomeStack.Navigator screenOptions={{ headerShown: false }}>
 
         <HomeStack.Screen name="Home" component={Home} />
+        <HomeStack.Screen name="OfferDetail" component={OfferDetail} />
         <PerfilStack.Screen name="Notifications" component={Notifi} />
         <PerfilStack.Screen name="Search" component={Search} />
 
@@ -216,7 +218,8 @@ export function AppRoutes() {
     return (
       <ContactStack.Navigator screenOptions={{ headerShown: false }}>
 
-        <ContactStack.Screen name="Contact" component={Contact} />
+        <ContactStack.Screen  name="Contact" component={Contact} />
+        <ContactStack.Screen  name="Contact2" component={Contact2} />
         <ContactStack.Screen name="Notifications" component={Notifi} />
         <ContactStack.Screen name="Search" component={Search} />
 

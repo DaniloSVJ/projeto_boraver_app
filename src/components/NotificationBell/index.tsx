@@ -1,15 +1,17 @@
 import React, { useCallback, useState } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import Bell from 'react-native-vector-icons/MaterialCommunityIcons';
+import { View, Text, StyleSheet , Image} from 'react-native'
+import Bell2 from 'react-native-vector-icons/MaterialCommunityIcons';
 import Circle from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useFocusEffect } from '@react-navigation/native';
+import BellW from '../../assets/bellwhite.svg'
+import BellR from '../../assets/bellroxo.svg'
 
 interface BellNotification {
     qtd: number;
 }
 
 const NotificationBell: React.FC<BellNotification> = ({ qtd }) => {
-    const [alertBell, setAlertBell] = useState("#9370DB")
+    const [alertBell, setAlertBell] = useState("#6959CD")
     useFocusEffect(
         useCallback(() => {
             async function reload() {
@@ -51,10 +53,14 @@ const NotificationBell: React.FC<BellNotification> = ({ qtd }) => {
 
         },
         Bell: {
-            marginTop: -7
+            marginTop: -7,
+            width: 22,
+            height: 24
         },
         Bell0: {
-            marginTop: 3
+            marginTop: 3,
+            width: 22,
+            height: 24
         }
 
 
@@ -83,7 +89,7 @@ const NotificationBell: React.FC<BellNotification> = ({ qtd }) => {
                     <View style={styles.Content}>
                     </View>
             }
-            <Bell style={qtd>0?styles.Bell:styles.Bell0} name="bell" color={alertBell} size={22} />
+            <Image style={qtd>0?styles.Bell:styles.Bell0} source={qtd>0?BellW:BellR}  />
         </View>
     )
 

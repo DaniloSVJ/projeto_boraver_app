@@ -140,7 +140,62 @@ export function SignUpStep2() {
                <Content>
                   <Form ref={formRef} onSubmit={handleSignUpStep3}>
                      <Input
-                        placeholder='Nome Completo'
+                        placeholder='Link do Istagram'
+                        autoCorrect={false}
+                        autoCapitalize="none"
+
+                        sendData={alterar}
+                        name={"nomecompleto"}
+                        icon=""
+
+                        returnKeyType="next"
+                     />
+                      <Input
+                        placeholder='Nº Seguidores Instagram'
+                        autoCorrect={false}
+                        autoCapitalize="none"
+
+                        sendData={alterar}
+                        name={"nomecompleto"}
+                        icon=""
+
+                        returnKeyType="next"
+                     />
+                     <Input
+                        placeholder='Link canal Youtube'
+                        autoCorrect={false}
+                        autoCapitalize="none"
+
+                        sendData={alterar}
+                        name={"nomecompleto"}
+                        icon=""
+
+                        returnKeyType="next"
+                     />
+                      <Input
+                        placeholder='Nº Seguidores Yotube'
+                        autoCorrect={false}
+                        autoCapitalize="none"
+
+                        sendData={alterar}
+                        name={"nomecompleto"}
+                        icon=""
+
+                        returnKeyType="next"
+                     />
+                               <Input
+                        placeholder='Link canal Tiktok'
+                        autoCorrect={false}
+                        autoCapitalize="none"
+
+                        sendData={alterar}
+                        name={"nomecompleto"}
+                        icon=""
+
+                        returnKeyType="next"
+                     />
+                     <Input
+                        placeholder='Nº Seguidores Tiktok'
                         autoCorrect={false}
                         autoCapitalize="none"
 
@@ -162,20 +217,10 @@ export function SignUpStep2() {
                         value={valueMask}
                      />   
                       */}
-                     <Input
-                        placeholder='Celular'
-                        autoCorrect={false}
-                        autoCapitalize="none"
-                        keyboardType="email-address"
-                        sendData={alterar}
-                        name={"celular"}
-                        icon=""
-                        
-                        returnKeyType="next"
-                     />
+                
                      
                      <Input
-                        placeholder={'Cidade'}
+                        placeholder={'Estado'}
                         autoCorrect={false}
                         autoCapitalize="none"
 
@@ -187,7 +232,7 @@ export function SignUpStep2() {
                      />
 
                      <Input
-                        placeholder='Estado'
+                        placeholder='Cidade'
 
                         autoCorrect={false}
                         autoCapitalize="none"

@@ -198,7 +198,7 @@ const { navigate } = useNavigation<Nav>();
         } else { setrender(true) }
 
     }
-
+  
     return (
 
         <Container>
@@ -219,7 +219,7 @@ const { navigate } = useNavigation<Nav>();
                             <IconSearch name={'search'} size={22} color={'#fff'} />
                         </ViewSearch>
                     </RectButton>
-                    <RectButton onPress={() => navigate("Notifications", {})}>
+                    <RectButton onPress={() => navigate("OfferDetail", {})}>
                         <ViewBell >
                             <NotificationBell qtd={qtdNote} />
                         </ViewBell>
@@ -280,22 +280,19 @@ const { navigate } = useNavigation<Nav>();
 
                                 </View>
                             </TitleItem>
-                            {s.destaque == true ? (
-                                <Destaque>
-                                    <TextDestaque>Destaque</TextDestaque>
-                                </Destaque>)
-                                : null
-                            }
+
 
                             <Description>
                                 <TextDescription>{s.descricao_servico}</TextDescription>
                             </Description>
                             <Footer>
                                 <View>
-                                    <TextFooter>Fortaleza  •  Serviços  •  2+</TextFooter>
+                                    <TextFooter>Treinamento</TextFooter>
                                 </View>
                                 <ViewTime>
-                                    <TextDescription>2 horas atrás</TextDescription>
+                                    <Destaque background={s.status}>
+                                        <TextDestaque>{s.status}</TextDestaque>
+                                    </Destaque>
                                 </ViewTime>
                             </Footer>
                         </ItemList>

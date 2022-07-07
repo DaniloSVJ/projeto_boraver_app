@@ -1,12 +1,17 @@
 
-import React, { useState, useCallback, useEffect } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import React, { useState, useCallback, useEffect, useRef } from 'react'
+import { Text, View, StyleSheet ,TextInput} from 'react-native'
+import Button from '../../../components/Button'
 import { useFocusEffect } from '@react-navigation/native';
 import IconSearch from 'react-native-vector-icons/FontAwesome';
 import { RectButton } from 'react-native-gesture-handler';
 import { Noti } from '../Noti'
 import NotificationBell from '../../../components/NotificationBell'
 import { useAuth } from '../../../hooks/auth'
+import { Form } from '@unform/mobile'
+import { Picker } from '@react-native-picker/picker';
+import { FormHandles } from "@unform/core"
+
 import {
     TitleService,
     ViewContentTitleItem,
@@ -99,9 +104,12 @@ type Nav = {
 }
 export function Contact() {
     const { user } = useAuth()
-const { navigate } = useNavigation<Nav>();
+    const { navigate } = useNavigation<Nav>();
+    const formRef = useRef<FormHandles>(null);
 
     const [bookmark, setBookmark] = useState(false)
+
+    const [selectedData, setSelectedData] = useState(false)
 
     useEffect(() => {
         setService([])
@@ -129,6 +137,8 @@ const { navigate } = useNavigation<Nav>();
     const [render, setrender] = useState(false)
     const [services, setService] = useState<solicitationI[]>([])
     const [idin, setIdin] = useState(0)
+
+
 
     useFocusEffect(
         useCallback(() => {
@@ -199,7 +209,32 @@ const { navigate } = useNavigation<Nav>();
         } else { setrender(true) }
 
     }
+    async function alterar(val: boolean) {
+        navigate("Contact2",{})
 
+    }
+    const styled = StyleSheet.create({
+   
+        
+        select: {
+            width: "100%",
+            marginTop: 9,
+            marginLeft: 49,
+            marginRight: 49,
+            color: "#3C2E54",
+            borderWidth: 1,
+            borderStyle: 'solid',
+            borderColor: "rgb(191,191,191)",
+            borderRadius: 5,
+            padding: 12,
+            i: 50
+
+        },
+        selectText: {
+            textAlign: 'right'
+        }
+
+    });
     return (
 
         <Container>
@@ -207,9 +242,9 @@ const { navigate } = useNavigation<Nav>();
 
                 <View>
                     <WelcomeText>
-                       Contato
+                        Contato
                     </WelcomeText>
-                    
+
                 </View>
                 <ViewIcons>
                     <RectButton onPress={() => navigate("Search", {})}>
@@ -229,12 +264,38 @@ const { navigate } = useNavigation<Nav>();
             <Content>
                 <ScrollView>
                     <ViewTitle>
-                        
-                     <Title>Fale com o nosso Time</Title>
-                    <SubTitle style={{marginTop:8}}>Como tem sido sua experiênca com o Boraver App? Tem dúvidas, sugestões ou elogios? Deixe sua mensagem no campo abaixo. Desde já agradecemos o envio de suas ideias, problemas ou agradecimentos.</SubTitle>
+
+                        <Title>Fale com o nosso Time</Title>
+                        <SubTitle style={{ marginTop: 8 }}>Como tem sido sua experiênca com o Boraver App? Tem dúvidas, sugestões ou elogios? Deixe sua mensagem no campo abaixo. Desde já agradecemos o envio de suas ideias, problemas ou agradecimentos.</SubTitle>
                     </ViewTitle>
                     <ViewForm>
-                    <SubTitleForm>Seu feedback é sobre o quê?</SubTitleForm>,
+                        <SubTitleForm>Seu feedback é sobre o quê?</SubTitleForm>
+                        <Form ref={formRef} onSubmit={alterar}>
+                            <Picker
+                                style={styled.select}
+                                itemStyle={styled.select}
+                                placeholder="Selecione uma opção"
+                                selectedValue={selectedData}
+                                onValueChange={(itemValue) =>
+                                    setSelectedData(itemValue)
+                                }>
+
+                                <Picker.Item label="Dúvida" value="duvida" />
+                                <Picker.Item label="Reclamação" value="reclamacao" />
+                                <Picker.Item label="Sugestão" value="sugestao" />
+                            </Picker>
+                            <TextInput
+                                style={{marginTop:16}}
+                                underlineColorAndroid="transparent"
+                                placeholder="Type something"
+                                placeholderTextColor="grey"
+                                numberOfLines={10}
+                                multiline={true}
+                            />
+                            <Button style={{marginTop:117}}bordercolor={"#3C2E54"} background={"#3C2E54"} color={"#fff"} onPress={() => formRef.current?.submitForm()}>
+                                Enviar
+                            </Button>
+                        </Form>
                     </ViewForm>
                 </ScrollView>
             </Content>

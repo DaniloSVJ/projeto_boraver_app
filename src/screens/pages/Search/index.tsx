@@ -60,6 +60,8 @@ export function Search() {
             marginRight: 53,
         },
         select: {
+            width: "100%",
+            marginTop: 15,
             marginLeft: 49,
             marginRight: 49,
             color: "#3C2E54",

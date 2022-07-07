@@ -1,5 +1,7 @@
 import styled from 'styled-components/native'
-
+interface Status{
+    background: string;
+}
 export const Container = styled.View`
     background-color: #fff;
     height:100%;
@@ -70,10 +72,19 @@ export const SubtitleService = styled.Text`
     font-size: 11px;
       
 `
-export const Destaque = styled.View`
+export const Destaque = styled.View<Status>`
     margin-top: 18px;
     padding: 2px;
-    background-color: #DF8747;
+    background-color: ${props=>{
+        if(props.background=='novaoferta'){
+            return "#DF8747"
+        }
+        else if(props.background=='andamento'){
+            return "#5EAA31"
+        }else {
+            return "#D53939"
+        }
+    }};
     width: 75px;
     margin-bottom:10px;
     border-radius:10px;

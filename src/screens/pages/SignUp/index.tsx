@@ -161,7 +161,37 @@ export function SignUp(){
                      
                      placeholder="Nome Usuário"
                      returnKeyType="next"
-                  />               
+                  />       
+                  <Input 
+                     ref={emailInputRef}
+                     autoCorrect={false}
+                     autoCapitalize="none"
+                     placeholder="whatsapp"
+                     name="whatsapp"
+                     
+                     
+                     returnKeyType="next"
+                  />    
+                  <Input 
+                     ref={emailInputRef}
+                     autoCorrect={false}
+                     autoCapitalize="none"
+                     placeholder="Foto de Perfil"
+                     name="foto"
+                     
+                     
+                     returnKeyType="next"
+                  /> 
+                  <Input 
+                     ref={emailInputRef}
+                     autoCorrect={false}
+                     autoCapitalize="none"
+                     placeholder="Gênero"
+                     name="genero"
+                     
+                     
+                     returnKeyType="next"
+                  />           
 
                   <Input 
                      ref={emailInputRef}
@@ -173,6 +203,16 @@ export function SignUp(){
                      placeholder="E-mail"
                      returnKeyType="next"
                   />    
+                  <Input 
+                     ref={emailInputRef}
+                     autoCorrect={false}
+                     autoCapitalize="none"
+                     placeholder="Cpf ou Cnpj"
+                     name="doc"
+                     
+                     
+                     returnKeyType="next"
+                  />   
                   <InputIcon 
                      ref={passwordInputRef}
                      name='password'
