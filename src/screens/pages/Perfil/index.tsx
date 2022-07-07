@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { Text, View, StyleSheet, TextInput, RefreshControlBase } from 'react-native'
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import { RectButton } from 'react-native-gesture-handler';
-
+import IconSearch from 'react-native-vector-icons/FontAwesome';
 import Button from '../../../components/Button';
 import { useNavigation, } from '@react-navigation/native';
 
@@ -32,6 +32,8 @@ import {
     HerderText2,
     Container,
     Header,
+    ViewIcons,
+    ViewSearch,
     TextDataPerfil,
     WelcomeText
 } from './styles'
@@ -79,17 +81,17 @@ interface InfluencyData {
     ativo: boolean;
 }
 type Nav = {
-    navigate: (value: string, {}) => void;
- }
+    navigate: (value: string, { }) => void;
+}
 export function Perfil() {
-    const { user ,signOut } = useAuth()
-    const {navigate} = useNavigation<Nav>();
+    const { user, signOut } = useAuth()
+    const { navigate } = useNavigation<Nav>();
 
 
     const formRef = useRef<FormHandles>(null);
     const emailInput0Ref = useRef<TextInput>(null);
     const [influencerInfo, setInfluencerInfo] = useState<InfluencyData>()
-    const [qtdNote,setQtdNote]=useState(0)
+    const [qtdNote, setQtdNote] = useState(0)
     const [nomeData, setNomeData] = useState("")
     const [celularData, setCelularData] = useState("")
     const [whatsappData, setWhatsappData] = useState("")
@@ -112,8 +114,8 @@ export function Perfil() {
     useFocusEffect(
         useCallback(() => {
             async function load() {
-               const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
-               await api.get(`/api/v3/influenciador/${user.id}/`).then(
+                const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
+                await api.get(`/api/v3/influenciador/${user.id}/`).then(
                     (res) => {
                         setInfluencerInfo(res.data)
                     }
@@ -220,9 +222,9 @@ export function Perfil() {
             agencia_bancoData, conta_bancoData
         ],
     );
-    async function notification(){
-        navigate("Notifications",{})
-     }
+    async function notification() {
+        navigate("Notifications", {})
+    }
     return (
         <Container>
             <Header>
@@ -249,11 +251,21 @@ export function Perfil() {
                         </View>
                     </ViewSaldo>
                 </View>
-                <RectButton onPress={()=>navigate("Notifications",{})}>
-                <ViewBell >
-                    <NotificationBell qtd={qtdNote} />
-                </ViewBell>
-                </RectButton>
+                
+                <ViewIcons>
+                 
+                    <RectButton onPress={() => navigate("Search", {})}>
+                        <ViewSearch>
+
+                            <IconSearch name={'search'} size={22} color={'#fff'} />
+                        </ViewSearch>
+                    </RectButton>
+                    <RectButton onPress={() => navigate("Notifications", {})}>
+                        <ViewBell >
+                            <NotificationBell qtd={qtdNote} />
+                        </ViewBell>
+                    </RectButton>
+                </ViewIcons>
             </Header>
 
             <Content display={displayView}>
@@ -454,7 +466,7 @@ export function Perfil() {
                                     <Button bordercolor={"#3C2E54"} background={"#3C2E54"} color={"#fff"} onPress={() => formRef.current?.submitForm()}>
                                         Salvar
                                     </Button>
-                                    <Button bordercolor={"#DC143C"} background={"#DC143C"} color={"#fff"} onPress={signOut }>
+                                    <Button bordercolor={"#DC143C"} background={"#DC143C"} color={"#fff"} onPress={signOut}>
                                         Sair
                                     </Button>
 

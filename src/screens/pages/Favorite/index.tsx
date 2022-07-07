@@ -2,16 +2,19 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native';
+import { useNavigation, } from '@react-navigation/native';
 
 import { FiPower } from 'react-icons/fi';
 import IconFavorite from 'react-native-vector-icons/Fontisto';
 import { RectButton } from 'react-native-gesture-handler';
-
+import IconSearch from 'react-native-vector-icons/FontAwesome';
 import NotificationBell from '../../../components/NotificationBell'
 import { AuthProvider, useAuth } from '../../../hooks/auth'
 import {
     TitleService,
     ViewContentTitleItem,
+    ViewIcons,
+    ViewSearch,
     ViewBell,
     TextFooter,
     ViewTime,
@@ -95,13 +98,18 @@ type addPut = {
     carater: string;
     criacao: string;
 }
+type Nav = {
+    navigate: (value: string, { }) => void;
+}
 const Favorite: React.FC = () => {
     const { user, signIn } = useAuth()
     let idInfluencier = ([{
         id: 0,
     }])
+    const { navigate } = useNavigation<Nav>();
+
     const token = localStorage.getItem('@BoraVer:token')
-    const [qtdNote,setQtdNote]=useState(0)    
+    const [qtdNote, setQtdNote] = useState(0)
     const [bookmark, setBookmark] = useState(false)
     const [loadingrenderteste, setLoadingRender] = useState(false)
     const [services, setService] = useState<solicitationI[]>([])
@@ -124,7 +132,7 @@ const Favorite: React.FC = () => {
                     }
                 });
                 const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
-                
+
                 setQtdNote(note.data.count)
 
             }
@@ -191,9 +199,19 @@ const Favorite: React.FC = () => {
                     </WelcomeText>
 
                 </View>
-                <ViewBell>
-                    <NotificationBell qtd={qtdNote} />
-                </ViewBell>
+                <ViewIcons>
+                    <RectButton onPress={() => navigate("Search", {})}>
+                        <ViewSearch>
+
+                            <IconSearch name={'search'} size={22} color={'#fff'} />
+                        </ViewSearch>
+                    </RectButton>
+                    <RectButton onPress={() => navigate("Notifications", {})}>
+                        <ViewBell >
+                            <NotificationBell qtd={qtdNote} />
+                        </ViewBell>
+                    </RectButton>
+                </ViewIcons>
 
             </Header>
 

@@ -21,7 +21,7 @@ import { Search } from '../screens/pages/Search';
 import Favorite from '../screens/pages/Favorite';
 import { Profile } from '../screens/pages/Profile';
 
-
+import {Contact} from '../screens/pages/Contact';
 
 
 import PasswordReset from '../screens/pages/PasswordReset';
@@ -159,12 +159,27 @@ export function AppRoutes() {
 
 
   }
+
+  const HomeStack = createNativeStackNavigator();
+  function HomeScreen() {
+
+    return (
+      <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+
+        <HomeStack.Screen name="Home" component={Home} />
+        <PerfilStack.Screen name="Notifications" component={Notifi} />
+        <PerfilStack.Screen name="Search" component={Search} />
+
+      </HomeStack.Navigator>
+    )
+  }
   const Notif =  createNativeStackNavigator();
   function Notifi() {
 
     return (
       <Notif.Navigator screenOptions={{ headerShown: false }}>
         <Notif.Screen name="Notifications" component={Noti} />
+        <PerfilStack.Screen name="Search" component={Search} />
       </Notif.Navigator>
     )
   }
@@ -176,7 +191,7 @@ export function AppRoutes() {
 
         <PerfilStack.Screen name="Perfil" component={Perfil} />
         <PerfilStack.Screen name="Notifications" component={Notifi} />
-
+        <PerfilStack.Screen name="Search" component={Search} />
 
       </PerfilStack.Navigator>
     )
@@ -189,9 +204,23 @@ export function AppRoutes() {
 
         <FavoriteStack.Screen name="Favorite" component={Favorite} />
         <PerfilStack.Screen name="Notifications" component={Notifi} />
-
+        <PerfilStack.Screen name="Search" component={Search} />
 
       </FavoriteStack.Navigator>
+    )
+  }
+
+  const ContactStack = createNativeStackNavigator();
+  function ContactScreen() {
+
+    return (
+      <ContactStack.Navigator screenOptions={{ headerShown: false }}>
+
+        <ContactStack.Screen name="Contact" component={Contact} />
+        <ContactStack.Screen name="Notifications" component={Notifi} />
+        <ContactStack.Screen name="Search" component={Search} />
+
+      </ContactStack.Navigator>
     )
   }
   const SearchStack = createNativeStackNavigator();
@@ -236,7 +265,7 @@ export function AppRoutes() {
 
     >
 
-      <Tab.Screen name="Home" component={Home} options={{
+      <Tab.Screen name="Home" component={HomeScreen} options={{
         tabBarIcon: ({ color, size, focused }) => (
           <View style={styles.borderDesactive}>
 
@@ -250,17 +279,7 @@ export function AppRoutes() {
         ),
       }}
       />
-      <Tab.Screen name="SearchScrenn" component={SearchScrenn} options={{
-        tabBarIcon: ({ color, size, focused }) => (
-          <View style={styles.borderDesactive}>
-            {
-              focused && <View style={styles.borderActive} />
-            }
-            <IconSearch style={focused ? styles.Icon : styles.IconDesactive} name={'search'} size={size} color={color} />
-          </View>
-        ),
-      }}
-      />
+  
       <Tab.Screen name="FavoriteScreen" component={FavoriteScreen} options={{
         tabBarIcon: ({ color, size, focused }) => (
           <View style={styles.borderDesactive}>
@@ -283,7 +302,7 @@ export function AppRoutes() {
         ),
       }}
       />
-    <Tab.Screen name="Noti" component={Noti} options={{
+    <Tab.Screen name="Contact" component={ContactScreen} options={{
         tabBarIcon: ({ color, size, focused }) => (
           <View style={styles.borderDesactive}>
             {

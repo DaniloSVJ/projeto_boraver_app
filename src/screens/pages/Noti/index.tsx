@@ -1,21 +1,24 @@
 
-import React, {  useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native';
 
 import { RectButton } from 'react-native-gesture-handler';
-
+import IconSearch from 'react-native-vector-icons/FontAwesome';
 import NotificationBell from '../../../components/NotificationBell'
-import {  useAuth } from '../../../hooks/auth'
+import { useAuth } from '../../../hooks/auth'
 import {
     TitleService,
     ViewContentTitleItem,
+    ViewIcons,
+    ViewSearch,
     ViewBell,
     TextFooter,
+
     ViewTime,
     Image,
     TitleItem,
-    
+
     Footer,
     Destaque,
     TextDestaque,
@@ -34,6 +37,7 @@ import {
     TextVazioSubTitle,
 
 } from './styles'
+import { useNavigation, } from '@react-navigation/native';
 
 import Img from '../../../assets/avatar_user.png'
 
@@ -86,23 +90,27 @@ type addPut = {
     carater: string;
     criacao: string;
 }
-interface teste{
-    id:number;
-    name:string;
-    
+interface teste {
+    id: number;
+    name: string;
+
 }
+type Nav = {
+    navigate: (value: string, { }) => void;
+}
+
 export function Noti() {
-    const  {user}  = useAuth()
-    
-    
+    const { user } = useAuth()
+
+const { navigate } = useNavigation<Nav>();
 
 
     // const [bookmark, setBookmark] = useState(false)
-  
+
     // useEffect(() => {
     //     setService([])
     //     async function load() {
-            
+
     //         const IdInfluencers = 
     //         await 
     //         api.get(`/api/v3/influenciador/${user.id}/`)
@@ -144,9 +152,9 @@ export function Noti() {
     //             });
 
     //             const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
-                
+
     //             setQtdNote(note.data.count)
-               
+
     //         }
     //         load()
     //     }, [bookmark]),
@@ -203,17 +211,25 @@ export function Noti() {
 
                 <View>
                     <WelcomeText>
-                        
+
                     </WelcomeText>
                     <HerderText2>
                         Confira os últimos jobs adicionados
                     </HerderText2>
                 </View>
-                
-                <ViewBell>
-                    {/* <NotificationBell qtd={qtdNote}  /> */}
-                </ViewBell>
+                <ViewIcons>
+                <RectButton onPress={() => navigate("Notifications", {})}>
+                        <ViewSearch>
 
+                            <IconSearch name={'search'} size={22} color={'#fff'} />
+                        </ViewSearch>
+                    </RectButton>
+                    <RectButton onPress={() => navigate("Notifications", {})}>
+                        <ViewBell >
+                            <NotificationBell qtd={qtdNote} />
+                        </ViewBell>
+                    </RectButton>
+                    </ViewIcons>
             </Header>
 
             <Content>

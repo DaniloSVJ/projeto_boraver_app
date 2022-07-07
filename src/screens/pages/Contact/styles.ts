@@ -47,8 +47,9 @@ interface propsImage {
     heightprops: string;
 }
 export const Image = styled.Image<propsImage>`
-    width: ${(props) => props.widthprops}
-    height: ${(props) => props.heightprops}
+    width: ${(props)=>props.widthprops}
+    height: ${(props)=>props.heightprops}
+    background-color: #fff;
     top: 0px;
     left: 0px;
     margin-right: 13px;
@@ -107,38 +108,6 @@ export const TextFooter = styled.Text`
 export const Ofert = styled.View`
     margin-bottom:10px;
 
-`
-
-export const ViewVazio = styled.View`
-    display: flex;
-    margin-top: 165px;
-    margin-left: 77px;
-    margin-right: 77px;
-    flex-direction:column;
-    justify-content:center;
-    align-items: center;
-    text-align: center;
-`
-
-export const ImagemVazio = styled.Image`
-    width: 77px;
-    height: 72px;
-
-`
-
-export const TextVazioTitle = styled.Text`
-    font-family: 'Montserrat_500Medium';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 17px;
-    line-height: 21px;
-`
-export const TextVazioSubTitle = styled.Text`
-    font-family: 'Montserrat_500Medium';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 11px;
-    line-height: 15px;
 `
 
 export const Footer = styled.View`
@@ -211,19 +180,43 @@ export const ViewButton = styled.View`
     width:100%;
 `
 
+export const ViewTitle = styled.View`
+    margin: 27px;
+`
+
+export const ViewForm = styled.View`
+    margin-top: 42px;
+    margin-right: 53px;
+    margin-left: 53px;
+
+`
 
 export const Title = styled.Text`
-font-family: 'Montserrat_500Medium';
+    font-family: 'Montserrat_500Medium';
     font-style: normal;
     font-weight: 700;
-    font-size: 25px;
-    line-height: 31px;
-    margin-top: 75px;
-    display: flex;
-    align-items: center;
-    text-align: center;
+    font-size: 14px;
+    line-height: 22px;
+    color: #373737;
 
-    color: #FFFFFF;
+`
+export const SubTitle = styled.Text`
+    font-family: 'Montserrat_500Medium';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 15px;
+    color: #373737;
+
+`
+export const SubTitleForm = styled.Text`
+    font-family: 'Montserrat_500Medium';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+    color: #373737;
+
 `
 
 export const Paragraph = styled.Text`
@@ -238,4 +231,35 @@ export const Paragraph = styled.Text`
 
     color: #FFFFFF;
 
+`
+export const ViewVazio = styled.View`
+    display: flex;
+    flex-direction:column;
+    margin-top: 165px;
+    margin-left: 77px;
+    margin-right: 77px;
+    justify-content:center;
+    align-items: center;
+    text-align: center;
+`
+
+export const ImagemVazio = styled.Image`
+    width: 77px;
+    height: 72px;
+
+`
+
+export const TextVazioTitle = styled.Text`
+    font-family: 'Montserrat_500Medium';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 21px;
+`
+export const TextVazioSubTitle = styled.Text`
+    font-family: 'Montserrat_500Medium';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 15px;
 `

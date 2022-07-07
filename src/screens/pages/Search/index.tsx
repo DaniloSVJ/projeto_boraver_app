@@ -101,7 +101,9 @@ export function Search() {
     function teste() {
         console.log("realizou o teste")
     }
-    const [selectedLanguage, setSelectedLanguage] = useState();
+    const [selectedStatus, setSelectedStatus] = useState();
+    const [selectedRedeSocial, setSelectedRedeSocial] = useState();
+
 
     const datatttt = ['data1', 'data2', 'data3']
     const MenuIcon = (props) => (
@@ -138,45 +140,39 @@ export function Search() {
                             <DateInput style={styles.dateinput} format="dd/mm/yyyy" icon={<Image style={styles.image} source={iconDate} />} value={date} onChange={e => setDate(String(e.value))} />
                         </Box>
                     </Box>
-                    
-                        <Picker
-                            style={styles.select}
-                            placeholder="Status do serviço"
-                            selectedValue={selectedLanguage}
-                            itemStyle={styles.select}
-                            
-                            onValueChange={(itemValue, itemIndex) =>
-                                setSelectedLanguage(itemValue)
-                                
-                            }>
 
-                            <Picker.Item label="Java" value="java" />
-                            <Picker.Item label="JavaScript" value="js" />
-                        </Picker>
-                 
-                    <Input
-                        ref={emailInputRef}
+                    <Picker
+                        style={styles.select}
+                        placeholder="Status do serviço"
+                        selectedValue={selectedStatus}
+                        itemStyle={styles.select}
 
-                        autoCorrect={false}
-                        autoCapitalize="none"
-                        keyboardType="numeric"
-                        name="email"
+                        onValueChange={(itemValue, itemIndex) =>
+                            setSelectedStatus(itemValue)
 
-                        onSubmitEditing={teste}
-                        placeholder="Digite o menor orçamento e aperte o ENTER"
-                        returnKeyType="next"
-                    />
+                        }>
 
-                    <Input
-                        ref={emailInputRef}
-                        autoCorrect={false}
-                        autoCapitalize="none"
+                        <Picker.Item label="NOVA OFERTA" value="novaoferta" />
+                        <Picker.Item label="Em Andamento" value="andamento" />
+                        <Picker.Item label="Recusado" value="recusado" />
+                    </Picker>
 
-                        keyboardType="email-address"
-                        name="email"
-                        placeholder="E-mail"
-                        returnKeyType="next"
-                    />
+                    <Picker
+                        style={styles.select}
+                        placeholder="Status do serviço"
+                        selectedValue={selectedRedeSocial}
+                        itemStyle={styles.select}
+
+                        onValueChange={(itemValue, itemIndex) =>
+                            setSelectedRedeSocial(itemValue)
+
+                        }>
+
+                        <Picker.Item label="Instagram" value="instagram" />
+                        <Picker.Item label="Youtube" value="youtube" />
+                        <Picker.Item label="Tiktok" value="tiktok" />
+                    </Picker>
+
 
 
                 </Form>

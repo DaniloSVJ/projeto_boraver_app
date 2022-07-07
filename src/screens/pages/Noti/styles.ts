@@ -150,8 +150,16 @@ export const Header = styled.View`
     justify-content: space-between;
 
 `
+export const ViewIcons = styled.View`
+    display:flex;
+    flex-direction: row;
+`
+export const ViewSearch = styled.View`
+    margin-top: 27px;
+    margin-right: 12px;
+`
 export const ViewBell = styled.View`
-    
+    margin-top: 3px;    
     margin-right: 30px;
 `
 

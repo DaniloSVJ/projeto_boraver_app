@@ -29,10 +29,11 @@ import {
     Container,
     Header,
     WelcomeText,
-    ViewVazio,
-    ImagemVazio,
-    TextVazioTitle,
-    TextVazioSubTitle,
+    Title,
+    SubTitle,
+    SubTitleForm,
+    ViewForm,
+    ViewTitle
 
 } from './styles'
 import { useNavigation, } from '@react-navigation/native';
@@ -96,7 +97,7 @@ interface teste {
 type Nav = {
     navigate: (value: string, { }) => void;
 }
-export function Home() {
+export function Contact() {
     const { user } = useAuth()
 const { navigate } = useNavigation<Nav>();
 
@@ -206,11 +207,9 @@ const { navigate } = useNavigation<Nav>();
 
                 <View>
                     <WelcomeText>
-                        Olá, {user.name}
+                       Contato
                     </WelcomeText>
-                    <HerderText2>
-                        Confira os últimos jobs adicionados
-                    </HerderText2>
+                    
                 </View>
                 <ViewIcons>
                     <RectButton onPress={() => navigate("Search", {})}>
@@ -229,106 +228,14 @@ const { navigate } = useNavigation<Nav>();
 
             <Content>
                 <ScrollView>
-
-                    {services.length > 0 ? services.map((s, key) => (
-                        <ItemList key={s.id}>
-                            <TitleItem>
-                                <ViewContentTitleItem>
-                                    <View>
-                                        <Image widthprops={"35px"} heightprops={"35px"} source={Img} />
-                                    </View>
-                                    <View>
-                                        <TitleService>{'dfdfdfdf'}</TitleService>
-                                        <SubtitleService>Orçamento R${String(s.menorvalor)} - R${String(s.maiorvalor)}</SubtitleService>
-                                    </View>
-                                </ViewContentTitleItem>
-
-                                <View style={styles.favorite}>
-                                    {
-
-                                        <RectButton
-                                            onPress={() => {
-                                                async function alterar() {
-                                                    function addf() {
-                                                        if (bookmark == false) {
-                                                            setBookmark(true)
-                                                            addfavorite(s, true)
-                                                        } else {
-                                                            setBookmark(false)
-                                                            addfavorite(s, false)
-                                                        }
-
-                                                    }
-                                                    await addf()
-
-                                                }
-                                                alterar()
-                                            }
-                                            }>
-
-                                            {[
-
-                                                bookmark == false
-                                                    ? <Image key={s.id} widthprops={"17px"} heightprops={"17px"} source={iconeFavorite} />
-                                                    : <Image key={s.id} widthprops={"17px"} heightprops={"17px"} source={iconeFavoriteTrue} />
-
-                                            ]}
-
-                                        </RectButton>
-
-                                    }
-
-                                </View>
-                            </TitleItem>
-                            {s.destaque == true ? (
-                                <Destaque>
-                                    <TextDestaque>Destaque</TextDestaque>
-                                </Destaque>)
-                                : null
-                            }
-
-                            <Description>
-                                <TextDescription>{s.descricao_servico}</TextDescription>
-                            </Description>
-                            <Footer>
-                                <View>
-                                    <TextFooter>Fortaleza  •  Serviços  •  2+</TextFooter>
-                                </View>
-                                <ViewTime>
-                                    <TextDescription>2 horas atrás</TextDescription>
-                                </ViewTime>
-                            </Footer>
-                        </ItemList>
-                    )) :
-                        <ViewVazio>
-
-                            <View>
-                                <ImagemVazio source={JobsVazio} />
-                            </View>
-                            <View>
-                                <TextVazioTitle>
-                                    Você não tem nenhuma solicitação de serviço
-
-                                </TextVazioTitle>
-                                <TextVazioSubTitle>
-                                    Verifique se você seguiu a regra de ativação da conta. Ou sua conta ainda está em processo de ativação pela equipe do Boraver Influencer
-                                </TextVazioSubTitle>
-                            </View>
-                        </ViewVazio>
-
-
-                    }
-
-                    <View>
-                        <Text> </Text>
-                        <Text> </Text>
-                        <Text> </Text>
-                        <Text> </Text>
-                        <Text> </Text>
-                        <Text> </Text>
-                        <Text> </Text>
-                        <Text> </Text>
-                    </View>
+                    <ViewTitle>
+                        
+                     <Title>Fale com o nosso Time</Title>
+                    <SubTitle style={{marginTop:8}}>Como tem sido sua experiênca com o Boraver App? Tem dúvidas, sugestões ou elogios? Deixe sua mensagem no campo abaixo. Desde já agradecemos o envio de suas ideias, problemas ou agradecimentos.</SubTitle>
+                    </ViewTitle>
+                    <ViewForm>
+                    <SubTitleForm>Seu feedback é sobre o quê?</SubTitleForm>,
+                    </ViewForm>
                 </ScrollView>
             </Content>
 
