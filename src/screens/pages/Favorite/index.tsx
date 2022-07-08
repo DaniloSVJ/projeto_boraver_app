@@ -4,6 +4,7 @@ import { Text, View, StyleSheet } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native';
 import { useNavigation, } from '@react-navigation/native';
 
+
 import { FiPower } from 'react-icons/fi';
 import IconFavorite from 'react-native-vector-icons/Fontisto';
 import { RectButton } from 'react-native-gesture-handler';

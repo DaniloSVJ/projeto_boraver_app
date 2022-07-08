@@ -62,35 +62,35 @@ export function SignUpStep3() {
             console.log(params.password)
             console.log(params.nome)
             console.log(params.celular)
-               console.log(params.cidade)
-                  console.log(params.estado)
+            console.log(params.cidade)
+            console.log(params.estado)
             await api.post('/api/v1/influencers/', {
                nome: params.nome,
-               nomecompleto : params.nomecompleto,
+               nomecompleto: params.nomecompleto,
                celular: params.celular,
                //////////////////////
-               whatsapp : params.celular,
-               telegram : params.celular,
-               tel_fixo : "",
+               whatsapp: params.celular,
+               telegram: params.celular,
+               tel_fixo: "",
                sexo: "",
-               nascimento : ""  ,
-               email : params.email,
-               password : params.password,
-               cpf_cnpj : "" ,
-               estado : params.estado,
-               cidade : params.cidade,
-               instagram :  "", 
-               qtd_intagram :"", 
-               youtube :  "",  
-               qtd_youtube : "", 
-               tiktok :  "",  
-               qtd_tiktok : "",  
-               agencia_banco : "",  
-               conta_banco : "", 
-               saldo : 0,
-               
+               nascimento: "",
+               email: params.email,
+               password: params.password,
+               cpf_cnpj: "",
+               estado: params.estado,
+               cidade: params.cidade,
+               instagram: "",
+               qtd_intagram: "",
+               youtube: "",
+               qtd_youtube: "",
+               tiktok: "",
+               qtd_tiktok: "",
+               agencia_banco: "",
+               conta_banco: "",
+               saldo: 0,
+
                ativo: false
-							
+
 
             }).then(function (response) {
                navigate("SignUpStep4", {})

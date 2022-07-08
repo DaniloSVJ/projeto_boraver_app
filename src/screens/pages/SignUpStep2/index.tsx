@@ -1,8 +1,8 @@
-import React, { useRef, useCallback,useState } from 'react'
-import {StyleSheet} from 'react-native'
+import React, { useRef, useCallback, useState } from 'react'
+import { StyleSheet } from 'react-native'
 import { Form } from '@unform/mobile'
 import { FormHandles } from "@unform/core"
-import { KeyboardAvoidingView, Platform ,Alert,ScrollView} from 'react-native'
+import { KeyboardAvoidingView, Platform, Alert, ScrollView } from 'react-native'
 import { Container, ContainerBody, Viewstep, View, ViewArrow, ViewButton, DivViewTop, Content, Brand, TextStep } from './styles'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { TextInputMask } from 'react-native-masked-text'
@@ -33,49 +33,50 @@ interface SignUpFormData {
 }
 interface InputValueReference {
    value: string;
- }
+}
 
 export function SignUpStep2() {
    const formRef = useRef<FormHandles>(null)
    const route = useRoute();
-   
-   const [valueMask,setValueMask] = useState("")
+
+   const [valueMask, setValueMask] = useState("")
    const params = route.params as RouteParams;
    const handleSignUpStep3 = useCallback(
       async (data: SignUpFormData) => {
 
          formRef.current?.setErrors({});
          console.log(data)
-         if(data.nomecompleto==""){
+         if (data.nomecompleto == "") {
             console.log("O nome é obrigatorio")
             Alert.alert("O nome é obrigatorio")
-         }else if(data.celular==""){
+         } else if (data.celular == "") {
             console.log("O Celular é obrigatorio")
             Alert.alert("O Celular é obrigatorio")
-         }else if(data.cidade==""){
+         } else if (data.cidade == "") {
             console.log("A Cidade é obrigatorio")
             Alert.alert("A Cidade é obrigatorio")
-         }else if(data.estado==""){
+         } else if (data.estado == "") {
             console.log("O Estado é obrigatorio")
             Alert.alert("O Estado é obrigatorio")
-         }else if(params.email==""){
+         } else if (params.email == "") {
             console.log("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
             Alert.alert("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
-         }else if(params.password==""){
-            console.log("A sessão anterior expirou volte e cadastre novamente o Email e Senha")            
+         } else if (params.password == "") {
+            console.log("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
             Alert.alert("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
-         }else{
+         } else {
             console.log("chegou aqui")
-         navigate('SignUpStep3', {
-            email: params.email ,
-            password: params.password,
-            nome: params.nome,
-            nomecompleto: data.nomecompleto,
-            celular: data.celular,
-            cidade: data.cidade,
-            estado: data.estado
+            navigate('SignUpStep3', {
+               email: params.email,
+               password: params.password,
+               nome: params.nome,
+               nomecompleto: data.nomecompleto,
+               celular: data.celular,
+               cidade: data.cidade,
+               estado: data.estado
 
-         });}
+            });
+         }
       },
       [])
 
@@ -92,14 +93,14 @@ export function SignUpStep2() {
    const styles = StyleSheet.create({
       container: {
          flex: 1,
-         color:"#3C2E54",
+         color: "#3C2E54",
          fontSize: 13,
          fontFamily: 'Montserrat_400Regular',
          border: 'none',
-         borderColor: "#fff"  
+         borderColor: "#fff"
       },
 
-    });
+   });
 
    return (
       <Container >
@@ -128,14 +129,14 @@ export function SignUpStep2() {
          <ContainerBody>
 
 
-         <KeyboardAvoidingView
+            <KeyboardAvoidingView
                behavior={
-                  Platform.OS === 'ios' 
-                  ? 'padding':
-                  undefined
+                  Platform.OS === 'ios'
+                     ? 'padding' :
+                     undefined
                }
-            >  
-              
+            >
+
 
                <Content>
                   <Form ref={formRef} onSubmit={handleSignUpStep3}>
@@ -150,7 +151,7 @@ export function SignUpStep2() {
 
                         returnKeyType="next"
                      />
-                      <Input
+                     <Input
                         placeholder='Nº Seguidores Instagram'
                         autoCorrect={false}
                         autoCapitalize="none"
@@ -172,7 +173,7 @@ export function SignUpStep2() {
 
                         returnKeyType="next"
                      />
-                      <Input
+                     <Input
                         placeholder='Nº Seguidores Yotube'
                         autoCorrect={false}
                         autoCapitalize="none"
@@ -183,7 +184,7 @@ export function SignUpStep2() {
 
                         returnKeyType="next"
                      />
-                               <Input
+                     <Input
                         placeholder='Link canal Tiktok'
                         autoCorrect={false}
                         autoCapitalize="none"
@@ -217,8 +218,8 @@ export function SignUpStep2() {
                         value={valueMask}
                      />   
                       */}
-                
-                     
+
+
                      <Input
                         placeholder={'Estado'}
                         autoCorrect={false}
@@ -251,7 +252,6 @@ export function SignUpStep2() {
                      </ViewButton>
                   </Form>
                </Content>
-               
             </KeyboardAvoidingView>
          </ContainerBody>
       </Container>

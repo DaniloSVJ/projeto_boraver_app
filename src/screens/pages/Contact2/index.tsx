@@ -38,6 +38,7 @@ export function Contact2() {
       },
       [])
 
+      
    function back() {
       navigate('SignUpStep2', {})
    }

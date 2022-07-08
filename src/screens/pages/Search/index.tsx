@@ -122,7 +122,6 @@ export function Search() {
     return (
         <Container>
             <Header>
-
                 <View>
                     <WelcomeText>
                         {titleHeader}

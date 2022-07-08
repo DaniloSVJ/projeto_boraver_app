@@ -168,6 +168,7 @@ export function OfferDetail() {
                             </View>
                         </TitleItem>
                     
+                    
                         <Ofert>
                             <TextDescription>69 Ofertas</TextDescription>
                         </Ofert>
