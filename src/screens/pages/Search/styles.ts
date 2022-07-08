@@ -17,14 +17,13 @@ export const Container = styled.View`
 export const InitilContent = styled.View<Display>`
     
 `
-export const Content = styled.View<Display>`
-    ${(props) => (props.display==""?"":"display: "+props.display )};
+export const Content = styled.View`
     width: 100%;
     height: 100%
     background-color: #fff;
     border-radius:  10px;
     margin-top: -20px;
-    
+        
 `
 export const ItemList = styled.View`
     width: 100%;
@@ -61,9 +60,10 @@ export const Image = styled.Image`
 export const TitleService = styled.Text`
     font-family: 'Montserrat_500Medium';
     font-style: normal;
-    font-weight: 700;
-    font-size: 14px;
-       
+    font-weight: 500;
+    font-size: 21px;
+    line-height: 31px;
+    color: #373737;
 `
 export const SubtitleService = styled.Text`
     font-family: 'Montserrat_500Medium';
@@ -155,6 +155,7 @@ export const ViewIcons = styled.View`
     display:flex;
     flex-direction: row;
 `
+
 export const ViewSearch = styled.View`
     margin-top: 27px;
     margin-right: 12px;
@@ -173,12 +174,39 @@ export const ContentForm = styled.View`
 `
 
 
+export const TextClient = styled.Text`
+font-family: 'Montserrat_500Medium';
+
+font-style: normal;
+font-weight: 500;
+font-size: 11px;
+line-height: 14px;
+
+`
+
+export const SubTitle = styled.Text`
+font-family: 'Montserrat_500Medium';
+
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 19px;
+
+`
+export const TextSolicit = styled.Text`
+    font-family: 'Montserrat_500Medium';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 19px;
+
+`
 
 export const ViewButton = styled.View`
-    diplay:flex;
-    margin-top:22px;
-    margin-bottom: 40px;
-    width:100%;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+
 `
 
 

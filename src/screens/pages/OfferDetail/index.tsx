@@ -3,6 +3,11 @@ import { Text, View, TextInput, StyleSheet } from 'react-native'
 import SelectDropdown from 'react-native-select-dropdown'
 import { Picker } from '@react-native-picker/picker';
 import { FontAwesome } from '@expo/vector-icons';
+import { RectButton } from 'react-native-gesture-handler';
+
+import { useNavigation, } from '@react-navigation/native';
+
+import IconSearch from 'react-native-vector-icons/FontAwesome';
 
 import { Box, DateInput } from 'grommet';
 import { FormHandles } from "@unform/core"
@@ -18,7 +23,7 @@ import DateField from 'react-native-datefield';
 
 import NotificationBell from '../../../components/NotificationBell'
 import { useAuth } from '../../../hooks/auth'
-import { TitleService, InitilContent, ViewSubTitle, ViewBell, TextFooter, ViewTime, Image, TitleItem, Ofert, Footer, Destaque, TextDestaque, Description, TextDescription, SubtitleService, ItemList, Content, HerderText2, Container, Header, WelcomeText } from './styles'
+import { TitleService, TextClient, SubTitle, TextSolicit, ViewLeftHerder, ViewIcons, ViewSearch, ViewBell, TextFooter, ViewTime, Image, TitleItem, Ofert, Footer, Destaque, TextDestaque, Description, TextDescription, SubtitleService, ItemList, Content, HerderText2, Container, Header, ViewIcone } from './styles'
 import Filter from '../../../assets/controler.png'
 import { ScrollView } from 'react-native-gesture-handler';
 import Input from '../../../components/InputGeral'
@@ -30,9 +35,13 @@ import { IconBase, icons } from 'react-icons/lib';
 interface SearchFormData {
 
 }
+type Nav = {
+    navigate: (value: string, { }) => void;
+}
 
 export function OfferDetail() {
     const { user } = useAuth()
+    const { navigate } = useNavigation<Nav>();
     const [dateSelect, setDateSelect] = useState("")
     const formRef = useRef<FormHandles>(null);
     const emailInputRef = useRef<TextInput>(null);
@@ -109,35 +118,41 @@ export function OfferDetail() {
 
 
     const datatttt = ['data1', 'data2', 'data3']
-    const MenuIcon = (props) => (
-        <svg path='../../../assets/iconDateInput.svg' fill={props.fill} stroke={props.stroke}></svg>
-    )
+
     return (
         <Container>
             <Header>
 
                 <View>
-                    <WelcomeText>
-                        {titleHeader}
-                    </WelcomeText>
-                    <ViewSubTitle display={displayView}>
-                        <View>
+
+                    <ViewLeftHerder >
+                        <ViewIcone>
                             <FontAwesome name="angle-left" size={24} color="white" />
-                        </View>
+                        </ViewIcone>
                         <View>
                             <HerderText2>
                                 Detalhe
                             </HerderText2>
                         </View>
-                    </ViewSubTitle>
+                    </ViewLeftHerder>
                 </View>
-                <ViewBell>
-                    <NotificationBell qtd={qtdNote} />
-                </ViewBell>
+                <ViewIcons>
+                    <RectButton onPress={() => navigate("Search", {})}>
+                        <ViewSearch>
+
+                            <IconSearch name={'search'} size={22} color={'#fff'} />
+                        </ViewSearch>
+                    </RectButton>
+                    <RectButton onPress={() => navigate("Notifications", {})}>
+                        <ViewBell >
+                            <NotificationBell qtd={qtdNote} />
+                        </ViewBell>
+                    </RectButton>
+                </ViewIcons>
 
             </Header>
 
-            <Content display={displayView}>
+            <Content >
                 <ScrollView>
                     <ItemList>
                         <TitleItem>
@@ -146,12 +161,13 @@ export function OfferDetail() {
                             </View>
                             <View>
                                 <TitleService>Provador em loja fitness</TitleService>
-                                <SubtitleService>Orçamento R$50 - R$150</SubtitleService>
+                                
+                            </View>
+                            <View>
+
                             </View>
                         </TitleItem>
-                        <Destaque>
-                            <TextDestaque>Destaque</TextDestaque>
-                        </Destaque>
+                    
                         <Ofert>
                             <TextDescription>69 Ofertas</TextDescription>
                         </Ofert>
@@ -167,36 +183,7 @@ export function OfferDetail() {
                             </ViewTime>
                         </Footer>
                     </ItemList>
-                    <ItemList>
-                        <TitleItem>
-                            <TitleService>Provador em loja fitness</TitleService>
-                            <SubtitleService>Orçamento R$50 - R$150</SubtitleService>
-                        </TitleItem>
-                        <Destaque>
-                            <TextDestaque>Destaque</TextDestaque>
-                        </Destaque>
-                        <Ofert>
-                            <TextDescription>69 Ofertas</TextDescription>
-                        </Ofert>
-                        <Description>
-                            <TextDescription>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.  leia mais</TextDescription>
-                        </Description>
-                    </ItemList>
-                    <ItemList>
-                        <TitleItem>
-                            <TitleService>Provador em loja fitness</TitleService>
-                            <SubtitleService>Orçamento R$50 - R$150</SubtitleService>
-                        </TitleItem>
-                        <Destaque>
-                            <TextDestaque>Destaque</TextDestaque>
-                        </Destaque>
-                        <Ofert>
-                            <TextDescription>69 Ofertas</TextDescription>
-                        </Ofert>
-                        <Description>
-                            <TextDescription>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.  leia mais</TextDescription>
-                        </Description>
-                    </ItemList>
+
                 </ScrollView>
             </Content>
 

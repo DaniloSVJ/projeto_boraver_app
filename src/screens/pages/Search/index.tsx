@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { Text, View, TextInput, StyleSheet } from 'react-native'
 import SelectDropdown from 'react-native-select-dropdown'
 import { Picker } from '@react-native-picker/picker';
+import IconSearch from 'react-native-vector-icons/FontAwesome';
 
 import { Box, DateInput } from 'grommet';
 import { FormHandles } from "@unform/core"
@@ -14,10 +15,11 @@ import dayjs from 'dayjs';
 import DatePicker from 'react-native-datepicker';
 
 import DateField from 'react-native-datefield';
+import { RectButton } from 'react-native-gesture-handler';
 
 import NotificationBell from '../../../components/NotificationBell'
 import { useAuth } from '../../../hooks/auth'
-import { TitleService, InitilContent, ViewSubTitle, ViewBell, TextFooter, ViewTime, Image, TitleItem, Ofert, Footer, Destaque, TextDestaque, Description, TextDescription, SubtitleService, ItemList, Content, HerderText2, Container, Header, WelcomeText } from './styles'
+import { TitleService,ViewIcons,ViewSearch, TextClient,SubTitle,TextSolicit, ViewSubTitle, ViewBell, TextFooter, ViewTime, Image, TitleItem, Ofert, Footer, Destaque, TextDestaque, Description, TextDescription, SubtitleService, ItemList, Content, HerderText2, Container, Header, WelcomeText } from './styles'
 import Filter from '../../../assets/controler.png'
 import { ScrollView } from 'react-native-gesture-handler';
 import Input from '../../../components/InputGeral'
@@ -25,13 +27,19 @@ import iconDate from '../../../assets/iconDateInput.svg'
 import IconComboBox from '../../../assets/iconComboBox.svg'
 import api from '../../../service/api'
 import { IconBase, icons } from 'react-icons/lib';
+import { useNavigation, } from '@react-navigation/native';
 
 interface SearchFormData {
 
 }
+type Nav = {
+    navigate: (value: string, { }) => void;
+}
+
 
 export function Search() {
     const { user } = useAuth()
+    const { navigate } = useNavigation<Nav>();
     const [dateSelect, setDateSelect] = useState("")
     const formRef = useRef<FormHandles>(null);
     const emailInputRef = useRef<TextInput>(null);
@@ -130,65 +138,35 @@ export function Search() {
                         </View>
                     </ViewSubTitle>
                 </View>
-                <ViewBell>
-                    <NotificationBell qtd={qtdNote} />
-                </ViewBell>
+                <ViewIcons>
+                    <RectButton onPress={() => navigate("Search", {})}>
+                        <ViewSearch>
+
+                            <IconSearch name={'search'} size={22} color={'#fff'} />
+                        </ViewSearch>
+                    </RectButton>
+                    <RectButton onPress={() => navigate("Notifications", {})}>
+                        <ViewBell >
+                            <NotificationBell qtd={qtdNote} />
+                        </ViewBell>
+                    </RectButton>
+                </ViewIcons>
 
             </Header>
-            <InitilContent display={displayViewForm}>
-                <Form ref={formRef} onSubmit={handleSearch}>
-                    <Box style={styles.dateinput} fill align="center" justify="start" pad="large">
-                        <Box width="100%" >
-                            <DateInput style={styles.dateinput} format="dd/mm/yyyy" icon={<Image style={styles.image} source={iconDate} />} value={date} onChange={e => setDate(String(e.value))} />
-                        </Box>
-                    </Box>
-
-                    <Picker
-                        style={styles.select}
-                        placeholder="Status do serviço"
-                        selectedValue={selectedStatus}
-                        itemStyle={styles.select}
-
-                        onValueChange={(itemValue, itemIndex) =>
-                            setSelectedStatus(itemValue)
-
-                        }>
-
-                        <Picker.Item label="NOVA OFERTA" value="novaoferta" />
-                        <Picker.Item label="Em Andamento" value="andamento" />
-                        <Picker.Item label="Recusado" value="recusado" />
-                    </Picker>
-
-                    <Picker
-                        style={styles.select}
-                        placeholder="Status do serviço"
-                        selectedValue={selectedRedeSocial}
-                        itemStyle={styles.select}
-
-                        onValueChange={(itemValue, itemIndex) =>
-                            setSelectedRedeSocial(itemValue)
-
-                        }>
-
-                        <Picker.Item label="Instagram" value="instagram" />
-                        <Picker.Item label="Youtube" value="youtube" />
-                        <Picker.Item label="Tiktok" value="tiktok" />
-                    </Picker>
-
-
-
-                </Form>
-            </InitilContent>
-            <Content display={displayView}>
+          
+            <Content >
                 <ScrollView>
                     <ItemList>
                         <TitleItem>
                             <View>
-
+                                {/* Icone */}
                             </View>
                             <View>
                                 <TitleService>Provador em loja fitness</TitleService>
-                                <SubtitleService>Orçamento R$50 - R$150</SubtitleService>
+                                
+                            </View>
+                            <View>
+                                {/* Icone */}
                             </View>
                         </TitleItem>
                         <Destaque>

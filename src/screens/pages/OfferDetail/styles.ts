@@ -17,8 +17,13 @@ export const Container = styled.View`
 export const InitilContent = styled.View<Display>`
     
 `
-export const Content = styled.View<Display>`
-    ${(props) => (props.display==""?"":"display: "+props.display )};
+export const ViewIcone = styled.View`
+    margin-top: 30px;
+    margin-left: 33px;
+
+`
+
+export const Content = styled.View`
     width: 100%;
     height: 100%
     background-color: #fff;
@@ -73,6 +78,35 @@ export const SubtitleService = styled.Text`
     font-size: 11px;
       
 `
+export const TextClient = styled.Text`
+font-family: 'Montserrat_500Medium';
+
+font-style: normal;
+font-weight: 500;
+font-size: 11px;
+line-height: 14px;
+
+`
+
+export const SubTitle = styled.Text`
+font-family: 'Montserrat_500Medium';
+
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 19px;
+
+`
+export const TextSolicit = styled.Text`
+    font-family: 'Montserrat_500Medium';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 19px;
+
+`
+
+
 export const Destaque = styled.View`
     margin-top: 18px;
     padding: 2px;
@@ -134,13 +168,21 @@ export const WelcomeText = styled.Text`
     color: #fff;
 
 `
+export const ViewLeftHerder = styled.View `
+    display:flex;
+    flex-direction: row;
+
+`
+
 export const HerderText2 = styled.Text`
-    font-family: 'Montserrat_200ExtraLight';
-    font-size: 13px;
+    font-family: 'Montserrat_500Medium';
     font-style: normal;
-    font-weight: 400;
-    font-size: 11px;
-    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 31px;
+    margin-top: 27px;
+    margin-left: 16px;
+    color: #fff;
 `
 export const Header = styled.View`
     background-color:  #3C2E54;
@@ -175,7 +217,9 @@ export const ContentForm = styled.View`
 
 
 export const ViewButton = styled.View`
-    diplay:flex;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
     margin-top:22px;
     margin-bottom: 40px;
     width:100%;
