@@ -1,11 +1,10 @@
 
 import React, { useState, useCallback, useEffect, useRef } from 'react'
-import { Text, View, StyleSheet ,TextInput} from 'react-native'
+import { View, StyleSheet ,TextInput} from 'react-native'
 import Button from '../../../components/Button'
 import { useFocusEffect } from '@react-navigation/native';
 import IconSearch from 'react-native-vector-icons/FontAwesome';
 import { RectButton } from 'react-native-gesture-handler';
-import { Noti } from '../Noti'
 import NotificationBell from '../../../components/NotificationBell'
 import { useAuth } from '../../../hooks/auth'
 import { Form } from '@unform/mobile'
@@ -13,24 +12,11 @@ import { Picker } from '@react-native-picker/picker';
 import { FormHandles } from "@unform/core"
 
 import {
-    TitleService,
-    ViewContentTitleItem,
+
     ViewBell,
-    TextFooter,
-    ViewTime,
-    Image,
-    TitleItem,
     ViewIcons,
     ViewSearch,
-    Footer,
-    Destaque,
-    TextDestaque,
-    Description,
-    TextDescription,
-    SubtitleService,
-    ItemList,
     Content,
-    HerderText2,
     Container,
     Header,
     WelcomeText,
@@ -44,17 +30,9 @@ import {
 } from './styles'
 import { useNavigation, } from '@react-navigation/native';
 
-import Img from '../../../assets/avatar_user.png'
-
-import iconeFavorite from '../../../assets/marca-paginas.png'
-import iconeFavoriteTrue from '../../../assets/marca-paginas-true.png'
-import JobsVazio from '../../../assets/item-exclamacao.png'
-
 import { ScrollView } from 'react-native-gesture-handler';
 
 import api from '../../../service/api'
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 interface solicitationI {
@@ -95,11 +73,7 @@ type addPut = {
     carater: string;
     criacao: string;
 }
-interface teste {
-    id: number;
-    name: string;
 
-}
 type Nav = {
     navigate: (value: string, { }) => void;
 }

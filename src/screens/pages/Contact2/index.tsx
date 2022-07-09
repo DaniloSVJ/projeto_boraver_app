@@ -4,7 +4,14 @@ import { FormHandles } from "@unform/core"
 import { StyleSheet } from 'react-native'
 import { RectButton } from 'react-native-gesture-handler';
 
-import { Container, ViewButton,  Content, Brand, Title, Paragraph } from './styles'
+import { 
+   Container,   
+   Content, 
+   Brand, 
+   Title, 
+   Paragraph 
+} from './styles'
+
 import { useNavigation, useRoute } from '@react-navigation/native';
 import IClose from 'react-native-vector-icons/Ionicons';
 

@@ -96,6 +96,7 @@ interface teste {
 type Nav = {
     navigate: (value: string, { }) => void;
 }
+
 export function Home() {
     const { user } = useAuth()
 const { navigate } = useNavigation<Nav>();
@@ -213,7 +214,7 @@ const { navigate } = useNavigation<Nav>();
                     </HerderText2>
                 </View>
                 <ViewIcons>
-                    <RectButton onPress={() => navigate("Search", {})}>
+                    <RectButton onPress={() => navigate("OfferDetail", {})}>
                         <ViewSearch>
 
                             <IconSearch name={'search'} size={22} color={'#fff'} />

@@ -38,17 +38,15 @@ export const Content = styled.View`
     border-radius:  10px;
     margin-top: -20px;
     
-    margin-right: 29px;
+    
     
     padding-left: 7px;
-    
     
 `
 export const ItemList = styled.View`
     width: 100%;
     margin-top: 23px;
     margin-bottom: 17px;
-    margin-right: 70px;
     padding-right: 29px;
     padding-left: 29px;  
     
@@ -118,7 +116,7 @@ line-height: 19px;
 
 `
 export const ViewBody = styled.Text`
-    margin-top: 77px;
+    margin-top: 38px;
     
     display: flex;
     flex-direction: column;
@@ -245,7 +243,7 @@ export const ViewSearch = styled.View`
 `
 export const ViewBell = styled.View`
     margin-top: 3px;
-    
+    margin-right: 30px;
 `
 
 export const ContentForm = styled.View`

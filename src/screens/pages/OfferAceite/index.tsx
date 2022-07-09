@@ -68,7 +68,7 @@ type Nav = {
     navigate: (value: string, { }) => void;
 }
 
-export function OfferDetail() {
+export function OfferAceite() {
     const { user } = useAuth()
     const { navigate } = useNavigation<Nav>();
     const [dateSelect, setDateSelect] = useState("")
@@ -193,22 +193,21 @@ export function OfferDetail() {
                 <View>
 
                     <ViewLeftHerder >
-                        <RectButton onPress={() => navigate("Home", {})}>
+                        <RectButton onPress={() => navigate("OfferDetail", {})}>
                             <ViewIcone>
                                 <FontAwesome name="angle-left" size={24} color="white" />
                             </ViewIcone>
-                        </RectButton>
+                        </RectButton>    
                         <View>
                             <HerderText2>
-                                Detalhe
+                                Aceito
                             </HerderText2>
                         </View>
                     </ViewLeftHerder>
                 </View>
                 <ViewIcons>
-                    <RectButton onPress={() => navigate("Search", {})}>
+                    <RectButton onPress={() => navigate("OfferDetail", {})}>
                         <ViewSearch>
-
                             <IconSearch name={'search'} size={22} color={'#fff'} />
                         </ViewSearch>
                     </RectButton>
@@ -224,96 +223,59 @@ export function OfferDetail() {
             <Content >
                 <ScrollView>
                     <ItemList>
-                        <TitleItem>
-                            <View>
-                                <Image style={styles.imageAvatar} source={iperfiluser} />
-                            </View>
-                            <View>
-                                <TitleService>Provador em loja fitness</TitleService>
-
-                            </View>
-                            <View style={{ marginRight: 29 }}>
-                                <Image style={styles.imagePrefered} source={ipreferredW} />
-
-                            </View>
-                        </TitleItem>
 
 
-                        <Ofert>
-                            <View style={{ display: 'flex', flexDirection: 'row' }} >
-                                <Foundation name="star" size={12} color="#373737" />
-                                <Avaliation>
-                                    4.5
-                                </Avaliation>
-                            </View>
-
-                            <TextDescription>Fortaleza, Ceará, Brasil</TextDescription>
-
-                            <TextDescription>Membro desde 31 de maio de 2021</TextDescription>
-                        </Ofert>
                         <ViewBody>
-                            <View style={styles.viewbody}>
-                                <View style={styles.imagebody}>
-                                    <SimpleLineIcons name="diamond" size={19} color="black" />
-                                </View>
-                                <View>
-                                    <SubtitleService>
-                                        Orçamento
-                                    </SubtitleService>
-
-                                    <TextSolicit>
-                                        R$500
-                                    </TextSolicit>
-                                </View>
-                            </View>
-                            <ViewBodyPeriod>
-                                <View style={styles.viewbody}>
-                                    <View style={styles.imagebody}>
-                                        <Image source={iTime} style={styles.imageTime} />
-                                    </View>
-                                    <View>
-                                        <SubtitleService>
-                                            Período
-                                        </SubtitleService>
-                                        <TextSolicit>
-                                            3 semanas
-                                        </TextSolicit>
-                                    </View>
-                                </View>
-                            </ViewBodyPeriod>
-                        </ViewBody>
-                        <ViewFooter>
                             <SubtitleService>
-                                Detalhe
+                                Você aceitou a proposta
                             </SubtitleService>
-                            <TextDescription style={{ marginTop: 10 }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Integer et justo tellus. Donec eget metus consequat, varius dui ut, dignissim mauris. Curabitur bibendum lacinia mi, in bibendum lacus dapibus volutpat. Nullam sit amet nisl nibh. Vestibulum id sem vitae arcu rhoncus euismod ac non ante. Pellentesque augue ipsum, efficitur eu neque in, condimentum malesuada diam.</TextDescription>
+                            <TextDescription style={{ marginTop: 10 }}>
+                            Agora é hora de conferir as mídias de divulgação e colher todos os detalhes do projeto.
+                            </TextDescription>
+ 
+                        </ViewBody>
 
-                        </ViewFooter>
 
-                        <ViewButton>
-                            <View style={{ marginRight: 18 }}>
-                                <Button
-                                    style={styles.buttonGreen}
-                                    bordercolor={"#489D31"}
-                                    background={"#489D31"}
-                                    color={"#fff"}
-                                    onPress={()=>navigate("OfferAceite",{})}
-                                >
-                                    Aceito
-                                </Button>
-                            </View>
-                            <View style={{ marginLeft: 18, marginRight: 18, paddingRight: 29 }}>
-                                <Button
-                                    style={styles.buttonRed}
-                                    bordercolor={"#C72D2D"}
-                                    background={"#C72D2D"}
-                                    color={"#fff"}
-                                    onPress={()=>navigate("OfferRecuse",{})}
-                                >
-                                    Não Aceito
-                                </Button>
-                            </View>
-                        </ViewButton>
+                        <View style={{ marginTop: 31,  marginRight:36, marginBottom:68 ,marginLeft:36,}}>
+                            <Button
+                                
+                                bordercolor={"#3C2E54"}
+                                background={"#3C2E54"}
+                                color={"#fff"}
+                            >
+                                Ver mídias de divulgação
+                            </Button>
+                        </View>
+
+
+                        <View>
+                             <SubtitleService>
+                             Dúvidas?
+                            </SubtitleService>
+                            <TextDescription style={{ marginTop: 10 }}>
+                            Ainda tem dúvidas sobre o projeto? Envie mensagens para o solicitante através do campo abaixo.
+                            </TextDescription>
+                            <TextInput
+                                style={{marginTop:18}}
+                                underlineColorAndroid="transparent"
+                                placeholder="Digite sua mensagem"
+                                placeholderTextColor="#373737"
+                                numberOfLines={10}
+                                multiline={true}
+                            />
+                        </View>
+
+
+                        <View style={{ marginTop: 57,  marginRight:36, marginBottom:'auto' ,marginLeft:36,}}>
+                            <Button
+                                
+                                bordercolor={"#3C2E54"}
+                                background={"#3C2E54"}
+                                color={"#fff"}
+                            >
+                                Confirmar e enviar
+                            </Button>
+                        </View>
 
                     </ItemList>
 

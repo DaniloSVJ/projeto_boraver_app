@@ -23,7 +23,8 @@ import { Profile } from '../screens/pages/Profile';
 
 import {Contact} from '../screens/pages/Contact';
 import {Contact2} from '../screens/pages/Contact2';
-
+import {OfferRecuse} from '../screens/pages/OfferRecuse'
+import {OfferAceite} from '../screens/pages/OfferAceite'
 
 import PasswordReset from '../screens/pages/PasswordReset';
 import { SignUp } from '../screens/pages/SignUp';
@@ -169,6 +170,8 @@ export function AppRoutes() {
 
         <HomeStack.Screen name="Home" component={Home} />
         <HomeStack.Screen name="OfferDetail" component={OfferDetail} />
+        <HomeStack.Screen name="OfferAceite" component={OfferAceite} />
+        <HomeStack.Screen name="OfferRecuse" component={OfferRecuse} />
         <PerfilStack.Screen name="Notifications" component={Notifi} />
         <PerfilStack.Screen name="Search" component={Search} />
 

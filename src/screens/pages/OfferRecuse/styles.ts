@@ -42,13 +42,11 @@ export const Content = styled.View`
     
     padding-left: 7px;
     
-    
 `
 export const ItemList = styled.View`
     width: 100%;
     margin-top: 23px;
     margin-bottom: 17px;
-    margin-right: 70px;
     padding-right: 29px;
     padding-left: 29px;  
     
@@ -245,7 +243,7 @@ export const ViewSearch = styled.View`
 `
 export const ViewBell = styled.View`
     margin-top: 3px;
-    
+    margin-right: 30px;
 `
 
 export const ContentForm = styled.View`

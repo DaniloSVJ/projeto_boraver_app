@@ -19,14 +19,16 @@ export function AuthRoutes(){
   return (
   <Navigator screenOptions={{ headerShown: false }}>
    <Group>
-      <Screen name="SignUpStep2" component={SignUpStep2}   />
-      <Screen name="SignUp" component={SignUp} />
-      <Screen name="HomeAuth" component={HomeAuth}   />
-      <Screen name="SignIn" component={SignIn} />
 
       
       
+      <Screen name="HomeAuth" component={HomeAuth}   />
+      <Screen name="SignIn" component={SignIn} />
+
+      <Screen name="SignUpStep2" component={SignUpStep2}   />
       <Screen name="SignUpStep3" component={SignUpStep3}   />
+      
+    
       <Screen name="SignUpStep4" component={SignUpStep4}   />
      
       <Screen name="PasswordReset" component={PasswordReset}   />
