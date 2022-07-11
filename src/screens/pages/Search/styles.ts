@@ -1,7 +1,8 @@
 import styled from 'styled-components/native'
+import { TextInput as TextInputRN } from 'react-native';
 
 
-interface Display{
+interface Display {
     display: string;
 }
 
@@ -13,6 +14,48 @@ export const Container = styled.View`
     height: 100%
     width: 100%;
 
+`
+export const ViewCalendar = styled.View`
+
+
+`
+export const Icon = styled.Image`
+    width: 18px;
+    height: 20px;
+    margin-right: 10px;
+    font-size: 13px;
+    color:#3C2E54;
+    margin-left: 5px;
+ 
+
+`;
+export const ContainerInput = styled.View`
+    width: auto;
+    height: 47px;
+    
+    
+    background-color:#F0FFFF;
+    border-radius: 12px;
+
+    border-style:"solid";
+    border-width: 1px;
+  
+    border-color: #808080;
+    font-size: 14px;
+    margin-top: 32px; 
+    margin-left: 54px;
+    margin-right: 54px;
+    margin-bottom: 7px;
+    padding-right: 14px;
+    padding-left: 25px;
+    flex-direction: row;
+  
+    align-items: center;
+
+    justify-content: space-between;
+
+
+    
 `
 export const InitilContent = styled.View<Display>`
     
@@ -36,7 +79,16 @@ export const ItemList = styled.View`
     justify-content: center;
 
 `
-
+export const TextInput = styled(TextInputRN)`
+  display: flex;
+  weith: 100%;
+  color:#3C2E54;
+  margin: 0px;
+  font-size: 13px;
+  font-family: 'Montserrat_400Regular';
+  border: none	;
+  border-color: #fff;  
+`;
 export const TitleItem = styled.View`
     display:flex;
     flex-direction: row;
@@ -44,8 +96,9 @@ export const TitleItem = styled.View`
 
 `
 export const ViewSubTitle = styled.View<Display>`
-    display: ${(props)=>(props.display==""?"flex;":props.display+";")}
+    display: ${(props) => (props.display == "" ? "flex;" : props.display + ";")}
     flex-direction: row;
+    
     justify-content: flex-start;
     margin-left: 28px;
 `
@@ -54,7 +107,8 @@ export const Image = styled.Image`
     height: 13px;
     top: 0px;
     left: 0px;
-    margin-right: 13px;
+    margin-right: 103px;
+    
     
 `
 export const TitleService = styled.Text`

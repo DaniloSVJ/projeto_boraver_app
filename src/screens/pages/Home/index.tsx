@@ -214,7 +214,7 @@ const { navigate } = useNavigation<Nav>();
                     </HerderText2>
                 </View>
                 <ViewIcons>
-                    <RectButton onPress={() => navigate("OfferDetail", {})}>
+                    <RectButton onPress={() => navigate("Search", {})}>
                         <ViewSearch>
 
                             <IconSearch name={'search'} size={22} color={'#fff'} />

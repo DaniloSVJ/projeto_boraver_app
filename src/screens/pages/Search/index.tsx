@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
-import { Text, View, TextInput, StyleSheet } from 'react-native'
+import { Text, View, SafeAreaView, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
 import SelectDropdown from 'react-native-select-dropdown'
-import { Picker } from '@react-native-picker/picker';
 import IconSearch from 'react-native-vector-icons/FontAwesome';
+import { Entypo } from '@expo/vector-icons'; 
+
+import CalendarPicker from 'react-native-calendar-picker';
 
 import { Box, DateInput } from 'grommet';
 import { FormHandles } from "@unform/core"
@@ -12,14 +14,11 @@ import Combobox from 'combobox-react-native'
 import IconFavorite from 'react-native-vector-icons/Fontisto';
 import { useFocusEffect } from '@react-navigation/native';
 import dayjs from 'dayjs';
-import DatePicker from 'react-native-datepicker';
-
 import DateField from 'react-native-datefield';
 import { RectButton } from 'react-native-gesture-handler';
-
 import NotificationBell from '../../../components/NotificationBell'
 import { useAuth } from '../../../hooks/auth'
-import { TitleService,ViewIcons,ViewSearch, TextClient,SubTitle,TextSolicit, ViewSubTitle, ViewBell, TextFooter, ViewTime, Image, TitleItem, Ofert, Footer, Destaque, TextDestaque, Description, TextDescription, SubtitleService, ItemList, Content, HerderText2, Container, Header, WelcomeText } from './styles'
+import { Icon, ViewIcons, ViewSearch, ContainerInput, SubTitle, TextSolicit, ViewSubTitle, ViewBell, TextFooter, ViewTime, Image, TitleItem, Ofert, Footer, Destaque, TextDestaque, Description, TextDescription, SubtitleService, ItemList, Content, HerderText2, Container, Header, WelcomeText } from './styles'
 import Filter from '../../../assets/controler.png'
 import { ScrollView } from 'react-native-gesture-handler';
 import Input from '../../../components/InputGeral'
@@ -28,9 +27,12 @@ import IconComboBox from '../../../assets/iconComboBox.svg'
 import api from '../../../service/api'
 import { IconBase, icons } from 'react-icons/lib';
 import { useNavigation, } from '@react-navigation/native';
+import DropDownPicker from 'react-native-dropdown-picker';
 
-interface SearchFormData {
-
+interface IState {
+    visible: boolean;
+    dateStr?: string;
+    date?: Date;
 }
 type Nav = {
     navigate: (value: string, { }) => void;
@@ -38,6 +40,25 @@ type Nav = {
 
 
 export function Search() {
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const inputElementRef = useRef<any>(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    function openCalendar() {
+        setIsVisible(true);
+    }
+    function closeCalendar() {
+        setIsVisible(false);
+    }
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false);
+    };
+
+    const handleConfirm = (date: Date) => {
+        console.warn("A date has been picked: ", date);
+        hideDatePicker();
+    };
+
     const { user } = useAuth()
     const { navigate } = useNavigation<Nav>();
     const [dateSelect, setDateSelect] = useState("")
@@ -49,11 +70,18 @@ export function Search() {
         { "id": 2, "name": "Em Andamento" },
         { "id": 3, "name": "Recusado" },
     ]
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+        { label: 'Nova Ofereta', value: 'novaoferta' },
+        { label: 'Em Andamento', value: 'andamento' },
+        { label: 'Recusado', value: 'recusado' }
+    ]);
     const [titleHeader, setTitleHeader] = useState("Buscar")
     const [displayView, setDisplayView] = useState('none')
     const [displayViewForm, setDisplayViewForm] = useState('flex')
-    const [date, setDate] = useState("")
-    const [open, setOpen] = useState(false)
+
+
     const styles = StyleSheet.create({
 
         image: {
@@ -62,6 +90,13 @@ export function Search() {
             color: "#fff",
 
         },
+        datePicker: {
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+            width: 320,
+            height: 260,
+            display: 'flex',
+        },
         dateinput: {
             width: 100,
             marginLeft: 53,
@@ -69,15 +104,16 @@ export function Search() {
         },
         select: {
             width: "100%",
-            marginTop: 15,
-            marginLeft: 49,
-            marginRight: 49,
+
+            marginTop: 1500,
+            marginLeft: 490,
+            marginRight: 100,
             color: "#3C2E54",
             borderWidth: 1,
             borderStyle: 'solid',
             borderColor: "rgb(191,191,191)",
             borderRadius: 5,
-            padding: 12,
+            padding: 200,
             i: 50
 
         },
@@ -97,28 +133,45 @@ export function Search() {
             load()
         }, [])
     )
-    const handleSearch = useCallback(
-        async (data: SearchFormData) => {
-            try {
+
+    function showDatePicker() {
+        setDatePicker(true);
+    };
+
+    function showTimePicker() {
+        setTimePicker(true);
+    };
 
 
-            } catch (err) {
-
-            }
-        },
-        [],
-    );
-    function teste() {
-        console.log("realizou o teste")
-    }
     const [selectedStatus, setSelectedStatus] = useState();
     const [selectedRedeSocial, setSelectedRedeSocial] = useState();
 
 
     const datatttt = ['data1', 'data2', 'data3']
-    const MenuIcon = (props) => (
-        <svg path='../../../assets/iconDateInput.svg' fill={props.fill} stroke={props.stroke}></svg>
-    )
+
+    function testedddd() {
+
+    }
+
+    const [datePicker, setDatePicker] = useState(false);
+
+
+    const [timePicker, setTimePicker] = useState(false);
+    const [show, setShow] = useState(false);
+    const onChange = () => {
+        const currentDate = 'selectedDate';
+        setShow(false);
+        // setDate(currentDate);
+    };
+    const [time, setTime] = useState(new Date(Date.now()));
+    const [valueInput, setValueInput] = useState('')
+    const [selectedDate, setSelectedDate] = useState(new Date(Date.now()));
+    const countries = ["Egypt", "Canada", "Australia", "Ireland"]
+    function seta(){
+        return(
+            <Entypo name="chevron-small-down" size={24} color="black" />
+        )
+    }
     return (
         <Container>
             <Header>
@@ -152,70 +205,60 @@ export function Search() {
                 </ViewIcons>
 
             </Header>
-          
+
             <Content >
                 <ScrollView>
-                    <ItemList>
-                        <TitleItem>
-                            <View>
-                                {/* Icone */}
-                            </View>
-                            <View>
-                                <TitleService>Provador em loja fitness</TitleService>
-                                
-                            </View>
-                            <View>
-                                {/* Icone */}
-                            </View>
-                        </TitleItem>
-                        <Destaque>
-                            <TextDestaque>Destaque</TextDestaque>
-                        </Destaque>
-                        <Ofert>
-                            <TextDescription>69 Ofertas</TextDescription>
-                        </Ofert>
-                        <Description>
-                            <TextDescription>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.  leia mais</TextDescription>
-                        </Description>
-                        <Footer>
-                            <View>
-                                <TextFooter>Fortaleza  •  Serviços  •  2+</TextFooter>
-                            </View>
-                            <ViewTime>
-                                <TextDescription>2 horas atrás</TextDescription>
-                            </ViewTime>
-                        </Footer>
-                    </ItemList>
-                    <ItemList>
-                        <TitleItem>
-                            <TitleService>Provador em loja fitness</TitleService>
-                            <SubtitleService>Orçamento R$50 - R$150</SubtitleService>
-                        </TitleItem>
-                        <Destaque>
-                            <TextDestaque>Destaque</TextDestaque>
-                        </Destaque>
-                        <Ofert>
-                            <TextDescription>69 Ofertas</TextDescription>
-                        </Ofert>
-                        <Description>
-                            <TextDescription>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.  leia mais</TextDescription>
-                        </Description>
-                    </ItemList>
-                    <ItemList>
-                        <TitleItem>
-                            <TitleService>Provador em loja fitness</TitleService>
-                            <SubtitleService>Orçamento R$50 - R$150</SubtitleService>
-                        </TitleItem>
-                        <Destaque>
-                            <TextDestaque>Destaque</TextDestaque>
-                        </Destaque>
-                        <Ofert>
-                            <TextDescription>69 Ofertas</TextDescription>
-                        </Ofert>
-                        <Description>
-                            <TextDescription>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.  leia mais</TextDescription>
-                        </Description>
-                    </ItemList>
+                    <TouchableOpacity onPress={openCalendar}>
+
+                        <ContainerInput>
+                            <TextInput
+                                value={valueInput}
+                                keyboardAppearance="dark"
+                                placeholderTextColor="#000"
+                            />
+                            <Icon source={iconDate} />
+                        </ContainerInput>
+                    </TouchableOpacity>
+
+                    {isVisible && (
+                        <CalendarPicker
+                            date={selectedDate}
+                            placeholder="Data de Solicitação"
+                            onDateChange={(date: Date) => {
+                                setSelectedDate(date)
+                                setValueInput(String(date))
+                                setIsVisible(false)
+                            }}
+                        />
+                    )
+                    }
+                    <View style={{marginLeft:65, marginRight:65}}>
+                    <SelectDropdown
+                        defaultButtonText=' '
+                        dropdownIconPosition={'right'}
+                        selectedRowStyle={styles.select}
+                        buttonTextStyle={styles.select}
+                        statusBarTranslucent={false}
+                        renderDropdownIcon={seta}
+                        //renderDropdownIcon={<Entypo name="chevron-small-down" size={24} color="black" />}
+                        disabled={false}
+                        data={countries}
+                        onSelect={(selectedItem, index) => {
+                            console.log(selectedItem, index)
+                        }}
+                        buttonTextAfterSelection={(selectedItem, index) => {
+                            // text represented after item is selected
+                            // if data array is an array of objects then return selectedItem.property to render after item is selected
+                            return selectedItem
+                        }}
+                        rowTextForSelection={(item, index) => {
+                            // text represented for each item in dropdown
+                            // if data array is an array of objects then return item.property to represent item in dropdown
+                            return item
+                        }}
+                    />
+
+</View>
                 </ScrollView>
             </Content>
 
