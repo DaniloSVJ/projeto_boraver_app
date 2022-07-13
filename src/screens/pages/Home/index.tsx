@@ -110,6 +110,7 @@ const { navigate } = useNavigation<Nav>();
             const IdInfluencers =
                 await
                     api.get(`/api/v3/influenciador/${user.id}/`)
+            console.log(IdInfluencers)         
             setIdin(IdInfluencers.data.id)
             api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`,
             ).then((response) => {

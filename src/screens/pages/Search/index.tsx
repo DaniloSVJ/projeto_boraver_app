@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
-import { Text, View, SafeAreaView, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
-import SelectDropdown from 'react-native-select-dropdown'
+import { Text, View, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
 import IconSearch from 'react-native-vector-icons/FontAwesome';
-import { Entypo } from '@expo/vector-icons'; 
+import Button from '../../../components/Button';
+import Select from '../../../components/Select'
+import { compareAsc, format ,parseISO} from 'date-fns'
+import Moment from 'moment';
 
 import CalendarPicker from 'react-native-calendar-picker';
 
@@ -47,36 +49,23 @@ export function Search() {
     function openCalendar() {
         setIsVisible(true);
     }
-    function closeCalendar() {
-        setIsVisible(false);
-    }
+
     const hideDatePicker = () => {
         setDatePickerVisibility(false);
     };
 
-    const handleConfirm = (date: Date) => {
-        console.warn("A date has been picked: ", date);
-        hideDatePicker();
-    };
+
+    const [selectedStatus, setSelectedStatus] = React.useState("");
+    const [selectedRedeSociais, setSelectedRedeSociais] = React.useState("");
+
 
     const { user } = useAuth()
     const { navigate } = useNavigation<Nav>();
-    const [dateSelect, setDateSelect] = useState("")
+
     const formRef = useRef<FormHandles>(null);
     const emailInputRef = useRef<TextInput>(null);
     const [qtdNote, setQtdNote] = useState(0)
-    const dataCb = [
-        { "id": 1, "name": "Nova Ofereta" },
-        { "id": 2, "name": "Em Andamento" },
-        { "id": 3, "name": "Recusado" },
-    ]
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(null);
-    const [items, setItems] = useState([
-        { label: 'Nova Ofereta', value: 'novaoferta' },
-        { label: 'Em Andamento', value: 'andamento' },
-        { label: 'Recusado', value: 'recusado' }
-    ]);
+    const [opt, setOpt] = useState([{}])
     const [titleHeader, setTitleHeader] = useState("Buscar")
     const [displayView, setDisplayView] = useState('none')
     const [displayViewForm, setDisplayViewForm] = useState('flex')
@@ -102,24 +91,7 @@ export function Search() {
             marginLeft: 53,
             marginRight: 53,
         },
-        select: {
-            width: "100%",
 
-            marginTop: 1500,
-            marginLeft: 490,
-            marginRight: 100,
-            color: "#3C2E54",
-            borderWidth: 1,
-            borderStyle: 'solid',
-            borderColor: "rgb(191,191,191)",
-            borderRadius: 5,
-            padding: 200,
-            i: 50
-
-        },
-        selectText: {
-            textAlign: 'right'
-        }
 
     });
     useFocusEffect(
@@ -129,49 +101,21 @@ export function Search() {
 
                 const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
                 setQtdNote(note.data.count)
+                const teste = [{ 'fdf': 'df' }, { 'dfdf': 'dfd' }]
+                setOpt([{ teste }])
+
             }
             load()
         }, [])
     )
 
-    function showDatePicker() {
-        setDatePicker(true);
-    };
-
-    function showTimePicker() {
-        setTimePicker(true);
-    };
-
-
-    const [selectedStatus, setSelectedStatus] = useState();
-    const [selectedRedeSocial, setSelectedRedeSocial] = useState();
-
-
-    const datatttt = ['data1', 'data2', 'data3']
-
-    function testedddd() {
-
-    }
-
-    const [datePicker, setDatePicker] = useState(false);
-
-
-    const [timePicker, setTimePicker] = useState(false);
-    const [show, setShow] = useState(false);
-    const onChange = () => {
-        const currentDate = 'selectedDate';
-        setShow(false);
-        // setDate(currentDate);
-    };
-    const [time, setTime] = useState(new Date(Date.now()));
+    const optStatus = ['Nova Oferta', 'Em Andamento', 'Recusado']
+    const optRedesSociais = ['Instagram', 'Youtube', 'Tiktok']
+    const [filter,setFilter]=useState(false)
     const [valueInput, setValueInput] = useState('')
     const [selectedDate, setSelectedDate] = useState(new Date(Date.now()));
-    const countries = ["Egypt", "Canada", "Australia", "Ireland"]
-    function seta(){
-        return(
-            <Entypo name="chevron-small-down" size={24} color="black" />
-        )
-    }
+
+
     return (
         <Container>
             <Header>
@@ -194,7 +138,7 @@ export function Search() {
                     <RectButton onPress={() => navigate("Search", {})}>
                         <ViewSearch>
 
-                            <IconSearch name={'search'} size={22} color={'#fff'} />
+                            <IconSearch name={'search'} size={22} color={'#5E448A'} />
                         </ViewSearch>
                     </RectButton>
                     <RectButton onPress={() => navigate("Notifications", {})}>
@@ -225,40 +169,42 @@ export function Search() {
                             date={selectedDate}
                             placeholder="Data de Solicitação"
                             onDateChange={(date: Date) => {
+                                
+                                const firstDate = parseISO(String(date));
+                                let dt = Moment(date).format('DD/MM/YYYY')
+                                let dt2  = Moment(date).
                                 setSelectedDate(date)
-                                setValueInput(String(date))
+                                setValueInput(String(dt))
                                 setIsVisible(false)
                             }}
                         />
                     )
                     }
-                    <View style={{marginLeft:65, marginRight:65}}>
-                    <SelectDropdown
-                        defaultButtonText=' '
-                        dropdownIconPosition={'right'}
-                        selectedRowStyle={styles.select}
-                        buttonTextStyle={styles.select}
-                        statusBarTranslucent={false}
-                        renderDropdownIcon={seta}
-                        //renderDropdownIcon={<Entypo name="chevron-small-down" size={24} color="black" />}
-                        disabled={false}
-                        data={countries}
-                        onSelect={(selectedItem, index) => {
-                            console.log(selectedItem, index)
-                        }}
-                        buttonTextAfterSelection={(selectedItem, index) => {
-                            // text represented after item is selected
-                            // if data array is an array of objects then return selectedItem.property to render after item is selected
-                            return selectedItem
-                        }}
-                        rowTextForSelection={(item, index) => {
-                            // text represented for each item in dropdown
-                            // if data array is an array of objects then return item.property to represent item in dropdown
-                            return item
-                        }}
+                    <Select
+                        options={optStatus}
+                        onChangeSelect={setSelectedStatus}
                     />
+                    <Select
+                        options={optRedesSociais}
+                        onChangeSelect={setSelectedRedeSociais}
+                    />
+                    <TouchableOpacity 
+                        style={{marginLeft: 54}}
+                        onPress={()=>''}>
+                        <Text>Filtrar por ordem alfabética</Text>
+                    </TouchableOpacity>
+                    <View style={{ marginTop: '20vh', marginLeft: 54, marginRight: 54 }}>
+                        <Button
+                            color={"#FFF"}
+                            background={"#3C2E54"}
+                            bordercolor={"#3C2E54"}
+                        >
+                            Fltrar
+                        </Button>
+                    </View>
 
-</View>
+
+
                 </ScrollView>
             </Content>
 
