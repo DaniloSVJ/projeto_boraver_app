@@ -18,12 +18,24 @@ export const Content = styled.View`
     margin-top: -20px;
     
 `
+export const ViewLeftHerder = styled.View `
+    display:flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    
+
+`
+export const ViewIcone = styled.View`
+    margin-top: 30px;
+    margin-left: 33px;
+
+`
 export const ItemList = styled.View`
     width: 100%;
     margin-top: 23px;
     margin-bottom: 17px;
-    padding-right: 29;
-    padding-left: 29;
+    padding-right: 1000px;
+    padding-left: 29px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -36,10 +48,27 @@ export const TitleItem = styled.View`
     justify-content: space-between;
 
 `
+export const TextWeekBody = styled.Text`
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 31px;
+   
+`
+
+export const ViewContentBody = styled.View`
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-right:63px;
+
+`
 export const ViewContentTitleItem = styled.View`
+    margin-top:10px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    padding-right:63px;
 
 `
 interface propsImage {
@@ -55,28 +84,31 @@ export const Image = styled.Image<propsImage>`
     margin-right: 13px;
     
 `
-export const TitleService = styled.Text`
+export const AutorText = styled.Text`
     font-family: 'Montserrat_500Medium';
     font-style: normal;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
+    line-height: 17px;
+    margin-right:5px;
        
 `
-export const SubtitleService = styled.Text`
+export const TextTime = styled.Text`
     font-family: 'Montserrat_500Medium';
     color: #DF8747;
     font-style: normal;
     font-weight: 500;
-    font-size: 11px;
+    font-size: 13px;
+    line-height: 17px;
+    margin-right:5px;
       
 `
-export const Destaque = styled.View`
-    margin-top: 18px;
-    padding: 2px;
-    background-color: #DF8747;
-    width: 75px;
-    margin-bottom:10px;
-    border-radius:10px;
+export const TextNoti = styled.View`
+    
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-right:100px;
+    padding-right:1000px;
 `
 export const TextDestaque = styled.Text`
     font-family: 'Montserrat_500Medium';
@@ -90,11 +122,13 @@ export const TextDestaque = styled.Text`
 `
 export const Description = styled.View``
 export const TextDescription = styled.Text`
+    width: 'auto;
     font-family: 'Montserrat_500Medium';
     font-style: normal;
     font-weight: 500;
-    font-size: 10px;
-    line-height: 15px;
+    font-size: 13px;
+    padding-right: 5px;
+    line-height: 17px;
     color: #373737;
 `
 export const TextFooter = styled.Text`
@@ -132,14 +166,14 @@ export const WelcomeText = styled.Text`
 
 `
 export const HerderText2 = styled.Text`
-    font-family: 'Montserrat_200ExtraLight';
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 11px;
-    margin-top: 2px;
-    margin-left: 28px;
-    color: #FFFFFF;
+font-family: 'Montserrat_500Medium';
+font-style: normal;
+font-weight: 700;
+font-size: 19px;
+line-height: 31px;
+margin-top: 28px;
+margin-left: 16px;
+color: #fff;
 `
 export const Header = styled.View`
     background-color:  #3C2E54;

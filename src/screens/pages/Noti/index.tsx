@@ -3,34 +3,35 @@ import React, { useState, useCallback, useEffect } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native';
 
+import { FontAwesome } from '@expo/vector-icons';
 import { RectButton } from 'react-native-gesture-handler';
 import IconSearch from 'react-native-vector-icons/FontAwesome';
 import NotificationBell from '../../../components/NotificationBell'
 import { useAuth } from '../../../hooks/auth'
 import {
-    TitleService,
+    AutorText,
     ViewContentTitleItem,
     ViewIcons,
     ViewSearch,
     ViewBell,
-    TextFooter,
+    ViewContentBody,
 
-    ViewTime,
+    TextWeekBody,
     Image,
     TitleItem,
 
-    Footer,
-    Destaque,
+    ViewIcone,
+    TextNoti,
     TextDestaque,
     Description,
     TextDescription,
-    SubtitleService,
+    TextTime,
     ItemList,
     Content,
     HerderText2,
     Container,
     Header,
-    WelcomeText,
+    ViewLeftHerder,
     ViewVazio,
     ImagemVazio,
     TextVazioTitle,
@@ -102,238 +103,188 @@ type Nav = {
 export function Noti() {
     const { user } = useAuth()
 
-const { navigate } = useNavigation<Nav>();
+    const { navigate } = useNavigation<Nav>();
 
 
-    // const [bookmark, setBookmark] = useState(false)
+    const [bookmark, setBookmark] = useState(false)
 
-    // useEffect(() => {
-    //     setService([])
-    //     async function load() {
+    useEffect(() => {
+        setService([])
+        async function load() {
 
-    //         const IdInfluencers = 
-    //         await 
-    //         api.get(`/api/v3/influenciador/${user.id}/`)
-    //         setIdin(IdInfluencers.data.id)
-    //         api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`, 
-    //           ).then((response) => {
-    //             setService([response.data]);
-    //             setBookmark(response.data.favorite)
-    //             console.log(services)
-    //         }).catch(function (error) {
-    //             setService([])
-    //         });
+            const IdInfluencers =
+                await
+                    api.get(`/api/v3/influenciador/${user.id}/`)
+            setIdin(IdInfluencers.data.id)
+            api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`,
+            ).then((response) => {
+                setService([response.data]);
+                setBookmark(response.data.favorite)
+                console.log(services)
+            }).catch(function (error) {
+                setService([])
+            });
 
-    //         console.log(user.id)
+            console.log(user.id)
 
-    //     }
-    //     load()
-    // }, [bookmark])
-    // const [qtdNote,setQtdNote]=useState(0)    
-    // const [render, setrender] = useState(false)
-    // const [services, setService] = useState<solicitationI[]>([])
-    // const [idin, setIdin] = useState(0)
+        }
+        load()
+    }, [bookmark])
+    const [qtdNote, setQtdNote] = useState(0)
+    const [render, setrender] = useState(false)
+    const [services, setService] = useState<solicitationI[]>([])
+    const [idin, setIdin] = useState(0)
 
-    // useFocusEffect(
-    //     useCallback(() => {
-    //         setService([])
-    //         async function load() {
-    //             const token = localStorage.getItem('@BoraVer:token');
-    //             const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
-    //             setIdin(IdInfluencers.data.id)
-    //             await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`, {
+    useFocusEffect(
+        useCallback(() => {
+            setService([])
+            async function load() {
+                const token = localStorage.getItem('@BoraVer:token');
+                const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
+                setIdin(IdInfluencers.data.id)
+                await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`, {
 
-    //             }).then((response) => {
-    //                 setService([response.data]);
-    //                 setBookmark(response.data.favorite)
-    //                 console.log(services)
-    //             }).catch(function (error) {
-    //                 setService([])
-    //             });
+                }).then((response) => {
+                    setService([response.data]);
+                    setBookmark(response.data.favorite)
+                    console.log(services)
+                }).catch(function (error) {
+                    setService([])
+                });
 
-    //             const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
+                const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
 
-    //             setQtdNote(note.data.count)
+                setQtdNote(note.data.count)
 
-    //         }
-    //         load()
-    //     }, [bookmark]),
-    // );
-    // const styles = StyleSheet.create({
-    //     favorite: {
-    //         marginLeft: 5
-    //     },
-    // })
-    // async function addfavorite(data: addPut, favorite: boolean) {
-
-
-    //     //api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    //     await api.put(`/api/v3/solicitacao/${data.id}/`, {
-    //         id: data.id,
-    //         cliente: data.cliente,
-    //         influencidor: data.influencidor,
-    //         descricao_servico: data.descricao_servico,
-    //         valor: data.cliente,
-    //         status: data.status,
-    //         pendente: data.pendente,
-    //         link_media: data.link_media,
-    //         favorite: favorite,
-    //         maiorvalor: data.maiorvalor,
-    //         menorvalor: data.menorvalor,
-    //         destaque: data.destaque,
-    //         valorads: data.valorads,
-    //         estado: data.estado,
-    //         cidade: data.cidade,
-    //         carater: data.carater,
-    //         criacao: data.criacao
-
-    //     }
-
-    //     )
-    //     await api.get(`/api/v3/solicitacao_servico/${idin}/`,)
-    //         .then((response) => {
-    //             setService([response.data]);
-    //             console.log(services)
-    //         }).catch(function (error) {
-    //             console.error(error)
-    //             setService([])
-    //         });
-    //     if (render == true) {
-    //         setrender(false)
-    //     } else { setrender(true) }
-
-    // }
+            }
+            load()
+        }, [bookmark]),
+    );
+    const styles = StyleSheet.create({
+        favorite: {
+            marginLeft: 5
+        },
+    })
 
     return (
 
         <Container>
+
+            {/*============== CABEÇALHO*/}
             <Header>
-
-                <View>
-                    <WelcomeText>
-
-                    </WelcomeText>
-                    <HerderText2>
-                        Confira os últimos jobs adicionados
-                    </HerderText2>
-                </View>
+                {/*============== Icone de voltar*/}
+                <ViewLeftHerder>
+                    <RectButton onPress={() => navigate("Home", {})}>
+                        <ViewIcone>
+                            <FontAwesome name="angle-left" size={24} color="white" />
+                        </ViewIcone>
+                    </RectButton>
+                    <View>
+                        <HerderText2>
+                            Notificações
+                        </HerderText2>
+                    </View>
+                </ViewLeftHerder>
                 <ViewIcons>
-                <RectButton onPress={() => navigate("Notifications", {})}>
+                    {/*============== explorer*/}
+                    <RectButton onPress={() => navigate("Notifications", {})}>
                         <ViewSearch>
 
                             <IconSearch name={'search'} size={22} color={'#fff'} />
                         </ViewSearch>
                     </RectButton>
+                    {/*============== sino noticações*/}
                     <RectButton onPress={() => navigate("Notifications", {})}>
                         <ViewBell >
                             <NotificationBell qtd={qtdNote} />
                         </ViewBell>
                     </RectButton>
-                    </ViewIcons>
+                </ViewIcons>
             </Header>
 
             <Content>
                 <ScrollView>
 
-                    {/* {services.length > 0 ? services.map((s, key) => (
-                        <ItemList key={s.id}>
-                            <TitleItem>
+                    {/* {services.length > 0 ? services.map((s, key) => ( */}
+                    <ItemList>
+                        <TitleItem>
+
+                            <ViewContentBody>
+                                <TextWeekBody>Hoje</TextWeekBody>
                                 <ViewContentTitleItem>
                                     <View>
-                                        <Image widthprops={"35px"} heightprops={"35px"} source={Img} />
+                                        <Image
+                                            widthprops={"35px"}
+                                            heightprops={"35px"}
+                                            source={Img}
+                                        />
                                     </View>
-                                    <View>
-                                        <TitleService>{'dfdfdfdf'}</TitleService>
-                                        <SubtitleService>Orçamento R${String(s.menorvalor)} - R${String(s.maiorvalor)}</SubtitleService>
-                                    </View>
+                                    <TextNoti>
+
+                                        <View style={{ width: '90vw', marginLeft: 2, paddingRight: 54 }}>
+                                            <TextDescription><AutorText>Trainer</AutorText>enviou uma nova mensagemem Divulgação de curso presencial.<TextTime>2d</TextTime>
+                                            </TextDescription>
+                                        </View>
+                                    </TextNoti>
                                 </ViewContentTitleItem>
+                                <ViewContentTitleItem>
+                                    <View>
+                                        <Image
+                                            widthprops={"35px"}
+                                            heightprops={"35px"}
+                                            source={Img}
+                                        />
+                                    </View>
+                                    <TextNoti>
 
-                                <View style={styles.favorite}>
-                                    {
+                                        <View style={{ width: '90vw', marginLeft: 2, paddingRight: 54 }}>
+                                            <TextDescription><AutorText>Sérgio Henrique </AutorText>Curtiu o seu comentário:Tudo bem. Obrigado<TextTime>2d</TextTime>
+                                            </TextDescription>
+                                        </View>
+                                    </TextNoti>
+                                </ViewContentTitleItem>
+                                <TextWeekBody>Esta semana</TextWeekBody>
+                                <ViewContentTitleItem>
+                                    <View>
+                                        <Image
+                                            widthprops={"35px"}
+                                            heightprops={"35px"}
+                                            source={Img}
+                                        />
+                                    </View>
+                                    <TextNoti>
 
-                                        <RectButton
-                                            onPress={() => {
-                                                async function alterar() {
-                                                    function addf() {
-                                                        if (bookmark == false) {
-                                                            setBookmark(true)
-                                                            addfavorite(s, true)
-                                                        } else {
-                                                            setBookmark(false)
-                                                            addfavorite(s, false)
-                                                        }
+                                        <View style={{ width: '90vw', marginLeft: 2, paddingRight: 54 }}>
+                                            <TextDescription><AutorText>Trainer</AutorText>enviou uma nova mensagemem Divulgação de curso presencial.<TextTime>2d</TextTime>
+                                            </TextDescription>
+                                        </View>
+                                    </TextNoti>
+                                </ViewContentTitleItem>
+                                <ViewContentTitleItem>
+                                    <View>
+                                        <Image
+                                            widthprops={"35px"}
+                                            heightprops={"35px"}
+                                            source={Img}
+                                        />
+                                    </View>
+                                    <TextNoti>
 
-                                                    }
-                                                    await addf()
-
-                                                }
-                                                alterar()
-                                            }
-                                            }>
-
-                                            {[
-
-                                                bookmark == false
-                                                    ? <Image key={s.id} widthprops={"17px"} heightprops={"17px"} source={iconeFavorite} />
-                                                    : <Image key={s.id} widthprops={"17px"} heightprops={"17px"} source={iconeFavoriteTrue} />
-
-                                            ]}
-
-                                        </RectButton>
-
-                                    }
-
-                                </View>
-                            </TitleItem>
-                            {s.destaque == true ? (
-                                <Destaque>
-                                    <TextDestaque>Destaque</TextDestaque>
-                                </Destaque>)
-                                : null
-                            }
-
-                            <Description>
-                                <TextDescription>{s.descricao_servico}</TextDescription>
-                            </Description>
-                            <Footer>
-                                <View>
-                                    <TextFooter>Fortaleza  •  Serviços  •  2+</TextFooter>
-                                </View>
-                                <ViewTime>
-                                    <TextDescription>2 horas atrás</TextDescription>
-                                </ViewTime>
-                            </Footer>
-                        </ItemList>
-                    )) :
-                        <ViewVazio>
-
-                            <View>
-                                <ImagemVazio source={JobsVazio} />
-                            </View>
-                            <View>
-                                <TextVazioTitle>
-                                    Você não tem nenhuma solicitação de serviço
-
-                                </TextVazioTitle>
-                                <TextVazioSubTitle>
-                                    Verifique se você seguiu a regra de ativação da conta. Ou sua conta ainda está em processo de ativação pela equipe do Boraver Influencer
-                                </TextVazioSubTitle>
-                            </View>
-                        </ViewVazio>
+                                        <View style={{ width: '90vw', marginLeft: 2, paddingRight: 54 }}>
+                                            <TextDescription><AutorText>Sérgio Henrique </AutorText>Curtiu o seu comentário:Tudo bem. Obrigado<TextTime>2d</TextTime>
+                                            </TextDescription>
+                                        </View>
+                                    </TextNoti>
+                                </ViewContentTitleItem>
+                            </ViewContentBody>
 
 
-                    }
+                        </TitleItem>
 
-                    <View>
-                        <Text> </Text>
-                        <Text> </Text>
-                        <Text> </Text>
-                        <Text> </Text>
-                        <Text> </Text>
-                        <Text> </Text>
-                        <Text> </Text>
-                        <Text> </Text>
-                    </View> */}
+
+
+
+                    </ItemList>
                 </ScrollView>
             </Content>
 

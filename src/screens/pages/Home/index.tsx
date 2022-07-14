@@ -158,6 +158,7 @@ export function Home() {
     return (
 
         <Container>
+{/*============== CABEÇALHO*/}            
             <Header>
 
                 <View>
@@ -169,13 +170,15 @@ export function Home() {
                     </HerderText2>
                 </View>
                 <ViewIcons>
+{/*============== Lupa Explorer*/}
                     <RectButton onPress={() => navigate("Search", {})}>
                         <ViewSearch>
 
                             <IconSearch name={'search'} size={22} color={'#fff'} />
                         </ViewSearch>
                     </RectButton>
-                    <RectButton onPress={() => navigate("OfferDetail", {})}>
+{/*============== Sino Notificações*/}
+                    <RectButton onPress={() => navigate("Notifications", {})}>
                         <ViewBell >
                             <NotificationBell qtd={qtdNote} />
                         </ViewBell>
@@ -184,11 +187,12 @@ export function Home() {
             </Header>
 
             <Content>
+{/*============== CORPO DA MENSAGEM*/}                    
                 <ScrollView>
                    
 
                     {services.length>0 ? services.map((s, key) =>(
-                       
+                       <TouchableOpacity onPress={()=>navigate('OfferDetail',{})}>
                         <ItemList key={key}>    
                             <TitleItem>
                                 <ViewContentTitleItem>
@@ -230,6 +234,7 @@ export function Home() {
                                 </ViewTime>
                             </Footer>
                         </ItemList>
+                        </TouchableOpacity> 
                     )) :
                         <ViewVazio>
 

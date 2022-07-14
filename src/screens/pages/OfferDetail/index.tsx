@@ -66,11 +66,13 @@ interface SearchFormData {
 }
 type Nav = {
     navigate: (value: string, { }) => void;
+    
 }
 
 export function OfferDetail() {
     const { user } = useAuth()
     const { navigate } = useNavigation<Nav>();
+    
     const [dateSelect, setDateSelect] = useState("")
     const formRef = useRef<FormHandles>(null);
     const emailInputRef = useRef<TextInput>(null);
@@ -159,7 +161,7 @@ export function OfferDetail() {
         useCallback(() => {
             async function load() {
                 const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
-
+                const solicitDetail = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
                 const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
                 setQtdNote(note.data.count)
             }
@@ -316,7 +318,16 @@ export function OfferDetail() {
                         </ViewButton>
 
                     </ItemList>
-
+                    <View>
+                        <Text> </Text>
+                        <Text> </Text>
+                        <Text> </Text>
+                        <Text> </Text>
+                        <Text> </Text>
+                        <Text> </Text>
+                        <Text> </Text>
+                        <Text> </Text>
+                    </View>
                 </ScrollView>
             </Content>
 

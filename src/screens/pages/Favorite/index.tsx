@@ -99,17 +99,18 @@ const Favorite: React.FC = () => {
     const [idin, setIdin] = useState(0)
     useFocusEffect(
         useCallback(() => {
-            async function load() {
-                const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
-                await setIdin(IdInfluencers.data.id)
-                const solicitacao = await api.get(`/api/v3/solicitacao_servico_fa/${IdInfluencers.data.id}/`)
-                console.log('ddddddddddddddddddddddddddddddddddddddddddddddddddd')
+          async function load() {
+            const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
+            await setIdin(IdInfluencers.data.id)
+            const solicitacao = 
+                await api.get(`/api/v3/solicitacao_servico_fa/${IdInfluencers.data.id}/`)
+            console.log('ddddddddddddddddddddddddddddddddddddddddddddddddddd')
 
-                console.log(solicitacao)
-                console.log('pppppppppppppppppppppppppp')
+            console.log(solicitacao)
+            console.log('pppppppppppppppppppppppppp')
 
-                setService([solicitacao.data]);
-        
+            setService(solicitacao.data.results);
+    
                 const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
 
                 setQtdNote(note.data.count)

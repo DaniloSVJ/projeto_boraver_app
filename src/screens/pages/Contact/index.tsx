@@ -10,6 +10,8 @@ import { useAuth } from '../../../hooks/auth'
 import { Form } from '@unform/mobile'
 import { Picker } from '@react-native-picker/picker';
 import { FormHandles } from "@unform/core"
+import Select from '../../../components/Select'
+
 
 import {
 
@@ -84,7 +86,7 @@ export function Contact() {
 
     const [bookmark, setBookmark] = useState(false)
 
-    const [selectedData, setSelectedData] = useState(false)
+    const [selectedData, setSelectedData] = useState('')
 
     useEffect(() => {
         setService([])
@@ -184,6 +186,7 @@ export function Contact() {
         } else { setrender(true) }
 
     }
+    const optContact=['Dúvida','Reclamação','Sugestão']
     async function alterar(val: boolean) {
         navigate("Contact2",{})
 
@@ -246,19 +249,10 @@ export function Contact() {
                     <ViewForm>
                         <SubTitleForm>Seu feedback é sobre o quê?</SubTitleForm>
                         <Form ref={formRef} onSubmit={alterar}>
-                            <Picker
-                                style={styled.select}
-                                itemStyle={styled.select}
-                                placeholder="Selecione uma opção"
-                                selectedValue={selectedData}
-                                onValueChange={(itemValue) =>
-                                    setSelectedData(itemValue)
-                                }>
-
-                                <Picker.Item label="Dúvida" value="duvida" />
-                                <Picker.Item label="Reclamação" value="reclamacao" />
-                                <Picker.Item label="Sugestão" value="sugestao" />
-                            </Picker>
+                            <Select
+                                options={optContact}
+                                onChangeSelect={setSelectedData}
+                            />
                             <TextInput
                                 style={{marginTop:16}}
                                 underlineColorAndroid="transparent"
