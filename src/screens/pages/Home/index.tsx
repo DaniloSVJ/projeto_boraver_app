@@ -1,6 +1,6 @@
 
 import React, { useState, useCallback, useEffect } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native';
 import IconSearch from 'react-native-vector-icons/FontAwesome';
 import { RectButton } from 'react-native-gesture-handler';
@@ -48,105 +48,70 @@ import { ScrollView } from 'react-native-gesture-handler';
 import api from '../../../service/api'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { number } from 'yup';
 
 
 interface solicitationI {
-    id: number;
-    cliente: number;
-    influencidor: number;
-    descricao_servico: string;
-    valor: number;
-    status: string;
-    pendente: boolean;
-    link_media: string;
-    favorite: boolean;
-    maiorvalor: number;
-    menorvalor: number;
-    destaque: boolean;
-    valorads: number;
-    estado: string;
-    cidade: string;
-    carater: string;
-    criacao: string;
+    id: number,
+    cliente: number,
+    influencidor:number,
+    titulo:string,
+    descricao_servico:string,
+    valor:number,
+    status:string,
+    pendente :string,
+    link_media:string,
+    favorite :boolean,
+    maiorvalor:number,
+    menorvalor:number,
+    destaque :boolean,
+    valorads :number,
+    estado :string,
+    cidade :string,
+    carater :string,
+    criacao :string,
 }
-type addPut = {
-    id: number;
-    cliente: number;
-    influencidor: number;
-    descricao_servico: string;
-    valor: number;
-    status: string;
-    pendente: boolean;
-    link_media: string;
-    favorite: boolean;
-    maiorvalor: number;
-    menorvalor: number;
-    destaque: boolean;
-    valorads: number;
-    estado: string;
-    cidade: string;
-    carater: string;
-    criacao: string;
-}
-interface teste {
-    id: number;
-    name: string;
 
-}
 type Nav = {
     navigate: (value: string, { }) => void;
 }
 
 export function Home() {
     const { user } = useAuth()
-const { navigate } = useNavigation<Nav>();
+    const { navigate } = useNavigation<Nav>();
 
     const [bookmark, setBookmark] = useState(false)
 
-    useEffect(() => {
-        setService([])
-        async function load() {
-
-            const IdInfluencers =
-                await
-                    api.get(`/api/v3/influenciador/${user.id}/`)
-            console.log(IdInfluencers)         
-            setIdin(IdInfluencers.data.id)
-            api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`,
-            ).then((response) => {
-                setService([response.data]);
-                setBookmark(response.data.favorite)
-                console.log(services)
-            }).catch(function (error) {
-                setService([])
-            });
-
-            console.log(user.id)
-
-        }
-        load()
-    }, [bookmark])
+   
     const [qtdNote, setQtdNote] = useState(0)
     const [render, setrender] = useState(false)
     const [services, setService] = useState<solicitationI[]>([])
     const [idin, setIdin] = useState(0)
 
     useFocusEffect(
-        useCallback(() => {
+    useCallback(() => {
             setService([])
             async function load() {
-                const token = localStorage.getItem('@BoraVer:token');
+                
                 const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
                 setIdin(IdInfluencers.data.id)
-                await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`, {
+                // setService([response.data.results]);
+                // setBookmark(response.data.results.favorite)
+                const solicitacao = await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`)
 
-                }).then((response) => {
-                    setService([response.data]);
-                    setBookmark(response.data.favorite)
-                    console.log(services)
-                }).catch(function (error) {
-                    setService([])
-                });
+
+                setService(solicitacao.data.results);
+                // setService([solicitacao.data]);
+                // .then((response) => {
+                //     setService([response.data.results]);
+                //     setBookmark(response.data.results.favorite)
+                //     console.log("============dfdfdfdfdf")
+                //     console.log(response.data.results)
+                //     console.log("dddddddddd===========dfdfdfdfdf")
+                // }).catch(function (error) {
+                //     console.log("============dfdfdfdfdf")
+                //     setService([])
+                // });
 
                 const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
 
@@ -154,42 +119,31 @@ const { navigate } = useNavigation<Nav>();
 
             }
             load()
-        }, [bookmark]),
-    );
+        }, [bookmark])
+   );
     const styles = StyleSheet.create({
         favorite: {
             marginLeft: 5
+
         },
     })
-    async function addfavorite(data: addPut, favorite: boolean) {
-
-
+    async function addfavorite(idS:number,sfav:boolean) {
+        let alter = false
+        if(sfav===false){
+            alter=true
+        }else if(sfav===true){
+            alter=false
+        }    
         //api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        await api.put(`/api/v3/solicitacao/${data.id}/`, {
-            id: data.id,
-            cliente: data.cliente,
-            influencidor: data.influencidor,
-            descricao_servico: data.descricao_servico,
-            valor: data.cliente,
-            status: data.status,
-            pendente: data.pendente,
-            link_media: data.link_media,
-            favorite: favorite,
-            maiorvalor: data.maiorvalor,
-            menorvalor: data.menorvalor,
-            destaque: data.destaque,
-            valorads: data.valorads,
-            estado: data.estado,
-            cidade: data.cidade,
-            carater: data.carater,
-            criacao: data.criacao
-
+     
+        await api.patch(`/api/v3/solicitacao/${idS}/`, {
+            favorite: alter,
         }
 
         )
-        await api.get(`/api/v3/solicitacao_servico/${idin}/`,)
+        await api.get(`/api/v3/solicitacao_servico/${idin}/`)
             .then((response) => {
-                setService([response.data]);
+                setService(response.data.results);
                 console.log(services)
             }).catch(function (error) {
                 console.error(error)
@@ -231,57 +185,34 @@ const { navigate } = useNavigation<Nav>();
 
             <Content>
                 <ScrollView>
+                   
 
-
-                    {services.length > 0 ? services.map((s, key) => (
-                        <ItemList key={s.id}>
+                    {services.length>0 ? services.map((s, key) =>(
+                       
+                        <ItemList key={key}>    
                             <TitleItem>
                                 <ViewContentTitleItem>
                                     <View>
                                         <Image widthprops={"35px"} heightprops={"35px"} source={Img} />
                                     </View>
                                     <View>
-                                        <TitleService>{'dfdfdfdf'}</TitleService>
+                                        <TitleService>{s.titulo}</TitleService>
                                         <SubtitleService>Orçamento R${String(s.menorvalor)} - R${String(s.maiorvalor)}</SubtitleService>
                                     </View>
                                 </ViewContentTitleItem>
+
 
                                 <View style={styles.favorite}>
                                     {
 
                                         <RectButton
-                                            onPress={() => {
-                                                async function alterar() {
-                                                    function addf() {
-                                                        if (bookmark == false) {
-                                                            setBookmark(true)
-                                                            addfavorite(s, true)
-                                                        } else {
-                                                            setBookmark(false)
-                                                            addfavorite(s, false)
-                                                        }
-
-                                                    }
-                                                    await addf()
-
-                                                }
-                                                alterar()
-                                            }
-                                            }>
-
-                                            {[
-
-                                                bookmark == false
-                                                    ? <Image key={s.id} widthprops={"17px"} heightprops={"17px"} source={iconeFavorite} />
-                                                    : <Image key={s.id} widthprops={"17px"} heightprops={"17px"} source={iconeFavoriteTrue} />
-
-                                            ]}
-
+                                            onPress={() => { addfavorite(s.id, s.favorite)}}>
+                                                     <Image  key={key} widthprops={"17px"} heightprops={"17px"} source={s.favorite== false?iconeFavorite:iconeFavoriteTrue} />
                                         </RectButton>
 
                                     }
 
-                                </View>
+                                </View>                               
                             </TitleItem>
 
 
@@ -289,7 +220,7 @@ const { navigate } = useNavigation<Nav>();
                                 <TextDescription>{s.descricao_servico}</TextDescription>
                             </Description>
                             <Footer>
-                                <View>
+                                <View style={{ marginTop:3}}>
                                     <TextFooter>Treinamento</TextFooter>
                                 </View>
                                 <ViewTime>

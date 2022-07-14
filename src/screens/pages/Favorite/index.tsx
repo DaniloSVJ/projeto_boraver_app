@@ -62,42 +62,24 @@ interface RepositoriesForms {
     idIn: string;
 }
 interface solicitationI {
-    id: number;
-    cliente: number;
-    influencidor: number;
-    descricao_servico: string;
-    valor: number;
-    status: string;
-    pendente: boolean;
-    link_media: string;
-    favorite: boolean;
-    maiorvalor: number;
-    menorvalor: number;
-    destaque: boolean;
-    valorads: number;
-    estado: string;
-    cidade: string;
-    carater: string;
-    criacao: string;
-}
-type addPut = {
-    id: number;
-    cliente: number;
-    influencidor: number;
-    descricao_servico: string;
-    valor: number;
-    status: string;
-    pendente: boolean;
-    link_media: string;
-    favorite: boolean;
-    maiorvalor: number;
-    menorvalor: number;
-    destaque: boolean;
-    valorads: number;
-    estado: string;
-    cidade: string;
-    carater: string;
-    criacao: string;
+    id: number,
+    cliente: number,
+    influencidor:number,
+    titulo:string,
+    descricao_servico:string,
+    valor:number,
+    status:string,
+    pendente :string,
+    link_media:string,
+    favorite :boolean,
+    maiorvalor:number,
+    menorvalor:number,
+    destaque :boolean,
+    valorads :number,
+    estado :string,
+    cidade :string,
+    carater :string,
+    criacao :string,
 }
 type Nav = {
     navigate: (value: string, { }) => void;
@@ -108,7 +90,7 @@ const Favorite: React.FC = () => {
         id: 0,
     }])
     const { navigate } = useNavigation<Nav>();
-
+    const [render, setrender] = useState(false)
     const token = localStorage.getItem('@BoraVer:token')
     const [qtdNote, setQtdNote] = useState(0)
     const [bookmark, setBookmark] = useState(false)
@@ -120,18 +102,14 @@ const Favorite: React.FC = () => {
             async function load() {
                 const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
                 await setIdin(IdInfluencers.data.id)
+                const solicitacao = await api.get(`/api/v3/solicitacao_servico_fa/${IdInfluencers.data.id}/`)
+                console.log('ddddddddddddddddddddddddddddddddddddddddddddddddddd')
 
-                await api.get(`/api/v3/solicitacao_servico_fa/${IdInfluencers.data.id}/`, {
+                console.log(solicitacao)
+                console.log('pppppppppppppppppppppppppp')
 
-                }).then((response) => {
-                    setService([response.data]);
-                    setBookmark(response.data.favorite)
-                }).catch(function (error) {
-                    console.error(error)
-                    if (error.status == 404) {
-                        setService([])
-                    }
-                });
+                setService([solicitacao.data]);
+        
                 const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
 
                 setQtdNote(note.data.count)
@@ -145,42 +123,31 @@ const Favorite: React.FC = () => {
             marginLeft: 5
         },
     })
-    async function addfavorite(data: addPut, favorite: boolean) {
-
-        console.log('veio aqui como ' + favorite)
-
+    async function addfavorite(idS: number, sfav: boolean) {
+        let alter = false
+        if (sfav === false) {
+            alter = true
+        } else if (sfav === true) {
+            alter = false
+        }
         //api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        await api.put(`/api/v3/solicitacao/${data.id}/`, {
-            id: data.id,
-            cliente: data.cliente,
-            influencidor: data.influencidor,
-            descricao_servico: data.descricao_servico,
-            valor: data.cliente,
-            status: data.status,
-            pendente: data.pendente,
-            link_media: data.link_media,
-            favorite: favorite,
-            maiorvalor: data.maiorvalor,
-            menorvalor: data.menorvalor,
-            destaque: data.destaque,
-            valorads: data.valorads,
-            estado: data.estado,
-            cidade: data.cidade,
-            carater: data.carater,
-            criacao: data.criacao
 
+        await api.patch(`/api/v3/solicitacao/${idS}/`, {
+            favorite: alter,
         }
 
         )
-        await api.get(`/api/v3/solicitacao_servico_fa/${idin}/`,)
+        await api.get(`/api/v3/solicitacao_servico_fa/${idin}/`)
             .then((response) => {
-                setService([response.data]);
-
-            })
-            .catch(function (error) {
+                setService(response.data.results);
+               
+            }).catch(function (error) {
+                console.error(error)
                 setService([])
-            })
-
+            });
+        if (render == true) {
+            setrender(false)
+        } else { setrender(true) }
 
     }
     function renderizar() {
@@ -218,82 +185,50 @@ const Favorite: React.FC = () => {
 
             <Content>
                 <ScrollView >
-                    {
-                        services.length > 0 ? services.map((s, key) => (
-                            (
+                {services.length >0 ? services.map((s, key) =>(
+                       
+                       <ItemList key={key}>    
+                           <TitleItem>
+                               <ViewContentTitleItem>
+                                   <View>
+                                       <Image widthprops={"35px"} heightprops={"35px"} source={Img} />
+                                   </View>
+                                   <View>
+                                       <TitleService>{s.titulo}</TitleService>
+                                       <SubtitleService>Orçamento R${String(s.menorvalor)} - R${String(s.maiorvalor)}</SubtitleService>
+                                   </View>
+                               </ViewContentTitleItem>
 
-                                <ItemList key={s.id}>
-                                    <TitleItem>
-                                        <ViewContentTitleItem>
-                                            <View>
-                                                <Image widthprops={"35px"} heightprops={"35px"} source={Img} />
-                                            </View>
-                                            <View>
-                                                <TitleService>{'dfdfdfdf'}</TitleService>
-                                                <SubtitleService>Orçamento R${String(s.menorvalor)} - R${String(s.maiorvalor)}</SubtitleService>
-                                            </View>
-                                        </ViewContentTitleItem>
 
-                                        <View style={styles.favorite}>
-                                            {
+                               <View style={styles.favorite}>
+                                   {
 
-                                                <RectButton
-                                                    onPress={() => {
-                                                        async function alterar() {
-                                                            async function addf() {
-                                                                if (bookmark == false) {
-                                                                    await setBookmark(true)
-                                                                    await console.log('pra ser true: ' + bookmark)
-                                                                    addfavorite(s, true)
-                                                                } else {
-                                                                    await setBookmark(false)
-                                                                    await console.log('pra ser false: ' + bookmark)
-                                                                    addfavorite(s, false)
-                                                                }
+                                       <RectButton
+                                           onPress={() => { addfavorite(s.id, s.favorite)}}>
+                                                    <Image  key={key} widthprops={"17px"} heightprops={"17px"} source={s.favorite== false?iconeFavorite:iconeFavoriteTrue} />
+                                       </RectButton>
 
-                                                            }
-                                                            await addf()
-                                                            console.log('e agora é : ' + bookmark)
+                                   }
 
-                                                        }
-                                                        alterar()
-                                                    }
-                                                    }>
+                               </View>                               
+                           </TitleItem>
 
-                                                    {[
 
-                                                        bookmark == false
-                                                            ? <Image key={s.id} widthprops={"17px"} heightprops={"17px"} source={iconeFavorite} />
-                                                            : <Image key={s.id} widthprops={"17px"} heightprops={"17px"} source={iconeFavoriteTrue} />
-
-                                                    ]}
-
-                                                </RectButton>
-
-                                            }
-
-                                        </View>
-                                    </TitleItem>
-                                    {s.destaque == true ? (
-                                        <Destaque>
-                                            <TextDestaque>Destaque</TextDestaque>
-                                        </Destaque>)
-                                        : null
-                                    }
-
-                                    <Description>
-                                        <TextDescription>{s.descricao_servico}</TextDescription>
-                                    </Description>
-                                    <Footer>
-                                        <View>
-                                            <TextFooter>Fortaleza  •  Serviços  •  2+</TextFooter>
-                                        </View>
-                                        <ViewTime>
-                                            <TextDescription>2 horas atrás</TextDescription>
-                                        </ViewTime>
-                                    </Footer>
-                                </ItemList>)
-                        )) :
+                           <Description>
+                               <TextDescription>{s.descricao_servico}</TextDescription>
+                           </Description>
+                           <Footer>
+                               <View style={{ marginTop:3}}>
+                                   <TextFooter>Treinamento</TextFooter>
+                               </View>
+                               <ViewTime>
+                                   <Destaque background={s.status}>
+                                       <TextDestaque>{s.status}</TextDestaque>
+                                   </Destaque>
+                               </ViewTime>
+                           </Footer>
+                       </ItemList>
+                   )) :
                             <ViewVazio>
                                 <View>
                                     <ImagemVazio source={pastaVazia} />

@@ -42,6 +42,7 @@ export const ViewContentTitleItem = styled.View`
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    margin-left:
 
 `
 interface propsImage {
@@ -73,7 +74,7 @@ export const SubtitleService = styled.Text`
       
 `
 export const Destaque = styled.View<Status>`
-    margin-top: 18px;
+    margin-top: 0px;
     padding: 2px;
     background-color: ${props=>{
         if(props.background=='novaoferta'){
