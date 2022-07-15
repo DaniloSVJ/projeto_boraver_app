@@ -88,5 +88,13 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Permissão para acessar sua biblioteca de imagens</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Permissão para acessar sua camera	</string>
+		<key>NSCameraUsageDescription</key>
+	<string>Permissão para acessar seu microfone</string>
+		<key>NSCameraUsageDescription</key>
+	<string>NSMicrophoneUsageDescription</string>
 </dict>
 </plist>

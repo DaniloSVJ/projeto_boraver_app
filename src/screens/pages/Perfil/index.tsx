@@ -1,14 +1,13 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react'
-import { Text, View, StyleSheet, TextInput, RefreshControlBase } from 'react-native'
+import React, { useEffect,  useState, useRef, useCallback } from 'react'
+import { Text,  View, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import { RectButton } from 'react-native-gesture-handler';
 import IconSearch from 'react-native-vector-icons/FontAwesome';
 import Button from '../../../components/Button';
 import { useNavigation, } from '@react-navigation/native';
-
 import { useFocusEffect } from '@react-navigation/native';
 import avatar_user from '../../../assets/avatar_user.png'
-
+import { ImageLibraryOptions, launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { Form } from '@unform/mobile'
 import { FormHandles } from "@unform/core"
 
@@ -45,6 +44,7 @@ import Input from '../../../components/InputGeral'
 import api from '../../../service/api'
 import VEdit from './VEdit'
 import { StringSchema } from 'yup';
+import { assets } from 'react-native.config';
 interface EditDatas {
     nome: {
         label: string;
@@ -83,9 +83,14 @@ interface InfluencyData {
 type Nav = {
     navigate: (value: string, { }) => void;
 }
+type ImageLibrary = {
+    options: string
+}
 export function Perfil() {
     const { user, signOut } = useAuth()
     const { navigate } = useNavigation<Nav>();
+
+    // You can also use as a promise without 'callback':
 
 
     const formRef = useRef<FormHandles>(null);
@@ -110,7 +115,43 @@ export function Perfil() {
     const [qtd_tiktokData, setQtd_tiktokData] = useState("")
     const [agencia_bancoData, setAgencia_bancoData] = useState("")
     const [conta_bancoData, setConta_bancoData] = useState("")
+    const [file, setFile] = useState();
 
+    const [singleFile, setSingleFile] = useState('');
+    const [multipleFile, setMultipleFile] = useState([]);
+
+    // const selectOneFile = async () => {
+    //     //Opening Document Picker for selection of one file
+    //     try {
+    //         const res = await DocumentPicker.pick({
+    //             type: [DocumentPicker.types.allFiles],
+    //             //There can me more options as well
+    //             // DocumentPicker.types.allFiles
+    //             // DocumentPicker.types.images
+    //             // DocumentPicker.types.plainText
+    //             // DocumentPicker.types.audio
+    //             // DocumentPicker.types.pdf
+    //         });
+    //         //Printing the log realted to the file
+    //         console.log('res : ' + JSON.stringify(res));
+    //         console.log('URI : ' + res.uri);
+    //         console.log('Type : ' + res.type);
+    //         console.log('File Name : ' + res.name);
+    //         console.log('File Size : ' + res.size);
+    //         //Setting the state to show single file attributes
+    //         setSingleFile(res);
+    //     } catch (err) {
+    //         //Handling any exception (If any)
+    //         if (DocumentPicker.isCancel(err)) {
+    //             //If user canceled the document selection
+    //             alert('Canceled from single doc picker');
+    //         } else {
+    //             //For Unknown Error
+    //             alert('Unknown Error: ' + JSON.stringify(err));
+    //             throw err;
+    //         }
+    //     }
+    // };
     useFocusEffect(
         useCallback(() => {
             async function load() {
@@ -187,6 +228,25 @@ export function Perfil() {
         },
     })
 
+    const handleImagePerfil = () => {
+        Alert.alert(
+            'Selecione',
+            'Informe de onde você quer pegar a foto',
+            [
+                {
+                    text:"Galeria",
+                    onPress:()=>PickImageOpen(),
+                    style: 'default'
+                }
+            ]
+        )
+    }
+
+    const PickImageOpen = async ()=>{
+        const options:ImageLibraryOptions ={
+                mediaType:'photo',}
+        const result = await launchImageLibrary(options); 
+    }
 
     const handlePerfil = useCallback(
         async (id: number) => {
@@ -251,9 +311,9 @@ export function Perfil() {
                         </View>
                     </ViewSaldo>
                 </View>
-                
+
                 <ViewIcons>
-                 
+
                     <RectButton onPress={() => navigate("Search", {})}>
                         <ViewSearch>
 
@@ -274,7 +334,13 @@ export function Perfil() {
                     <ViewConteinerData>
                         <ViewImagePerfil>
                             <View>
-                                <ImagePerfil source={avatar_user} />
+                                <RectButton
+                                    activeOpacity={0.5}
+
+                                    onPress={PickImageOpen}
+                                >
+                                    <ImagePerfil source={avatar_user} />
+                                </RectButton>
                             </View>
 
 

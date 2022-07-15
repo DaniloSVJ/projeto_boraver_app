@@ -192,7 +192,7 @@ export function Home() {
                    
 
                     {services.length>0 ? services.map((s, key) =>(
-                       <TouchableOpacity onPress={()=>navigate('OfferDetail',{})}>
+                       <TouchableOpacity onPress={()=>navigate('OfferDetail',{idS:s.id})}>
                         <ItemList key={key}>    
                             <TitleItem>
                                 <ViewContentTitleItem>

@@ -9,7 +9,7 @@ import {SignUpStep3} from '../screens/pages/SignUpStep3';
 import {SignUpStep4} from '../screens/pages/SignUpStep4';
 import {PasswordReset2} from '../screens/pages/PasswordReset2';
 import {HomeAuth} from '../screens/pages/HomeAuth';
-
+import {Perfil} from '../screens/pages/Perfil';
 import PasswordReset from '../screens/pages/PasswordReset';
 const { Navigator, Screen, Group } = createNativeStackNavigator();
 const navigationRef = createNavigationContainerRef()
@@ -22,7 +22,7 @@ export function AuthRoutes(){
 
       
       
-      <Screen name="HomeAuth" component={HomeAuth}   />
+      <Screen name="HomeAuth" component={Perfil}   />
       <Screen name="SignIn" component={SignIn} />
 
       <Screen name="SignUpStep2" component={SignUpStep2}   />
