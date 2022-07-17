@@ -22,9 +22,9 @@ export function AuthRoutes(){
 
       
       
-      <Screen name="HomeAuth" component={Perfil}   />
+      
       <Screen name="SignIn" component={SignIn} />
-
+      <Screen name="SignUp" component={SignUpStep2}   />
       <Screen name="SignUpStep2" component={SignUpStep2}   />
       <Screen name="SignUpStep3" component={SignUpStep3}   />
       

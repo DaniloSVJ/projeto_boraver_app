@@ -192,9 +192,10 @@ export function Home() {
                    
 
                     {services.length>0 ? services.map((s, key) =>(
-                       <TouchableOpacity onPress={()=>navigate('OfferDetail',{idS:s.id})}>
+                       
                         <ItemList key={key}>    
                             <TitleItem>
+                            <TouchableOpacity onPress={()=>navigate('OfferDetail',{idS:s.id})}>
                                 <ViewContentTitleItem>
                                     <View>
                                         <Image widthprops={"35px"} heightprops={"35px"} source={Img} />
@@ -204,7 +205,7 @@ export function Home() {
                                         <SubtitleService>Orçamento R${String(s.menorvalor)} - R${String(s.maiorvalor)}</SubtitleService>
                                     </View>
                                 </ViewContentTitleItem>
-
+                            </TouchableOpacity>
 
                                 <View style={styles.favorite}>
                                     {
@@ -219,7 +220,7 @@ export function Home() {
                                 </View>                               
                             </TitleItem>
 
-
+                            <TouchableOpacity onPress={()=>navigate('OfferDetail',{idS:s.id})}>        
                             <Description>
                                 <TextDescription>{s.descricao_servico}</TextDescription>
                             </Description>
@@ -233,8 +234,9 @@ export function Home() {
                                     </Destaque>
                                 </ViewTime>
                             </Footer>
+                            </TouchableOpacity>
                         </ItemList>
-                        </TouchableOpacity> 
+                        
                     )) :
                         <ViewVazio>
 

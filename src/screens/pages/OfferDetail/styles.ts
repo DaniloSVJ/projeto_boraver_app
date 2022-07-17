@@ -265,7 +265,7 @@ export const ViewButton = styled.View`
     justify-content: space-between;
     margin-top:22px;
     margin-bottom: 40px;
-    
+    padding-right:10vw;
     
     width:100vw;
 `

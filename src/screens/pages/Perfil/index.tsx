@@ -1,5 +1,5 @@
-import React, { useEffect,  useState, useRef, useCallback } from 'react'
-import { Text,  View, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
+import { Text, Alert, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import { RectButton } from 'react-native-gesture-handler';
 import IconSearch from 'react-native-vector-icons/FontAwesome';
@@ -7,12 +7,15 @@ import Button from '../../../components/Button';
 import { useNavigation, } from '@react-navigation/native';
 import { useFocusEffect } from '@react-navigation/native';
 import avatar_user from '../../../assets/avatar_user.png'
-import { ImageLibraryOptions, launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { ImageLibraryOptions, launchImageLibrary } from 'react-native-image-picker';
 import { Form } from '@unform/mobile'
 import { FormHandles } from "@unform/core"
-
+import * as ImagePicker from 'expo-image-picker';
+import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types'
+import fs from 'fs'
 import CheckBox from '@react-native-community/checkbox';
 import Eye from 'react-native-vector-icons/FontAwesome';
+import { Buffer } from "buffer";
 
 import AntDesign from 'react-native-vector-icons/FontAwesome';
 
@@ -43,8 +46,12 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Input from '../../../components/InputGeral'
 import api from '../../../service/api'
 import VEdit from './VEdit'
-import { StringSchema } from 'yup';
+import { object, string, StringSchema } from 'yup';
 import { assets } from 'react-native.config';
+import { url } from 'inspector';
+import { secondsToMilliseconds } from 'date-fns/esm';
+import { type } from 'os';
+import { base64 } from 'base-64'
 interface EditDatas {
     nome: {
         label: string;
@@ -58,6 +65,7 @@ interface EditDatas {
 interface InfluencyData {
     id: number;
     nome: string;
+    profile_picture: string;
     nomecompleto: string;
     celular: string;
     whatsapp: string;
@@ -89,7 +97,29 @@ type ImageLibrary = {
 export function Perfil() {
     const { user, signOut } = useAuth()
     const { navigate } = useNavigation<Nav>();
+    const [image, setImage] = useState('');
+    let fileimage = null
+    const pickImage = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+            uri: string,
+        });
 
+
+
+
+        if (!result.cancelled) {
+            let { uri } = result as ImageInfo
+            fileimage = uri
+            setImage(uri)
+            setalterimage(uri);
+
+        }
+    };
     // You can also use as a promise without 'callback':
 
 
@@ -120,38 +150,7 @@ export function Perfil() {
     const [singleFile, setSingleFile] = useState('');
     const [multipleFile, setMultipleFile] = useState([]);
 
-    // const selectOneFile = async () => {
-    //     //Opening Document Picker for selection of one file
-    //     try {
-    //         const res = await DocumentPicker.pick({
-    //             type: [DocumentPicker.types.allFiles],
-    //             //There can me more options as well
-    //             // DocumentPicker.types.allFiles
-    //             // DocumentPicker.types.images
-    //             // DocumentPicker.types.plainText
-    //             // DocumentPicker.types.audio
-    //             // DocumentPicker.types.pdf
-    //         });
-    //         //Printing the log realted to the file
-    //         console.log('res : ' + JSON.stringify(res));
-    //         console.log('URI : ' + res.uri);
-    //         console.log('Type : ' + res.type);
-    //         console.log('File Name : ' + res.name);
-    //         console.log('File Size : ' + res.size);
-    //         //Setting the state to show single file attributes
-    //         setSingleFile(res);
-    //     } catch (err) {
-    //         //Handling any exception (If any)
-    //         if (DocumentPicker.isCancel(err)) {
-    //             //If user canceled the document selection
-    //             alert('Canceled from single doc picker');
-    //         } else {
-    //             //For Unknown Error
-    //             alert('Unknown Error: ' + JSON.stringify(err));
-    //             throw err;
-    //         }
-    //     }
-    // };
+
     useFocusEffect(
         useCallback(() => {
             async function load() {
@@ -159,6 +158,11 @@ export function Perfil() {
                 await api.get(`/api/v3/influenciador/${user.id}/`).then(
                     (res) => {
                         setInfluencerInfo(res.data)
+                        //   console.log('>>>>>>>>>>>>>>>')
+                        //  console.log(typeof(res.data.profile_picture))
+                        //   console.log('<<<<<<<<<<<<<<<')
+                        //console.log(es.data.profile_picture)
+                        setImage(res.data.profile_picture)
                     }
                 )
                 const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
@@ -167,7 +171,7 @@ export function Perfil() {
             load()
         }, [])
     )
-
+    const [alterimage,setalterimage]=useState('')
     const [seeValue, setSeeValue] = useState(false)
     const [displayView, setDisplayView] = useState('flex')
     const nomeInputRef = useRef<TextInput>(null);
@@ -234,24 +238,32 @@ export function Perfil() {
             'Informe de onde você quer pegar a foto',
             [
                 {
-                    text:"Galeria",
-                    onPress:()=>PickImageOpen(),
+                    text: "Galeria",
+                    onPress: () => PickImageOpen(),
                     style: 'default'
                 }
             ]
         )
     }
 
-    const PickImageOpen = async ()=>{
-        const options:ImageLibraryOptions ={
-                mediaType:'photo',}
-        const result = await launchImageLibrary(options); 
+    const PickImageOpen = async () => {
+        const options: ImageLibraryOptions = {
+            mediaType: 'photo',
+        }
+        const result = await launchImageLibrary(options);
+
     }
+
+    //Usage example:
 
     const handlePerfil = useCallback(
         async (id: number) => {
+            
 
-            await api.put(`/api/v1/influencers/${id}/`, {
+            
+
+            await api.patch(`/api/v1/influencers/${id}/`, {
+                profile_picture: alterimage,
                 nome: user.name,
                 nomecompleto: nomeData,
                 celular: celularData,
@@ -275,7 +287,7 @@ export function Perfil() {
 
         },
         [
-            nomeData, celularData, whatsappData, telegramData,
+            alterimage, nomeData, celularData, whatsappData, telegramData,
             tel_fixomData, sexoData, emailData, cpf_cnpjData,
             estadoData, cidadeData, instagramData, qtd_intagramData,
             youtubeData, qtd_youtubeData, tiktokData, qtd_tiktokData,
@@ -288,7 +300,7 @@ export function Perfil() {
     return (
         <Container>
             <Header>
-
+                {/* //################ Cabeçalho//################  */}
                 <View>
                     <WelcomeText>
                         Saldo:
@@ -330,26 +342,28 @@ export function Perfil() {
 
             <Content display={displayView}>
                 <ScrollView>
+                    {/* //################ Image//################  */}
 
                     <ViewConteinerData>
-                        <ViewImagePerfil>
-                            <View>
-                                <RectButton
-                                    activeOpacity={0.5}
 
-                                    onPress={PickImageOpen}
-                                >
-                                    <ImagePerfil source={avatar_user} />
-                                </RectButton>
-                            </View>
-
-
-                        </ViewImagePerfil>
                         <ViewEdit>
+                            {/* //################ Body//################  */}
                             {influencerInfo ?
                                 <Form ref={formRef}
                                     onSubmit={() => handlePerfil(influencerInfo.id)}>
+                                    <ViewImagePerfil>
+                                        <View>
+                                            <RectButton
+                                                activeOpacity={0.5}
 
+                                                onPress={pickImage}
+                                            >
+                                                <ImagePerfil source={image === '' ? avatar_user : image} />
+                                            </RectButton>
+                                        </View>
+
+
+                                    </ViewImagePerfil>
                                     <VEdit
                                         ref={nomeInputRef}
                                         sendData={setNomeData}

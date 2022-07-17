@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState, useCallback } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet,TouchableOpacity } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native';
 import { useNavigation, } from '@react-navigation/native';
 
@@ -190,6 +190,7 @@ const Favorite: React.FC = () => {
                        
                        <ItemList key={key}>    
                            <TitleItem>
+                           <TouchableOpacity onPress={()=>navigate('OfferDetail',{idS:s.id})}> 
                                <ViewContentTitleItem>
                                    <View>
                                        <Image widthprops={"35px"} heightprops={"35px"} source={Img} />
@@ -200,7 +201,7 @@ const Favorite: React.FC = () => {
                                    </View>
                                </ViewContentTitleItem>
 
-
+                            </TouchableOpacity>
                                <View style={styles.favorite}>
                                    {
 
@@ -214,7 +215,7 @@ const Favorite: React.FC = () => {
                                </View>                               
                            </TitleItem>
 
-
+                           <TouchableOpacity onPress={()=>navigate('OfferDetail',{idS:s.id})}>
                            <Description>
                                <TextDescription>{s.descricao_servico}</TextDescription>
                            </Description>
@@ -228,6 +229,7 @@ const Favorite: React.FC = () => {
                                    </Destaque>
                                </ViewTime>
                            </Footer>
+                           </TouchableOpacity>        
                        </ItemList>
                    )) :
                             <ViewVazio>

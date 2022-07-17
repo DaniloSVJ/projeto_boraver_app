@@ -5,7 +5,7 @@ import React, {
   useContext,
   createContext,
 } from 'react';
-
+import { useNavigation, } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../service/api';
 
@@ -28,7 +28,12 @@ interface AuthContextData {
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
+type Nav = {
+  navigate: (value: string, { }) => void;
+}
+
 export const AuthProvider: React.FC = ({ children }) => {
+  const { navigate } = useNavigation<Nav>();
   const [data, setData] = useState<AuthState>({} as AuthState);
   const [loading, setLoading] = useState(true);
 
@@ -68,6 +73,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     localStorage.removeItem('@BoraVer:user');
 
     setData({} as AuthState);
+    navigate('SignIn',{})
   }, []);
 
   return (
