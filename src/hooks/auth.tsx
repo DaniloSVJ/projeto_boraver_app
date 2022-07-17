@@ -12,18 +12,24 @@ import api from '../service/api';
 interface AuthState {
   token: string;
   user: object;
+  id:number;
+  name:string;
 }
 
 interface SignInCredentials {
   email: string;
   password: string;
+  id:number;
+  name:string;
 }
 
 interface AuthContextData {
-  user: object;
+  user: AuthState;
   loading: boolean;
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
+ 
+  
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -77,7 +83,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user: data.user,  loading, signIn, signOut }}>
+    <AuthContext.Provider value={{ user: data.user, id:data.id,name:data.name, loading, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );

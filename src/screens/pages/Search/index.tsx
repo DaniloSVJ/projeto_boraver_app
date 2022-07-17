@@ -172,7 +172,7 @@ export function Search() {
                                 
                                 const firstDate = parseISO(String(date));
                                 let dt = Moment(date).format('DD/MM/YYYY')
-                                let dt2  = Moment(date).
+                                
                                 setSelectedDate(date)
                                 setValueInput(String(dt))
                                 setIsVisible(false)
@@ -183,10 +183,14 @@ export function Search() {
                     <Select
                         options={optStatus}
                         onChangeSelect={setSelectedStatus}
+                        marginR={54}
+                        marginL={58}
                     />
                     <Select
                         options={optRedesSociais}
                         onChangeSelect={setSelectedRedeSociais}
+                        marginR={54}
+                        marginL={58}
                     />
                     <TouchableOpacity 
                         style={{marginLeft: 54}}

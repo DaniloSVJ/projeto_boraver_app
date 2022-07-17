@@ -252,6 +252,8 @@ export function Contact() {
                             <Select
                                 options={optContact}
                                 onChangeSelect={setSelectedData}
+                                marginR={10}
+                                marginL={10}
                             />
                             <TextInput
                                 style={{marginTop:16}}
