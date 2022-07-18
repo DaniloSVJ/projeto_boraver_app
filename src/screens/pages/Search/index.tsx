@@ -3,7 +3,7 @@ import { Text, View, TextInput, StyleSheet, TouchableOpacity } from 'react-nativ
 import IconSearch from 'react-native-vector-icons/FontAwesome';
 import Button from '../../../components/Button';
 import Select from '../../../components/Select'
-import { compareAsc, format ,parseISO} from 'date-fns'
+import { compareAsc, endOfYesterday, format, parseISO } from 'date-fns'
 import Moment from 'moment';
 
 import CalendarPicker from 'react-native-calendar-picker';
@@ -30,7 +30,7 @@ import api from '../../../service/api'
 import { IconBase, icons } from 'react-icons/lib';
 import { useNavigation, } from '@react-navigation/native';
 import DropDownPicker from 'react-native-dropdown-picker';
-
+import axios from 'axios'
 interface IState {
     visible: boolean;
     dateStr?: string;
@@ -41,11 +41,19 @@ type Nav = {
 }
 
 
+
 export function Search() {
+
+
+    
+    const [cities, setCities] = useState('');
+    const [listUFs, setListUFs] = useState([]);
+    const [listCities, setListCities] = useState([]);
+
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const inputElementRef = useRef<any>(null);
     const [isVisible, setIsVisible] = useState(false);
-
+   
     function openCalendar() {
         setIsVisible(true);
     }
@@ -69,7 +77,7 @@ export function Search() {
     const [titleHeader, setTitleHeader] = useState("Buscar")
     const [displayView, setDisplayView] = useState('none')
     const [displayViewForm, setDisplayViewForm] = useState('flex')
-
+  
 
     const styles = StyleSheet.create({
 
@@ -85,6 +93,7 @@ export function Search() {
             width: 320,
             height: 260,
             display: 'flex',
+
         },
         dateinput: {
             width: 100,
@@ -94,16 +103,18 @@ export function Search() {
 
 
     });
+
+  
+
     useFocusEffect(
         useCallback(() => {
+
             async function load() {
                 const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
 
                 const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
                 setQtdNote(note.data.count)
-                const teste = [{ 'fdf': 'df' }, { 'dfdf': 'dfd' }]
-                setOpt([{ teste }])
-
+               
             }
             load()
         }, [])
@@ -111,11 +122,12 @@ export function Search() {
 
     const optStatus = ['Nova Oferta', 'Em Andamento', 'Recusado']
     const optRedesSociais = ['Instagram', 'Youtube', 'Tiktok']
-    const [filter,setFilter]=useState(false)
+    const [filter, setFilter] = useState(false)
     const [valueInput, setValueInput] = useState('')
+
     const [selectedDate, setSelectedDate] = useState(new Date(Date.now()));
-
-
+    const estoptios = ['Rondônia', 'Acre', 'Amazonas', 'Roraima', 'Pará', 'Amapá', 'Tocantins', 'Maranhão', 'Piauí', 'Ceará', 'Rio Grande do Norte', 'Paraíba', 'Pernambuco', 'Alagoas', 'Sergipe', 'Bahia', 'Minas Gerais', 'Espírito Santo', 'Rio de Janeiro', 'São Paulo', 'Paraná', 'Santa Catarina', 'Rio Grande do Sul', 'Mato Grosso do Sul', 'Mato Grosso', 'Goiás', 'Distrito Federal']
+   
     return (
         <Container>
             <Header>
@@ -169,10 +181,10 @@ export function Search() {
                             date={selectedDate}
                             placeholder="Data de Solicitação"
                             onDateChange={(date: Date) => {
-                                
+
                                 const firstDate = parseISO(String(date));
                                 let dt = Moment(date).format('DD/MM/YYYY')
-                                
+
                                 setSelectedDate(date)
                                 setValueInput(String(dt))
                                 setIsVisible(false)
@@ -192,12 +204,18 @@ export function Search() {
                         marginR={54}
                         marginL={58}
                     />
-                    <TouchableOpacity 
-                        style={{marginLeft: 54}}
-                        onPress={()=>''}>
+                           
+                    
+
+                    <TouchableOpacity
+                        style={{ marginLeft: 54 }}
+                        onPress={() => ''}>
                         <Text>Filtrar por ordem alfabética</Text>
                     </TouchableOpacity>
-                    <View style={{ marginTop: '20vh', marginLeft: 54, marginRight: 54 }}>
+
+
+
+                    <View style={{ marginTop: '20vh',marginBottom:'10vh', marginLeft: 54, marginRight: 54 }}>
                         <Button
                             color={"#FFF"}
                             background={"#3C2E54"}
@@ -207,7 +225,16 @@ export function Search() {
                         </Button>
                     </View>
 
-
+                    <View>
+                                <Text> </Text>
+                                <Text> </Text>
+                                <Text> </Text>
+                                <Text> </Text>
+                                <Text> </Text>
+                                <Text> </Text>
+                                <Text> </Text>
+                                <Text> </Text>
+                    </View>
 
                 </ScrollView>
             </Content>

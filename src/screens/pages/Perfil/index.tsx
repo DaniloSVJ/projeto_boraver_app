@@ -549,7 +549,8 @@ export function Perfil() {
                                     <Button bordercolor={"#DC143C"} background={"#DC143C"} color={"#fff"} onPress={signOut}>
                                         Sair
                                     </Button>
-
+                                    <View>
+                                    <Text>  </Text>
                                     <Text> </Text>
                                     <Text> </Text>
                                     <Text> </Text>
@@ -557,6 +558,12 @@ export function Perfil() {
                                     <Text> </Text>
                                     <Text> </Text>
                                     <Text> </Text>
+                                    <Text> </Text>
+                                    <Text> </Text>
+                                    <Text> </Text>
+                                    <Text> </Text>
+                                    <Text> </Text>
+                                    </View>
 
                                 </Form>
                                 : <Text></Text>

@@ -8,23 +8,24 @@ import React, {
 import { useNavigation, } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../service/api';
-
-interface AuthState {
-  token: string;
-  user: object;
-  id:number;
+interface DataUSer {
+  id: number;
   name:string;
 }
+interface AuthState {
+  token: string;
+  user: DataUSer;
+}
+
 
 interface SignInCredentials {
   email: string;
   password: string;
-  id:number;
-  name:string;
+
 }
 
 interface AuthContextData {
-  user: AuthState;
+  user: DataUSer;
   loading: boolean;
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
@@ -83,7 +84,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user: data.user, id:data.id,name:data.name, loading, signIn, signOut }}>
+    <AuthContext.Provider value={{ user: data.user, loading, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );

@@ -58,20 +58,29 @@ const Select: React.FC<Select> = ({ options, onChangeSelect,marginR,marginL }) =
       <SelectDropdown
         defaultButtonText=' '
         dropdownIconPosition={'right'}
-        selectedRowStyle={{ backgroundColor: '#fff', }}
-        selectedRowTextStyle={{ backgroundColor: '#fff', marginTop: 5, fontSize: 14, color: "#5E448A" }}
-        buttonStyle={{ marginTop: 'auto', marginRight: 10 }}
-        dropdownStyle={{ marginRight: 80 }}
-        rowStyle={{ marginRight: 80, paddingBottom:10, paddingTop:10,  backgroundColor: '#fff' }}
-        rowTextStyle={{ marginRight: 80, backgroundColor: '#fff', fontSize: 14, color: "#5E448A" }}
-        buttonTextStyle={{ marginRight: 'auto', marginTop: 'auto', fontSize: 14, color: "#5E448A" }}
+        selectedRowStyle={{ backgroundColor: '#D3D3D3', }}
+        selectedRowTextStyle={{ backgroundColor: '#D3D3D3', marginTop: 5, fontSize: 14, color: "#000" }}
+        buttonStyle={{  marginTop: 'auto',  }}
+        dropdownStyle={{ backgroundColor: '#D3D3D3' ,marginRight: 'auto' }}
+        rowStyle={{ backgroundColor: '#D3D3D3' ,marginRight: 'auto', paddingBottom:10, paddingTop:10,  }}
+        rowTextStyle={{  backgroundColor: '#D3D3D3' , fontSize: 20,marginRight: 'auto', color: "#000" }}
+        buttonTextStyle={{ marginRight: 'auto',fontSize: 15, marginTop: 'auto', color: "#000" }}
         statusBarTranslucent={false}
+        
+        dropdownOverlayColor={'#D3D3D3'}
+        dropdownBackgroundColor={'#D3D3D3'}
+
+        disableAutoScroll={true}
         renderDropdownIcon={seta}
         disabled={false}
         data={options}
+        search={true}
+        
+       // dropdownStyle={styles.select}
         onSelect={(selectedItem, index) => {
           onChangeSelect(selectedItem)
         }}
+        
         buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem
         }}

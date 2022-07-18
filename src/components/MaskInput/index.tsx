@@ -17,7 +17,7 @@ import React, {
   interface InputProps extends TextInputProps {
     name: string;
     mask: string;
-    
+    options:object;
     containerStyle?: object;
   }
   
@@ -30,7 +30,7 @@ import React, {
   }
   
   const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
-    { name,  mask,containerStyle = {}, ...rest },
+    { name,options,  mask,containerStyle = {}, ...rest },
     ref, 
   ) => {
     
@@ -41,7 +41,7 @@ import React, {
   
     const [isFocused, setIsFocused] = useState(false);
     const [isFilled, setIsFilled] = useState(false);
-  
+    const [textMask,setTextMask]= useState('cpf');
     const handleInputFocus = useCallback(() => {
       setIsFocused(true);
     }, []);
@@ -102,7 +102,9 @@ import React, {
         defaultValue={defaultValue}
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
-        type={mask}
+        type={textMask||}
+        options={options}
+        value={inputValueRef.current.value}
         onChangeText={(value:string) => {
           inputValueRef.current.value = value;
         }}

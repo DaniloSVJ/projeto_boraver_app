@@ -40,7 +40,7 @@ export const Content = styled.View`
     
     margin-right: 29px;
     
-    padding-left: 7px;
+    padding-left: 5px;
     
     
 `
@@ -50,7 +50,7 @@ export const ItemList = styled.View`
     margin-bottom: 17px;
     margin-right: 70px;
     padding-right: 29px;
-    padding-left: 29px;  
+    padding-left: 19px;  
     
     display: flex;
     flex-direction: column;
@@ -62,6 +62,7 @@ export const TitleItem = styled.View`
     display:flex;
     flex-direction: row;
     justify-content: flex-start;
+    margin-right: 7px;
 
 `
 export const ViewSubTitle = styled.View<Display>`
@@ -84,7 +85,7 @@ export const TitleService = styled.Text`
     font-family: 'Montserrat_500Medium';
     font-style: normal;
     font-weight: 500;
-    font-size: 21px;
+    font-size: 19px;
     line-height: 31px;
     color: #373737;
        

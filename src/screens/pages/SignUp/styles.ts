@@ -1,6 +1,6 @@
 import styled from 'styled-components/native'
 
-
+import { TextInputMask } from 'react-native-masked-text'
 
 export const Container =styled.View`
     background-color: #FFF;
@@ -95,3 +95,35 @@ export const TextStep = styled.Text`
 
 `
 
+export const InputMask = styled(TextInputMask)`
+    flex: 1,
+    color:"#3C2E54",
+    font-size: 13,
+    font-family: 'Montserrat_400Regular',
+    border: 'none',
+    border-color: "#fff"  
+
+`
+
+export const ContainerMask = styled.View`
+  width: 100%;
+  height: 47px;
+  padding: 0 16px;
+
+  background-color:#F0FFFF			;
+  border-radius: 12px;
+  border-style: solid;
+  border-width: 2px;
+  
+  font-size: 14px;
+  padding: 7px 0;
+  padding-left: 20px;
+  padding-right: 20px;  
+
+  margin-bottom: 16px;
+  border-color: #fff;
+  flex-direction: row;
+  align-items: center;
+  
+
+`;

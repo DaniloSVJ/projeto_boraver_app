@@ -85,7 +85,7 @@ import React, {
         defaultValue={defaultValue}
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
-       
+        
         onChangeText={(value: string) => {
           inputValueRef.current.value = value;
         }}

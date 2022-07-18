@@ -1,6 +1,7 @@
 import React, { useRef, useCallback, useState } from 'react'
 import { useNavigation, } from '@react-navigation/native';
 import * as Yup from 'yup';
+import { TextInputMask } from 'react-native-masked-text'
 
 import { Form } from '@unform/mobile'
 import { FormHandles } from "@unform/core"
@@ -25,13 +26,17 @@ import {
    DivViewTop,
    Content,
    Brand,
-   TextStep
+   TextStep,
+   ContainerMask,
+   InputMask
+
 } from './styles'
 
 
 
 import InputIcon from '../../../components/Input';
 import Input from '../../../components/InputGeral';
+import MaskInput from '../../../components/MaskInput';
 
 import Button from '../../../components/Button';
 import getValidationErrors from '../../../utils/getValidationErrors';
@@ -48,6 +53,9 @@ interface SignUpFormData {
    name: string;
    email: string;
    password: string;
+   genero: string;
+   foto: string;
+   whatsapp: string;
 }
 export function SignUp() {
    const formRef = useRef<FormHandles>(null);
@@ -58,7 +66,7 @@ export function SignUp() {
    const nameInputRef = useRef<TextInput>(null);
    const emailInputRef = useRef<TextInput>(null);
    const passwordInputRef = useRef<TextInput>(null);
-
+ 
    const handleSignUp = useCallback(
       async (data: SignUpFormData) => {
 
@@ -68,6 +76,7 @@ export function SignUp() {
          const schema = Yup.object().shape({
             name: Yup.string()
                .required('Nome é obrigatório'),
+            
             email: Yup.string()
                .required('E-mail é obrigatório')
                .email('Digite um e-mail válido'),
@@ -87,7 +96,18 @@ export function SignUp() {
             'name': data.name
          }).then(function (response) {
 
-            navigate("SignUpStep2", { 'nome': data.name, 'email': data.email, 'password': data.password })
+            navigate("SignUpStep2", 
+            { 
+               'nome': data.name, 
+               'password': data.password, 
+               'whatsapp': textMaskCelular,
+               'foto': data.foto, 
+               'genero': data.genero, 
+               'email': data.email, 
+               'cpf': textMaskCPF,
+               'cnpj':textMaskCNPJ 
+               
+            })
          }).catch(function (error) {
             console.error(error)
             if (error.response.status == 400) {
@@ -114,7 +134,15 @@ export function SignUp() {
    async function backsing() {
       navigate("SignIn", {})
    }
-
+   const optObj =
+   {
+      maskType: 'BRL',
+      withDDD: true,
+      dddMask: '(99) '
+   }
+   const [textMaskCelular, setTextMaskCelular] = useState('')
+   const [textMaskCPF, setTextMaskCPF] = useState('')
+   const [textMaskCNPJ, setTextMaskCNPJ] = useState('')
    return (
       <Container >
 
@@ -140,8 +168,6 @@ export function SignUp() {
 
          </DivViewTop>
          <ContainerBody>
-
-
             <KeyboardAvoidingView
                behavior={
                   Platform.OS === 'ios'
@@ -149,8 +175,6 @@ export function SignUp() {
                      undefined
                }
             >
-
-
                <Content>
                   <Form ref={formRef} onSubmit={handleSignUp}>
                      <Input
@@ -162,16 +186,26 @@ export function SignUp() {
                         placeholder="Nome Usuário"
                         returnKeyType="next"
                      />
-                     <Input
-                        ref={emailInputRef}
-                        autoCorrect={false}
-                        autoCapitalize="none"
-                        placeholder="whatsapp"
-                        name="whatsapp"
+                     <ContainerMask >
+                        <TextInputMask
+                           
+                           type={'cel-phone'}
+                           style={{width:'70vw'}}
+                           options={{
+                              maskType: 'BRL',
+                              withDDD: true,
+                              dddMask: '(99) '
+                           }}
+                           
+                           placeholder='Seu Whatsapp'
+                           value={textMaskCelular}
+                           onChangeText={text => {
+                              setTextMaskCelular(text)
 
-
-                        returnKeyType="next"
-                     />
+                           }}
+                           returnKeyType="next"
+                        />
+                     </ContainerMask>
                      <Input
                         ref={emailInputRef}
                         autoCorrect={false}
@@ -189,7 +223,6 @@ export function SignUp() {
                         placeholder="Gênero"
                         name="genero"
 
-
                         returnKeyType="next"
                      />
 
@@ -203,16 +236,32 @@ export function SignUp() {
                         placeholder="E-mail"
                         returnKeyType="next"
                      />
-                     <Input
-                        ref={emailInputRef}
-                        autoCorrect={false}
-                        autoCapitalize="none"
-                        placeholder="Cpf ou Cnpj"
-                        name="doc"
+                     <ContainerMask >
+                        <TextInputMask
+                           style={{width:'70vw'}}
+                           type={'cpf'}
+                           placeholder='Seu CPF'
+                           value={textMaskCPF}
+                           onChangeText={text => {
+                              setTextMaskCPF(text)
 
+                           }}
+                           returnKeyType="next"
+                        />
+                     </ContainerMask>
+                     <ContainerMask >
+                        <TextInputMask
+                           type={'cnpj'}
+                           style={{width:'70vw'}}
+                           placeholder='Seu CNPJ'
+                           value={textMaskCNPJ}
+                           onChangeText={text => {
+                              setTextMaskCNPJ(text)
 
-                        returnKeyType="next"
-                     />
+                           }}
+                           returnKeyType="next"
+                        />
+                     </ContainerMask>
                      <InputIcon
                         ref={passwordInputRef}
                         name='password'

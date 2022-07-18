@@ -20,6 +20,7 @@ export const Container = styled.View<ContainerProps>`
   font-size: 14px;
   padding: 7px 0;
   padding-left: 20px;
+  padding-right: 20px; 
   margin-bottom: 16px;
   border-color: #fff;
   flex-direction: row;

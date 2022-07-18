@@ -234,7 +234,7 @@ export function OfferDetail() {
                                 <TitleService>Provador em loja fitness</TitleService>
 
                             </View>
-                            <View style={{ marginRight: 29 }}>
+                            <View style={{marginLeft:'auto', marginRight: '5vw' }}>
                                 <Image style={styles.imagePrefered} source={ipreferredW} />
 
                             </View>

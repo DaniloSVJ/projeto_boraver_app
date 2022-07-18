@@ -1,6 +1,6 @@
 
 import React, { useState, useCallback, useEffect, useRef } from 'react'
-import { View, StyleSheet ,TextInput} from 'react-native'
+import { View, StyleSheet, TextInput, Text } from 'react-native'
 import Button from '../../../components/Button'
 import { useFocusEffect } from '@react-navigation/native';
 import IconSearch from 'react-native-vector-icons/FontAwesome';
@@ -28,7 +28,7 @@ import {
     ViewForm,
     ViewTitle
 
-    
+
 } from './styles'
 import { useNavigation, } from '@react-navigation/native';
 
@@ -186,14 +186,14 @@ export function Contact() {
         } else { setrender(true) }
 
     }
-    const optContact=['Dúvida','Reclamação','Sugestão']
+    const optContact = ['Dúvida', 'Reclamação', 'Sugestão']
     async function alterar(val: boolean) {
-        navigate("Contact2",{})
+        navigate("Contact2", {})
 
     }
     const styled = StyleSheet.create({
-   
-        
+
+
         select: {
             width: "100%",
             marginTop: 9,
@@ -256,16 +256,28 @@ export function Contact() {
                                 marginL={10}
                             />
                             <TextInput
-                                style={{marginTop:16}}
+                                style={{ marginTop: 16 }}
                                 underlineColorAndroid="transparent"
                                 placeholder="Type something"
                                 placeholderTextColor="grey"
                                 numberOfLines={10}
                                 multiline={true}
                             />
-                            <Button style={{marginTop:117}}bordercolor={"#3C2E54"} background={"#3C2E54"} color={"#fff"} onPress={() => formRef.current?.submitForm()}>
-                                Enviar
-                            </Button>
+                            <View style={{ marginTop: 'auto',marginBottom: '50vh' }}>
+                                <Button bordercolor={"#3C2E54"} background={"#3C2E54"} color={"#fff"} onPress={() => formRef.current?.submitForm()}>
+                                    Enviar
+                                </Button>
+                            </View>
+                            <View>
+                                <Text> </Text>
+                                <Text> </Text>
+                                <Text> </Text>
+                                <Text> </Text>
+                                <Text> </Text>
+                                <Text> </Text>
+                                <Text> </Text>
+                                <Text> </Text>
+                            </View>
                         </Form>
                     </ViewForm>
                 </ScrollView>
