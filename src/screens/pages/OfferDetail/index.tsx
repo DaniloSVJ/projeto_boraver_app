@@ -5,7 +5,7 @@ import { Picker } from '@react-native-picker/picker';
 import { FontAwesome } from '@expo/vector-icons';
 import { RectButton } from 'react-native-gesture-handler';
 import Button from '../../../components/Button'
-import { useNavigation, } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Foundation } from '@expo/vector-icons';
 import IconSearch from 'react-native-vector-icons/FontAwesome';
 
@@ -21,7 +21,7 @@ import DatePicker from 'react-native-datepicker';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import DateField from 'react-native-datefield';
 import { IconBase, icons } from 'react-icons/lib';
-
+import StatusConcluido from '../../../assets/Solicitacao_concluida.jpg'
 import iTime from '../../../assets/iTime.svg'
 import NotificationBell from '../../../components/NotificationBell'
 import { useAuth } from '../../../hooks/auth'
@@ -50,11 +50,10 @@ import {
     ViewIcone
 } from './styles'
 
-import Filter from '../../../assets/controler.png'
+
+
 import { ScrollView } from 'react-native-gesture-handler';
-import Input from '../../../components/InputGeral'
-import iconDate from '../../../assets/iconDateInput.svg'
-import IconComboBox from '../../../assets/iconComboBox.svg'
+
 import ipreferredW from '../../../assets/ipreferredW.svg'
 import iperfiluser from '../../../assets/avatar_user.png'
 
@@ -66,27 +65,42 @@ interface SearchFormData {
 }
 type Nav = {
     navigate: (value: string, { }) => void;
-    
+
+}
+interface RouteParams {
+    idS: number
+}
+
+interface Solicitacao {
+    cliente: number,
+    influencidor: number,
+    titulo: string,
+    descricao_servico: string,
+    valor: number,
+    status: string,
+    periodo: string,
+    favorite: boolean,
+    maiorvalor: number,
+    menorvalor: number,
+    destaque: string,
+    valorads: string,
+    estado: string,
+    cidade: string,
+
 }
 
 export function OfferDetail() {
+    const route = useRoute();
+    const { idS } = route.params as RouteParams;
     const { user } = useAuth()
     const { navigate } = useNavigation<Nav>();
-    
-    const [dateSelect, setDateSelect] = useState("")
+    const [soliction, setSoliction] = useState<Solicitacao>()
+
     const formRef = useRef<FormHandles>(null);
     const emailInputRef = useRef<TextInput>(null);
     const [qtdNote, setQtdNote] = useState(0)
-    const dataCb = [
-        { "id": 1, "name": "Nova Ofereta" },
-        { "id": 2, "name": "Em Andamento" },
-        { "id": 3, "name": "Recusado" },
-    ]
-    const [titleHeader, setTitleHeader] = useState("Buscar")
-    const [displayView, setDisplayView] = useState('none')
-    const [displayViewForm, setDisplayViewForm] = useState('flex')
-    const [date, setDate] = useState("")
-    const [open, setOpen] = useState(false)
+
+
     const styles = StyleSheet.create({
 
         imageAvatar: {
@@ -161,32 +175,38 @@ export function OfferDetail() {
         useCallback(() => {
             async function load() {
                 const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
-                const solicitDetail = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
+                const solicitDetail = await api.get(`/api/v3/solicitacao/${idS}/`)
+                setSoliction(solicitDetail.data)
                 const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
                 setQtdNote(note.data.count)
             }
             load()
         }, [])
     )
-    const handleSearch = useCallback(
-        async (data: SearchFormData) => {
-            try {
-
-
-            } catch (err) {
-
+    const handleAlterStatus = (respost: string) => {
+        async function alterstatus() {
+            if (respost === 'aceito') {
+                await api.patch(`/api/v3/solicitacao/${idS}/`,{
+                    status:'andamento'
+                })
+                navigate('OfferAceite',{})
+            }else if (respost === 'recusado') {
+                await api.patch(`/api/v3/solicitacao/${idS}/`,{
+                    status:'recusado'
+                })
+                navigate('OfferRecuse',{})
+            }else if (respost === 'concluída') {
+                await api.patch(`/api/v3/solicitacao/${idS}/`,{
+                    status:'concluído'
+                })
+                navigate('OfferConcluded',{})
             }
-        },
-        [],
-    );
-    function teste() {
-        console.log("realizou o teste")
+
+        }
     }
-    const [selectedStatus, setSelectedStatus] = useState();
-    const [selectedRedeSocial, setSelectedRedeSocial] = useState();
-
-
-    const datatttt = ['data1', 'data2', 'data3']
+    // Colocar botão para alterar status para
+    // concluido na oferta em andamento.
+    // Criar Tela simples de Comunicação com o cliente
 
     return (
         <Container>
@@ -225,16 +245,17 @@ export function OfferDetail() {
 
             <Content >
                 <ScrollView>
+
                     <ItemList>
                         <TitleItem>
                             <View>
                                 <Image style={styles.imageAvatar} source={iperfiluser} />
                             </View>
                             <View>
-                                <TitleService>Provador em loja fitness</TitleService>
+                                <TitleService>{soliction?.titulo}</TitleService>
 
                             </View>
-                            <View style={{marginLeft:'auto', marginRight: '5vw' }}>
+                            <View style={{ marginLeft: 'auto', marginRight: '5vw' }}>
                                 <Image style={styles.imagePrefered} source={ipreferredW} />
 
                             </View>
@@ -249,7 +270,7 @@ export function OfferDetail() {
                                 </Avaliation>
                             </View>
 
-                            <TextDescription>Fortaleza, Ceará, Brasil</TextDescription>
+                            <TextDescription>{soliction?.cidade}, {soliction?.estado}, Brasil</TextDescription>
 
                             <TextDescription>Membro desde 31 de maio de 2021</TextDescription>
                         </Ofert>
@@ -264,7 +285,7 @@ export function OfferDetail() {
                                     </SubtitleService>
 
                                     <TextSolicit>
-                                        R$500
+                                        R$ {soliction?.periodo}
                                     </TextSolicit>
                                 </View>
                             </View>
@@ -278,7 +299,7 @@ export function OfferDetail() {
                                             Período
                                         </SubtitleService>
                                         <TextSolicit>
-                                            3 semanas
+                                            {soliction?.status}
                                         </TextSolicit>
                                     </View>
                                 </View>
@@ -288,35 +309,91 @@ export function OfferDetail() {
                             <SubtitleService>
                                 Detalhe
                             </SubtitleService>
-                            <TextDescription style={{ marginTop: 10 }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Integer et justo tellus. Donec eget metus consequat, varius dui ut, dignissim mauris. Curabitur bibendum lacinia mi, in bibendum lacus dapibus volutpat. Nullam sit amet nisl nibh. Vestibulum id sem vitae arcu rhoncus euismod ac non ante. Pellentesque augue ipsum, efficitur eu neque in, condimentum malesuada diam.</TextDescription>
+                            <TextDescription style={{ marginTop: 10 }}>{soliction?.descricao_servico}</TextDescription>
 
                         </ViewFooter>
+                        {soliction?.status === 'novaoferta' ? (
+                            <ViewButton>
+                                <View style={{ marginRight: 18 }}>
+                                    <Button
+                                        style={styles.buttonGreen}
+                                        bordercolor={"#489D31"}
+                                        background={"#489D31"}
+                                        color={"#fff"}
+                                        onPress={() => navigate("OfferAceite", {})}
+                                    >
+                                        Aceito
+                                    </Button>
+                                </View>
+                                <View style={{ marginLeft: 18, marginRight: 18, paddingRight: 29 }}>
+                                    <Button
+                                        style={styles.buttonRed}
+                                        bordercolor={"#C72D2D"}
+                                        background={"#C72D2D"}
+                                        color={"#fff"}
+                                        onPress={() => navigate("OfferRecuse", {})}
+                                    >
+                                        Não Aceito
+                                    </Button>
+                                </View>
+                            </ViewButton>
+                        ) : soliction?.status === 'andamento' ?
+                            (
+                                <ViewButton>
+                                    <View style={{ marginRight: 18 }}>
+                                        <Text>OFERTA ACEITA</Text>
+                                        <Button
+                                            style={styles.buttonGreen}
+                                            bordercolor={"#3C2E54"}
+                                            background={"#3C2E54"}
+                                            color={"#fff"}
+                                            onPress={() => navigate("OfferAceite", {})}
+                                        >
+                                            Tela de Comunicação
+                                        </Button>
+                                    </View>
 
-                        <ViewButton>
-                            <View style={{ marginRight: 18 }}>
-                                <Button
-                                    style={styles.buttonGreen}
-                                    bordercolor={"#489D31"}
-                                    background={"#489D31"}
-                                    color={"#fff"}
-                                    onPress={()=>navigate("OfferAceite",{})}
-                                >
-                                    Aceito
-                                </Button>
-                            </View>
-                            <View style={{ marginLeft: 18, marginRight: 18, paddingRight: 29 }}>
-                                <Button
-                                    style={styles.buttonRed}
-                                    bordercolor={"#C72D2D"}
-                                    background={"#C72D2D"}
-                                    color={"#fff"}
-                                    onPress={()=>navigate("OfferRecuse",{})}
-                                >
-                                    Não Aceito
-                                </Button>
-                            </View>
-                        </ViewButton>
+                                </ViewButton>
+                            ) :soliction?.status === 'concluido' ?
+                            (
+                                <ViewButton>
+                                    <Text>
+                                        Parabêns você concluiu esse Trabalho
+                                    </Text>
+                                    <Image style={{width:300,height:300}} source={StatusConcluido} />
 
+
+                                </ViewButton>
+                            ):
+                            (
+                                <ViewButton>
+                                    <View style={{ marginRight: 18 }}>
+                                        <Text>Você Recusou esta Solicitação</Text>
+                                        <Button
+                                            style={styles.buttonGreen}
+                                            bordercolor={"#489D31"}
+                                            background={"#489D31"}
+                                            color={"#fff"}
+                                            onPress={() => navigate("OfferAceite", {})}
+                                        >
+                                            Ver a réplica do cliente
+                                        </Button>
+                                    </View>
+                                    <View style={{ marginLeft: 18, marginRight: 18, paddingRight: 29 }}>
+                                        <Button
+                                            style={styles.buttonRed}
+                                            bordercolor={"#489D31"}
+                                            background={"#489D31"}
+                                            color={"#fff"}
+                                            onPress={() => navigate("OfferAceite", {})}
+                                        >
+                                            Agora Aceito
+                                        </Button>
+                                    </View>
+
+                                </ViewButton>
+                            )
+                        }
                     </ItemList>
                     <View>
                         <Text> </Text>

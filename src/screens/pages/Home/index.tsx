@@ -87,7 +87,7 @@ export function Home() {
     const [render, setrender] = useState(false)
     const [services, setService] = useState<solicitationI[]>([])
     const [idin, setIdin] = useState(0)
-
+    
     useFocusEffect(
     useCallback(() => {
             setService([])
