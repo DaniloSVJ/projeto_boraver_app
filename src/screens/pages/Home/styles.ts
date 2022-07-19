@@ -82,6 +82,8 @@ export const Destaque = styled.View<Status>`
         }
         else if(props.background=='andamento'){
             return "#5EAA31"
+        }else if(props.background=='concluido'){
+            return "#3c2e54"
         }else {
             return "#D53939"
         }

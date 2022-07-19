@@ -38,19 +38,17 @@ export const Content = styled.View`
     border-radius:  10px;
     margin-top: -20px;
     
-    margin-right: 29px;
     
-    padding-left: 5px;
     
+    padding-left: 7px;
     
 `
 export const ItemList = styled.View`
     width: 100%;
     margin-top: 23px;
     margin-bottom: 17px;
-    margin-right: 70px;
     padding-right: 29px;
-    padding-left: 19px;  
+    padding-left: 29px;  
     
     display: flex;
     flex-direction: column;
@@ -62,7 +60,6 @@ export const TitleItem = styled.View`
     display:flex;
     flex-direction: row;
     justify-content: flex-start;
-    margin-right: 7px;
 
 `
 export const ViewSubTitle = styled.View<Display>`
@@ -85,7 +82,7 @@ export const TitleService = styled.Text`
     font-family: 'Montserrat_500Medium';
     font-style: normal;
     font-weight: 500;
-    font-size: 19px;
+    font-size: 21px;
     line-height: 31px;
     color: #373737;
        
@@ -119,7 +116,7 @@ line-height: 19px;
 
 `
 export const ViewBody = styled.Text`
-    margin-top: 77px;
+    margin-top: 38px;
     
     display: flex;
     flex-direction: column;
@@ -148,9 +145,25 @@ export const ViewFooter = styled.View`
     flex-direction: column;
 `
 
-
-
-
+export const Destaque = styled.View`
+    margin-top: 18px;
+    padding: 2px;
+    background-color: #DF8747;
+    width: 75px;
+    margin-bottom:10px;
+    border-radius:10px;
+`
+export const TextDestaque = styled.Text`
+    font-family: 'Montserrat_500Medium';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 8px;
+    color: #FFFFFF;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 22px;
+`
+export const Description = styled.View``
 export const TextDescription = styled.Text`
     font-family: 'Montserrat_500Medium';
     font-style: normal;
@@ -172,6 +185,12 @@ export const Ofert = styled.View`
 
 `
 
+export const Footer = styled.View`
+    margin-top: 27px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+`
 export const ViewTime = styled.View`
 
 `
@@ -224,7 +243,7 @@ export const ViewSearch = styled.View`
 `
 export const ViewBell = styled.View`
     margin-top: 3px;
-    
+    margin-right: 30px;
 `
 
 export const ContentForm = styled.View`
@@ -244,7 +263,7 @@ export const ViewButton = styled.View`
     justify-content: space-between;
     margin-top:22px;
     margin-bottom: 40px;
-    padding-right:10vw;
+    
     
     width:100vw;
 `
@@ -264,55 +283,16 @@ font-family: 'Montserrat_500Medium';
     color: #FFFFFF;
 `
 
-export const ViewConcluded = styled.View`
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top:22px;
-    margin-bottom: 40px;
-    padding-right:10vw;
-    align-self: center;
-    width:100vw;
-`
-export const TextConcluded = styled.Text`
-    font-family: 'Montserrat_500Medium';
-    font-size: 20px;
-    margin-top: 19px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    align-self: center;
-    color: #000000;
-
-
-`
-export const TextHappy = styled.Text`
-    font-family: 'Montserrat_500Medium';
-    font-size: 30px;
-    margin-top: 19px;
-    font-weight: bold;
-    display: flex;
-    align-self: center;
-    align-items: center;
-    text-align: center;
+export const Paragraph = styled.Text`
+    font-family: 'Montserrat_200ExtraLight';
+    font-size: 13px;
     
-    color: #000000;
-
-`
-
-
-export const TextRecAndAndament = styled.Text`
-    font-family: 'Montserrat_500Medium';
-    font-size: 17px;
+    
     margin-top: 19px;
-    font-weight: bold;
     display: flex;
     align-items: center;
     text-align: center;
-    align-self: center;
-    color: #000000;
 
+    color: #FFFFFF;
 
 `

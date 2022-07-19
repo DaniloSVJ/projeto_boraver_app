@@ -48,7 +48,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import api from '../../../service/api'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { number } from 'yup';
+import { boolean, number } from 'yup';
 
 
 interface solicitationI {
@@ -82,7 +82,8 @@ export function Home() {
 
     const [bookmark, setBookmark] = useState(false)
 
-   
+    const [idCliente,setIdCliente]=useState(0)
+    const [statusIn,setStatusIn]=useState(false)
     const [qtdNote, setQtdNote] = useState(0)
     const [render, setrender] = useState(false)
     const [services, setService] = useState<solicitationI[]>([])
@@ -95,24 +96,16 @@ export function Home() {
                 
                 const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
                 setIdin(IdInfluencers.data.id)
-                // setService([response.data.results]);
+                setStatusIn(IdInfluencers.data.ativo)
+                console.log(">>>>"+IdInfluencers.data.ativo)                // setService([response.data.results]);
                 // setBookmark(response.data.results.favorite)
                 const solicitacao = await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`)
 
 
                 setService(solicitacao.data.results);
-                // setService([solicitacao.data]);
-                // .then((response) => {
-                //     setService([response.data.results]);
-                //     setBookmark(response.data.results.favorite)
-                //     console.log("============dfdfdfdfdf")
-                //     console.log(response.data.results)
-                //     console.log("dddddddddd===========dfdfdfdfdf")
-                // }).catch(function (error) {
-                //     console.log("============dfdfdfdfdf")
-                //     setService([])
-                // });
-
+                
+                
+                console.log('id cliente é'+solicitacao.data.results.cliente)
                 const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
 
                 setQtdNote(note.data.count)
@@ -189,13 +182,13 @@ export function Home() {
             <Content>
 {/*============== CORPO DA MENSAGEM*/}                    
                 <ScrollView>
-                   
+                
 
-                    {services.length>0 ? services.map((s, key) =>(
+                    {services.length>0 && statusIn===true ? services.map((s, key) =>(
                        
                         <ItemList key={key}>    
                             <TitleItem>
-                            <TouchableOpacity onPress={()=>navigate('OfferDetail',{idS:s.id})}>
+                            <TouchableOpacity onPress={()=>navigate('OfferDetail',{idS:s.id,idCli:s.cliente})}>
                                 <ViewContentTitleItem>
                                     <View>
                                         <Image widthprops={"35px"} heightprops={"35px"} source={Img} />
@@ -220,7 +213,7 @@ export function Home() {
                                 </View>                               
                             </TitleItem>
 
-                            <TouchableOpacity onPress={()=>navigate('OfferDetail',{idS:s.id})}>        
+                            <TouchableOpacity onPress={()=>navigate('OfferDetail',{idS:s.id,idCli:s.cliente})}>        
                             <Description>
                                 <TextDescription>{s.descricao_servico}</TextDescription>
                             </Description>
@@ -237,7 +230,7 @@ export function Home() {
                             </TouchableOpacity>
                         </ItemList>
                         
-                    )) :
+                    )) : 
                         <ViewVazio>
 
                             <View>

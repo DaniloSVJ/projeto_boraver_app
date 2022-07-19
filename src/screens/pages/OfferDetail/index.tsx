@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { Text, View, TextInput, StyleSheet, Image } from 'react-native'
+import Moment from 'moment';
+
 import SelectDropdown from 'react-native-select-dropdown'
 import { Picker } from '@react-native-picker/picker';
 import { FontAwesome } from '@expo/vector-icons';
@@ -39,7 +41,6 @@ import {
     Avaliation,
     TitleItem,
     Ofert,
-    Footer, Destaque, TextDestaque, Description,
     TextDescription,
     SubtitleService,
     ItemList,
@@ -47,7 +48,11 @@ import {
     HerderText2,
     Container,
     Header,
-    ViewIcone
+    ViewIcone,
+    ViewConcluded,
+    TextHappy,
+    TextConcluded,
+    TextRecAndAndament
 } from './styles'
 
 
@@ -68,7 +73,8 @@ type Nav = {
 
 }
 interface RouteParams {
-    idS: number
+    idS: number,
+    idCli: number,
 }
 
 interface Solicitacao {
@@ -79,6 +85,8 @@ interface Solicitacao {
     valor: number,
     status: string,
     periodo: string,
+    qtddias: number,
+    inicio:string,
     favorite: boolean,
     maiorvalor: number,
     menorvalor: number,
@@ -91,7 +99,7 @@ interface Solicitacao {
 
 export function OfferDetail() {
     const route = useRoute();
-    const { idS } = route.params as RouteParams;
+    const { idS, idCli } = route.params as RouteParams;
     const { user } = useAuth()
     const { navigate } = useNavigation<Nav>();
     const [soliction, setSoliction] = useState<Solicitacao>()
@@ -99,7 +107,7 @@ export function OfferDetail() {
     const formRef = useRef<FormHandles>(null);
     const emailInputRef = useRef<TextInput>(null);
     const [qtdNote, setQtdNote] = useState(0)
-
+    const [dtCliRegister, setDtCliRegister] = useState('')
 
     const styles = StyleSheet.create({
 
@@ -175,6 +183,8 @@ export function OfferDetail() {
         useCallback(() => {
             async function load() {
                 const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
+                const cliente = await api.get(`/api/v1/clientes/${idCli}/`)
+                setDtCliRegister(cliente.data.criacao)
                 const solicitDetail = await api.get(`/api/v3/solicitacao/${idS}/`)
                 setSoliction(solicitDetail.data)
                 const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
@@ -183,26 +193,36 @@ export function OfferDetail() {
             load()
         }, [])
     )
-    const handleAlterStatus = (respost: string) => {
+    const handleAlterStatus = (response: string) => {
         async function alterstatus() {
-            if (respost === 'aceito') {
-                await api.patch(`/api/v3/solicitacao/${idS}/`,{
-                    status:'andamento'
+            if (response === 'aceito') {
+                await api.patch(`/api/v3/solicitacao/${idS}/`, {
+                    status: 'andamento',
+                    inicio: String(Date())
                 })
-                navigate('OfferAceite',{})
-            }else if (respost === 'recusado') {
-                await api.patch(`/api/v3/solicitacao/${idS}/`,{
-                    status:'recusado'
+                navigate('OfferAceite', {})
+            } else if (response === 'recusado') {
+                await api.patch(`/api/v3/solicitacao/${idS}/`, {
+                    status: 'recusado'
                 })
-                navigate('OfferRecuse',{})
-            }else if (respost === 'concluída') {
-                await api.patch(`/api/v3/solicitacao/${idS}/`,{
-                    status:'concluído'
+                navigate('OfferRecuse', {})
+            } else if (response === 'concluída') {
+                await api.patch(`/api/v3/solicitacao/${idS}/`, {
+                    status: 'concluído'
                 })
-                navigate('OfferConcluded',{})
+
             }
 
         }
+        alterstatus()
+    }
+    function direncadatas(dtContrato:string){
+        const now = new Date()
+        const past = new Date(dtContrato)
+        const diff = Math.abs(now.getTime() - past.getTime()); // Subtrai uma data pela outra
+        const days = Math.ceil(diff / (1000 * 60 * 60 * 24)); // Divide o total pelo total de milisegundos correspondentes a 1 dia. (1000 milisegundos = 1 segundo).
+
+        return days
     }
     // Colocar botão para alterar status para
     // concluido na oferta em andamento.
@@ -272,7 +292,7 @@ export function OfferDetail() {
 
                             <TextDescription>{soliction?.cidade}, {soliction?.estado}, Brasil</TextDescription>
 
-                            <TextDescription>Membro desde 31 de maio de 2021</TextDescription>
+                            <TextDescription>Membro desde {Moment(dtCliRegister).locale('pt-br').format('LL')}</TextDescription>
                         </Ofert>
                         <ViewBody>
                             <View style={styles.viewbody}>
@@ -285,7 +305,7 @@ export function OfferDetail() {
                                     </SubtitleService>
 
                                     <TextSolicit>
-                                        R$ {soliction?.periodo}
+                                        R$ {soliction?.maiorvalor}
                                     </TextSolicit>
                                 </View>
                             </View>
@@ -299,7 +319,7 @@ export function OfferDetail() {
                                             Período
                                         </SubtitleService>
                                         <TextSolicit>
-                                            {soliction?.status}
+                                            {soliction?.periodo}
                                         </TextSolicit>
                                     </View>
                                 </View>
@@ -320,7 +340,7 @@ export function OfferDetail() {
                                         bordercolor={"#489D31"}
                                         background={"#489D31"}
                                         color={"#fff"}
-                                        onPress={() => navigate("OfferAceite", {})}
+                                        onPress={() => handleAlterStatus('aceito')}
                                     >
                                         Aceito
                                     </Button>
@@ -331,7 +351,7 @@ export function OfferDetail() {
                                         bordercolor={"#C72D2D"}
                                         background={"#C72D2D"}
                                         color={"#fff"}
-                                        onPress={() => navigate("OfferRecuse", {})}
+                                        onPress={() => handleAlterStatus('recusado')}
                                     >
                                         Não Aceito
                                     </Button>
@@ -349,50 +369,75 @@ export function OfferDetail() {
                                             color={"#fff"}
                                             onPress={() => navigate("OfferAceite", {})}
                                         >
-                                            Tela de Comunicação
+                                            Falar com o Cliente
                                         </Button>
+
                                     </View>
-
-                                </ViewButton>
-                            ) :soliction?.status === 'concluido' ?
-                            (
-                                <ViewButton>
-                                    <Text>
-                                        Parabêns você concluiu esse Trabalho
-                                    </Text>
-                                    <Image style={{width:300,height:300}} source={StatusConcluido} />
-
-
-                                </ViewButton>
-                            ):
-                            (
-                                <ViewButton>
-                                    <View style={{ marginRight: 18 }}>
-                                        <Text>Você Recusou esta Solicitação</Text>
-                                        <Button
-                                            style={styles.buttonGreen}
-                                            bordercolor={"#489D31"}
-                                            background={"#489D31"}
-                                            color={"#fff"}
-                                            onPress={() => navigate("OfferAceite", {})}
-                                        >
-                                            Ver a réplica do cliente
-                                        </Button>
-                                    </View>
-                                    <View style={{ marginLeft: 18, marginRight: 18, paddingRight: 29 }}>
+                                    {direncadatas(String(soliction?.inicio)) > soliction.qtddias ?   
+                                    (<View style={{ marginLeft: 18, marginRight: 18, paddingRight: 29 }}>
                                         <Button
                                             style={styles.buttonRed}
-                                            bordercolor={"#489D31"}
-                                            background={"#489D31"}
+                                            bordercolor={"#C72D2D"}
+                                            background={"#C72D2D"}
                                             color={"#fff"}
-                                            onPress={() => navigate("OfferAceite", {})}
+                                            onPress={() => handleAlterStatus('concluido')}
                                         >
-                                            Agora Aceito
+                                            Concluir
                                         </Button>
-                                    </View>
-
+                                    </View>):
+                                    <View/>
+                                    }
+                                    
                                 </ViewButton>
-                            )
+                            ) : soliction?.status === 'concluido' ?
+                                (
+                                    <ViewConcluded>
+                                        <TextConcluded>
+                                            Você concluiu esse Trabalho
+                                        </TextConcluded>
+
+                                        <Image style={{ alignSelf: 'center', width: 250, height: 250 }} source={StatusConcluido} />
+
+
+                                        <View>
+                                            <TextHappy>
+                                                Parabêns
+                                            </TextHappy>
+                                        </View>
+                                    </ViewConcluded>
+                                ) :
+                                (  <View>
+                                    <TextRecAndAndament>Você Recusou esta Solicitação</TextRecAndAndament>
+                                
+
+                                    <ViewButton>
+                                        <View style={{ marginRight: 18 }}>
+                                            
+                                            <Button
+                                                style={styles.buttonGreen}
+                                                bordercolor={"#3C2E54"}
+                                                background={"#3C2E54"}
+                                                color={"#fff"}
+                                                onPress={() => navigate("OfferAceite", {})}
+                                            >
+                                                Mensagem do cliente
+                                            </Button>
+                                        </View>
+                                        <View style={{ marginLeft: 18, marginRight: 18, paddingRight: 29 }}>
+                                            <Button
+                                                style={styles.buttonRed}
+                                                bordercolor={"#489D31"}
+                                                background={"#489D31"}
+                                                color={"#fff"}
+                                                onPress={() => handleAlterStatus('aceito')}
+                                            >
+                                                Agora Aceito
+                                            </Button>
+                                        </View>
+
+                                    </ViewButton>
+                                    </View>
+                                )
                         }
                     </ItemList>
                     <View>
