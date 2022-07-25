@@ -33,14 +33,14 @@ import { SignUpStep2 } from '../screens/pages/SignUpStep2';
 import { Splas } from '../screens/pages/Splas';
 import { access } from 'fs';
 
-import iHomeR from '../assets/ihomeroxo.svg'
-import iHomeO from '../assets/ihomeorange.svg'
+import IHomeR from '../assets/ihomeroxo.svg'
+import IHomeO from '../assets/ihomeorange.svg'
 
-import iPerfilR from '../assets/iperfilroxo.svg'
-import iPerfilO from '../assets/iperfilorange.svg'
+import IPerfilR from '../assets/iperfilroxo.svg'
+import IPerfilO from '../assets/iperfilorange.svg'
 
-import ifavoriteR from '../assets/ifavoriteroxo.svg'
-import ifavoriteO from '../assets/ifavoriteorange.svg'
+import IfavoriteR from '../assets/ifavoriteroxo.svg'
+import IfavoriteO from '../assets/ifavoriteorange.svg'
 
 
 
@@ -71,7 +71,7 @@ export function AppRoutes() {
       marginRight: 33,
       
       width: 18,
-      height:23,
+      height: 23,
      
     },
     IconDesactive: {
@@ -79,7 +79,24 @@ export function AppRoutes() {
       marginLeft: 33,
       marginRight: 33,
       width: 18,
-      height:23,
+      height: 23,
+      marginBottom: 8
+    },
+    IconContac: {
+      marginTop: 8,
+      marginLeft: 33,
+      marginRight: 33,
+      
+      width: 14,
+      height: 19,
+     
+    },
+    IconContacDesactive: {
+      marginTop: 8,
+      marginLeft: 33,
+      marginRight: 33,
+      width: 14,
+      height: 19,
       marginBottom: 8
     },
     IconPerfilA: {
@@ -106,7 +123,8 @@ export function AppRoutes() {
       marginTop: -10,
       marginLeft: 10,
       marginRight: 10,
-      
+      width: 'auto',
+      height:'auto',
       borderRadius: 5,
       
     },
@@ -119,7 +137,8 @@ export function AppRoutes() {
       marginTop: -10,
       marginLeft: 10,
       marginRight: 10,
-      
+      width: 'auto',
+      height:'auto',
       borderRadius: 5,
       
     },
@@ -128,7 +147,8 @@ export function AppRoutes() {
       borderBottomColor: '#3C2E54',
       borderRightColor: '#3C2E54',
       borderLeftColor: '#3C2E54',
-      // borderTopWidth: 5,
+      width: 'auto',
+      height:'auto',
       marginTop: -10,
       borderRadius: 5,
       marginLeft: 33,
@@ -141,7 +161,8 @@ export function AppRoutes() {
       borderBottomColor: '#3C2E54',
       borderRightColor: '#3C2E54',
       borderLeftColor: '#3C2E54',
-      // borderTopWidth: 5,
+      width: 'auto',
+      height:'auto',
       marginTop: -10,
       borderRadius: 5,
       marginLeft: 33,
@@ -280,7 +301,12 @@ export function AppRoutes() {
 
               </View>
             }
-            <Image style={focused ? styles.Icon : styles.IconDesactive} source={focused ? iHomeO: iHomeR} />
+            { focused?
+            (<IHomeO style={styles.Icon} />)
+            :
+            (<IHomeR style={styles.IconDesactive} />)
+            }
+           
           </View>
         ),
       }}
@@ -292,7 +318,12 @@ export function AppRoutes() {
             {
               focused && <View style={styles.borderActive} />
             }
-            <Image style={focused ? styles.Icon : styles.IconDesactive} source={focused ? ifavoriteO: ifavoriteR} />
+            { focused?
+            (<IfavoriteO style={styles.Icon} />)
+            :
+            (<IfavoriteR style={styles.IconDesactive} />)
+            }
+            
           </View>
         ),
       }}
@@ -303,7 +334,12 @@ export function AppRoutes() {
             {
               focused && <View style={styles.borderActivePerfil} />
             }
-            <Image style={focused ? styles.IconPerfilA : styles.IconPerfilD} source={focused ? iPerfilO: iPerfilR} />
+            { focused?
+            (<IPerfilO style={styles.IconPerfilA} />)
+            :
+            (<IPerfilR style={styles.IconPerfilD} />)
+            }
+           
           </View>
         ),
       }}

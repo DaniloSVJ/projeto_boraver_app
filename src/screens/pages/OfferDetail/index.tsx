@@ -24,7 +24,7 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import DateField from 'react-native-datefield';
 import { IconBase, icons } from 'react-icons/lib';
 import StatusConcluido from '../../../assets/Solicitacao_concluida.jpg'
-import iTime from '../../../assets/iTime.svg'
+import ITime from '../../../assets/iTime.svg'
 import NotificationBell from '../../../components/NotificationBell'
 import { useAuth } from '../../../hooks/auth'
 import {
@@ -59,7 +59,7 @@ import {
 
 import { ScrollView } from 'react-native-gesture-handler';
 
-import ipreferredW from '../../../assets/ipreferredW.svg'
+import IpreferredW from '../../../assets/ipreferredW.svg'
 import iperfiluser from '../../../assets/avatar_user.png'
 
 
@@ -275,8 +275,8 @@ export function OfferDetail() {
                                 <TitleService>{soliction?.titulo}</TitleService>
 
                             </View>
-                            <View style={{ marginLeft: 'auto', marginRight: '5vw' }}>
-                                <Image style={styles.imagePrefered} source={ipreferredW} />
+                            <View style={{ marginLeft: 'auto', marginRight: '5%' }}>
+                                <IpreferredW style={styles.imagePrefered}  />
 
                             </View>
                         </TitleItem>
@@ -312,7 +312,8 @@ export function OfferDetail() {
                             <ViewBodyPeriod>
                                 <View style={styles.viewbody}>
                                     <View style={styles.imagebody}>
-                                        <Image source={iTime} style={styles.imageTime} />
+                                        <ITime style={styles.imageTime} />
+                                        
                                     </View>
                                     <View>
                                         <SubtitleService>
@@ -418,7 +419,7 @@ export function OfferDetail() {
                                                 bordercolor={"#3C2E54"}
                                                 background={"#3C2E54"}
                                                 color={"#fff"}
-                                                onPress={() => navigate("OfferAceite", {})}
+                                                onPress={() => navigate("OfferRecuse", {})}
                                             >
                                                 Mensagem do cliente
                                             </Button>

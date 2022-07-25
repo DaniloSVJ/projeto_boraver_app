@@ -91,7 +91,7 @@ const Favorite: React.FC = () => {
     }])
     const { navigate } = useNavigation<Nav>();
     const [render, setrender] = useState(false)
-    const token = localStorage.getItem('@BoraVer:token')
+    
     const [qtdNote, setQtdNote] = useState(0)
     const [bookmark, setBookmark] = useState(false)
     const [loadingrenderteste, setLoadingRender] = useState(false)

@@ -34,16 +34,17 @@ const Select: React.FC<Select> = ({ options, onChangeSelect,marginR,marginL }) =
       marginTop: 16,
       marginLeft: marginR,
       marginRight: marginL,
-      paddingRight: 10,
+      paddingRight: 'auto',
       marginBottom: 16,
+      backgroundColor:'#F0FFFF',
       color: "#3C2E54",
-      borderWidth: 1,
-      borderStyle: 'solid',
-      borderColor: "#808080",
+      // borderWidth: 1,
+      // borderStyle: 'solid',
+      // borderColor: "",
       borderRadius: 12,
-      paddingLeft: 25,
-      paddingTop: 12,
-      paddingBottom: 12
+      paddingLeft:40,
+      paddingTop: 0,
+      paddingBottom: 0
     },
     selectText: {
       textAlign: 'right'
@@ -58,17 +59,17 @@ const Select: React.FC<Select> = ({ options, onChangeSelect,marginR,marginL }) =
       <SelectDropdown
         defaultButtonText=' '
         dropdownIconPosition={'right'}
-        selectedRowStyle={{ backgroundColor: '#D3D3D3', }}
-        selectedRowTextStyle={{ backgroundColor: '#D3D3D3', marginTop: 5, fontSize: 14, color: "#000" }}
-        buttonStyle={{  marginTop: 'auto',  }}
-        dropdownStyle={{ backgroundColor: '#D3D3D3' ,marginRight: 'auto' }}
-        rowStyle={{ backgroundColor: '#D3D3D3' ,marginRight: 'auto', paddingBottom:10, paddingTop:10,  }}
-        rowTextStyle={{  backgroundColor: '#D3D3D3' , fontSize: 20,marginRight: 'auto', color: "#000" }}
-        buttonTextStyle={{ marginRight: 'auto',fontSize: 15, marginTop: 'auto', color: "#000" }}
-        statusBarTranslucent={false}
+        selectedRowStyle={{  backgroundColor: '#F0FFFF', }}
+        selectedRowTextStyle={{  backgroundColor: '#F0FFFF',  fontSize: 14, color: '#3C2E54', }}
+        buttonStyle={{ backgroundColor: '#F0FFFF', marginTop: 'auto',  }}
+        dropdownStyle={{backgroundColor: '#F0FFFF' ,marginRight: 'auto' }}
+        rowStyle={{ backgroundColor: '#F0FFFF' ,marginRight: 'auto', paddingBottom:10, paddingTop:0,  }}
+        rowTextStyle={{  backgroundColor: '#F0FFFF' , fontSize: 20,color: '#3C2E54',marginRight: 'auto',  }}
+        buttonTextStyle={{ backgroundColor: '#F0FFFF', marginRight: 'auto',color: '#3C2E54',fontSize: 15,  }}
+        statusBarTranslucent={true}
         
-        dropdownOverlayColor={'#D3D3D3'}
-        dropdownBackgroundColor={'#D3D3D3'}
+        
+       
 
         disableAutoScroll={true}
         renderDropdownIcon={seta}

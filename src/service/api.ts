@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const api = axios.create({
    // headers:{ Authorization: `Bearer ${token}`},
-    baseURL: "http://localhost:8000/",
+    baseURL: "https://boraverapi.herokuapp.com/",
     //headers:{ Authorization: `Bearer ${token}`},
  },
 );

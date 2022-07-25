@@ -15,6 +15,26 @@ export const Container = styled.View`
     width: 100%;
 
 `
+export const ViewLeftHerder = styled.View `
+    display:flex;
+    flex-direction: row;
+
+`
+export const ViewIcone = styled.View`
+    margin-top: 30px;
+    margin-left: 33px;
+
+`
+export const HerderText = styled.Text`
+    font-family: 'Montserrat_500Medium';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 31px;
+    margin-top: 27px;
+    margin-left: 16px;
+    color: #fff;
+`
 export const ViewCalendar = styled.View`
 
 
@@ -23,7 +43,7 @@ export const Icon = styled.Image`
     width: 18px;
     height: 20px;
     margin-right: 10px;
-    font-size: 13px;
+    
     color:#3C2E54;
     margin-left: 5px;
  

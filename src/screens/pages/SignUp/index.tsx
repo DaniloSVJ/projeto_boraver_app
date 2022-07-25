@@ -7,13 +7,14 @@ import { Form } from '@unform/mobile'
 import { FormHandles } from "@unform/core"
 import { GiCircle } from "react-icons/gi";
 import { useAuth } from '../../hooks/auth';
-
+import Select from '../../../components/Select'
 import {
    KeyboardAvoidingView,
    Platform,
    Alert,
    TextInput,
-   ScrollView
+   ScrollView,
+   Text
 } from 'react-native'
 
 import {
@@ -28,7 +29,7 @@ import {
    Brand,
    TextStep,
    ContainerMask,
-   InputMask
+
 
 } from './styles'
 
@@ -53,30 +54,36 @@ interface SignUpFormData {
    name: string;
    email: string;
    password: string;
-   genero: string;
+   
    foto: string;
-   whatsapp: string;
+   
+
 }
 export function SignUp() {
    const formRef = useRef<FormHandles>(null);
    const { navigate } = useNavigation<Nav>();
    const navigation = useNavigation();
    const [seePassword, setSeePassword] = useState(true)
-
+   const [generoV, setGeneroV] = useState('')
    const nameInputRef = useRef<TextInput>(null);
    const emailInputRef = useRef<TextInput>(null);
    const passwordInputRef = useRef<TextInput>(null);
- 
-   const handleSignUp = useCallback(
-      async (data: SignUpFormData) => {
+   const [textMaskCelular, setTextMaskCelular] = useState('')
+   const [textMaskCPF, setTextMaskCPF] = useState('sss')
+   const [textMaskCNPJ, setTextMaskCNPJ] = useState('')
 
+
+
+   const handleSignUp =(data: SignUpFormData)=>{
+
+            
 
          formRef.current?.setErrors({});
 
          const schema = Yup.object().shape({
             name: Yup.string()
                .required('Nome é obrigatório'),
-            
+
             email: Yup.string()
                .required('E-mail é obrigatório')
                .email('Digite um e-mail válido'),
@@ -86,28 +93,31 @@ export function SignUp() {
          );
 
 
-         await schema.validate(data, {
+         schema.validate(data, {
             abortEarly: false,
          });
-
-
-         await api.post('/api/v3/veremail/', {
+         console.log('>>>>'+generoV)
+         console.log('>>>>'+textMaskCPF)
+         console.log('>>>>'+textMaskCNPJ)
+         console.log('>>>>'+textMaskCelular)
+         console.log('>>>>'+data.email)
+         api.post('/api/v3/veremail/', {
             'email': data.email,
             'name': data.name
          }).then(function (response) {
+        
+            navigate("SignUpStep2",
+               {
+                  'nome': data.name,
+                  'password': data.password,
+                  'whatsapp': textMaskCelular ,
+                  'foto': data.foto,
+                  'genero': generoV,
+                  'email': data.email,
+                  'cpf': textMaskCPF,
+                  'cnpj': textMaskCNPJ
 
-            navigate("SignUpStep2", 
-            { 
-               'nome': data.name, 
-               'password': data.password, 
-               'whatsapp': textMaskCelular,
-               'foto': data.foto, 
-               'genero': data.genero, 
-               'email': data.email, 
-               'cpf': textMaskCPF,
-               'cnpj':textMaskCNPJ 
-               
-            })
+               })
          }).catch(function (error) {
             console.error(error)
             if (error.response.status == 400) {
@@ -123,9 +133,9 @@ export function SignUp() {
 
          })
 
-      },
-      [navigate],
-   );
+      
+   }
+     
    async function alterar(val: boolean) {
       setSeePassword(val)
 
@@ -140,149 +150,159 @@ export function SignUp() {
       withDDD: true,
       dddMask: '(99) '
    }
-   const [textMaskCelular, setTextMaskCelular] = useState('')
-   const [textMaskCPF, setTextMaskCPF] = useState('')
-   const [textMaskCNPJ, setTextMaskCNPJ] = useState('')
+
+   const generoOpt = ['Masculino', 'Feminino', 'Não Informar']
    return (
       <Container >
+         <ScrollView>
+            <DivViewTop>
+               <TextStep>
+                  Etapa 1 de 3
+               </TextStep>
+               <Viewstep>
+                  <View >
+                     <Icon name="circle" size={7} color="#DF8747" />
+                  </View>
+                  <View  >
+                     <Icon name="circle-o" size={7} color="#DF8747" />
+                  </View>
+                  <View  >
+                     <Icon name="circle-o" size={7} color="#DF8747" />
+                  </View>
+               </Viewstep>
+               <ViewArrow>
+                  <Icon2 name="close" size={14} color="#fff" onPress={backsing} />
+               </ViewArrow>
+               <View><Brand source={BrandImg} /></View>
 
-         <DivViewTop>
-            <TextStep>
-               Etapa 1 de 3
-            </TextStep>
-            <Viewstep>
-               <View >
-                  <Icon name="circle" size={7} color="#DF8747" />
-               </View>
-               <View  >
-                  <Icon name="circle-o" size={7} color="#DF8747" />
-               </View>
-               <View  >
-                  <Icon name="circle-o" size={7} color="#DF8747" />
-               </View>
-            </Viewstep>
-            <ViewArrow>
-               <Icon2 name="close" size={14} color="#fff" onPress={backsing} />
-            </ViewArrow>
-            <View><Brand source={BrandImg} /></View>
+            </DivViewTop>
+            <ContainerBody>
+               <KeyboardAvoidingView
+                  behavior={
+                     Platform.OS === 'ios'
+                        ? 'padding' :
+                        undefined
+                  }
+               >
 
-         </DivViewTop>
-         <ContainerBody>
-            <KeyboardAvoidingView
-               behavior={
-                  Platform.OS === 'ios'
-                     ? 'padding' :
-                     undefined
-               }
-            >
-               <Content>
-                  <Form ref={formRef} onSubmit={handleSignUp}>
-                     <Input
-                        ref={nameInputRef}
-                        autoCorrect={false}
-                        autoCapitalize="none"
-                        name="name"
+                  <Content>
 
-                        placeholder="Nome Usuário"
-                        returnKeyType="next"
-                     />
-                     <ContainerMask >
-                        <TextInputMask
-                           
-                           type={'cel-phone'}
-                           style={{width:'70vw'}}
-                           options={{
-                              maskType: 'BRL',
-                              withDDD: true,
-                              dddMask: '(99) '
-                           }}
-                           
-                           placeholder='Seu Whatsapp'
-                           value={textMaskCelular}
-                           onChangeText={text => {
-                              setTextMaskCelular(text)
+                     <Form ref={formRef} onSubmit={handleSignUp}>
 
-                           }}
-                           returnKeyType="next"
-                        />
-                     </ContainerMask>
-                     <Input
-                        ref={emailInputRef}
-                        autoCorrect={false}
-                        autoCapitalize="none"
-                        placeholder="Foto de Perfil"
-                        name="foto"
+                        <View>
+                           <Input
+                              ref={nameInputRef}
+                              autoCorrect={false}
+                              autoCapitalize="none"
+                              name="name"
+
+                              placeholder="Nome Usuário"
+                              returnKeyType="next"
+                           />
+                           <ContainerMask >
+                              <TextInputMask
+                                 
+                                 type={'cel-phone'}
+                                 style={{ width: '100%' }}
+                                 options={{
+                                    maskType: 'BRL',
+                                    withDDD: true,
+                                    dddMask: '(99) '
+                                 }}
+                                 
+                                 placeholder='Seu Whatsapp'
+                                 value={textMaskCelular}
+                                 onChangeText={text => {
+                                    setTextMaskCelular(text)
+                                    console.log(textMaskCelular)
+                                 }}
+                                 returnKeyType="next"
+                              />
+                           </ContainerMask>
+                           <Input
+                              ref={emailInputRef}
+                              autoCorrect={false}
+                              autoCapitalize="none"
+                              placeholder="Foto de Perfil"
+                              name="foto"
 
 
-                        returnKeyType="next"
-                     />
-                     <Input
-                        ref={emailInputRef}
-                        autoCorrect={false}
-                        autoCapitalize="none"
-                        placeholder="Gênero"
-                        name="genero"
+                              returnKeyType="next"
+                           />
+                           <Select
+                              options={generoOpt}
+                              onChangeSelect={setGeneroV}
+                              marginR={5}
+                              marginL={9}
+                           />
 
-                        returnKeyType="next"
-                     />
+                           <Input
+                              ref={emailInputRef}
+                              autoCorrect={false}
+                              autoCapitalize="none"
+                              keyboardType="email-address"
+                              name="email"
 
-                     <Input
-                        ref={emailInputRef}
-                        autoCorrect={false}
-                        autoCapitalize="none"
-                        keyboardType="email-address"
-                        name="email"
+                              placeholder="E-mail"
+                              returnKeyType="next"
+                           />
+                           <ContainerMask >
+                              <TextInputMask
+                                 style={{ width: '100%' }}
+                                 type={'cpf'}
+                                 placeholder='Seu CPF'
+                                 value={textMaskCPF}
+                                 onChangeText={text => {
+                                    setTextMaskCPF(text)
+                                    
+                                 }}
+                               
+                                 returnKeyType="next"
+                              />
+                           </ContainerMask>
+                           <ContainerMask >
+                              <TextInputMask
+                                 type={'cnpj'}
+                                 style={{ width: '100%' }}
+                                 placeholder='Seu CNPJ'
+                                 value={textMaskCNPJ}
+                                 onChangeText={text => {
+                                    setTextMaskCNPJ(text)
 
-                        placeholder="E-mail"
-                        returnKeyType="next"
-                     />
-                     <ContainerMask >
-                        <TextInputMask
-                           style={{width:'70vw'}}
-                           type={'cpf'}
-                           placeholder='Seu CPF'
-                           value={textMaskCPF}
-                           onChangeText={text => {
-                              setTextMaskCPF(text)
+                                 }}
+                                 returnKeyType="next"
+                              />
+                           </ContainerMask>
+                           <InputIcon
+                              ref={passwordInputRef}
+                              name='password'
+                              sendData={alterar}
+                              icon="eye-off-outline"
 
-                           }}
-                           returnKeyType="next"
-                        />
-                     </ContainerMask>
-                     <ContainerMask >
-                        <TextInputMask
-                           type={'cnpj'}
-                           style={{width:'70vw'}}
-                           placeholder='Seu CNPJ'
-                           value={textMaskCNPJ}
-                           onChangeText={text => {
-                              setTextMaskCNPJ(text)
+                              placeholder="Senha"
+                              secureTextEntry={seePassword}
+                              returnKeyType="send"
+                           />
+                           <ViewButton>
 
-                           }}
-                           returnKeyType="next"
-                        />
-                     </ContainerMask>
-                     <InputIcon
-                        ref={passwordInputRef}
-                        name='password'
-                        sendData={alterar}
-                        icon="eye-off-outline"
+                              <Button bordercolor={"#3C2E54"} background={"#3C2E54"} color={"#fff"} onPress={() => formRef.current?.submitForm()}>
+                                 Continuar
+                              </Button>
+                           </ViewButton>
+                        </View>
+                        <View>
+                           <Text> </Text>
 
-                        placeholder="Senha"
-                        secureTextEntry={seePassword}
-                        returnKeyType="send"
-                     />
-                     <ViewButton>
+                        </View>
 
-                        <Button bordercolor={"#3C2E54"} background={"#3C2E54"} color={"#fff"} onPress={() => formRef.current?.submitForm()}>
-                           Continuar
-                        </Button>
-                     </ViewButton>
-                  </Form>
-               </Content>
+                     </Form>
 
-            </KeyboardAvoidingView>
-         </ContainerBody>
+
+                  </Content>
+
+               </KeyboardAvoidingView>
+            </ContainerBody>
+         </ScrollView>
       </Container>
    )
 }

@@ -17,13 +17,24 @@ type Nav = {
 }
 
 interface RouteParams {
-   email: string;
-   password: string;
-   nome: string;
-   nomecompleto: string;
-   celular: string;
-   estado: string;
-   cidade: string;
+   email: string,
+   password: string,
+   nome: string,
+   whatsapp: string,
+   genero: string,
+   foto: string,
+   cpf: string,
+   cnpj:string,
+
+   instagram: string,
+   qtd_instagram: string,
+   youtube: string,
+   qtd_youtube: string,
+   tiktok:string,
+   qtd_tiktok:string,
+
+   estados:string,
+   cidades:string
 }
 
 
@@ -37,17 +48,35 @@ export function SignUpStep3() {
    const handleSignUpStep3 = useCallback(
       async () => {
          formRef.current?.setErrors({});
+         console.log(params.email)
+         console.log(params.password)
+         console.log(params.nome)
+         console.log(params.whatsapp)
+         console.log(params.genero)
+         console.log(params.foto)
+         console.log(params.cpf)
+         console.log(params.cnpj)
+         
+         console.log(params.instagram)
+         console.log(params.qtd_instagram)
+         console.log(params.youtube)
+         console.log(params.qtd_youtube)
+         console.log(params.tiktok)
+         console.log(params.qtd_tiktok)
 
+         console.log(params.estados)
+         console.log(params.cidades)
+       
          if (params.nome == "") {
             console.log("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
             Alert.alert("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
-         } else if (params.celular == "") {
+         } else if (params.whatsapp == "") {
             console.log("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
             Alert.alert("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
-         } else if (params.cidade == "") {
+         } else if (params.cidades == "") {
             console.log("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
             Alert.alert("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
-         } else if (params.estado == "") {
+         } else if (params.estados == "") {
             console.log("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
             Alert.alert("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
          } else if (params.email == "") {
@@ -58,49 +87,50 @@ export function SignUpStep3() {
             Alert.alert("A sessão anterior expirou volte e cadastre novamente o Email e Senha")
          } else {
 
-            console.log(params.email)
-            console.log(params.password)
-            console.log(params.nome)
-            console.log(params.celular)
-            console.log(params.cidade)
-            console.log(params.estado)
             await api.post('/api/v1/influencers/', {
-               nome: params.nome,
-               nomecompleto: params.nomecompleto,
-               celular: params.celular,
-               //////////////////////
-               whatsapp: params.celular,
-               telegram: params.celular,
-               tel_fixo: "",
-               sexo: "",
-               nascimento: "",
-               email: params.email,
-               password: params.password,
-               cpf_cnpj: "",
-               estado: params.estado,
-               cidade: params.cidade,
-               instagram: "",
-               qtd_intagram: "",
-               youtube: "",
-               qtd_youtube: "",
-               tiktok: "",
-               qtd_tiktok: "",
-               agencia_banco: "",
-               conta_banco: "",
-               saldo: 0,
+            
+              profile_picture: params.foto,
+              nome: params.nome,
+              nomecompleto: '',
+              celular: '',
 
-               ativo: false
+              cpf: params.cpf,
+              cnpj: params.cnpj,
+
+              whatsapp: params.whatsapp,
+              telegram: '',
+              tel_fixo: '',
+              sexo: params.genero,
+              nascimento:  '',
+              email: params.email,
+        
+              password: params.password,
+              estado: params.estados,
+              cidade: params.cidades,
+              instagram: params.instagram,
+              qtd_intagram: params.qtd_instagram,
+              youtube:  params.youtube,
+              qtd_youtube: params.qtd_youtube,
+              tiktok: params.tiktok,
+              qtd_tiktok: params.qtd_tiktok,
+              agencia_banco: '',
+              conta_banco: '',
+              saldo: 0,
+              ativo: false
 
 
             }).then(function (response) {
                navigate("SignUpStep4", {})
             }).catch(function (error) {
-               console.error(error)
+               
                if (error.response.status == 400) {
+                  console.error(error.response.data.details)
                   Alert.alert('Erro ao cadastrar, verifique seus dados e tente novamente. Se o problema persistir contate o suporte técnico')
                } else if (error.response.status == 500) {
+                  console.log('>>>'+error.response.data.details+'<<<<<')
                   Alert.alert('Estamos com problemas técnico. Por favor, tente mais tarde')
                } else {
+                  console.error(error.response.data.details)
                   Alert.alert('Problema desconhecido. Por favor, contate o suporte')
                }
             })
@@ -179,3 +209,6 @@ export function SignUpStep3() {
    )
 
 }
+
+
+

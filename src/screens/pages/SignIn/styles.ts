@@ -105,7 +105,8 @@ export const ForgotPassordButton = styled.TouchableOpacity`
    
 ` 
 export const ForgotPasswordText = styled.Text`
-    margin-left: 2px;
+  margin-top: 5px;
+  margin-left: 2px;
   color: #4A4A4A;
   font-size: 12px;
   font-family: 'Montserrat_400Regular';

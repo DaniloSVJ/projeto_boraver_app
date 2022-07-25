@@ -121,7 +121,7 @@ export function Contact() {
         useCallback(() => {
             setService([])
             async function load() {
-                const token = localStorage.getItem('@BoraVer:token');
+              
                 const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
                 setIdin(IdInfluencers.data.id)
                 await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`, {
@@ -263,7 +263,7 @@ export function Contact() {
                                 numberOfLines={10}
                                 multiline={true}
                             />
-                            <View style={{ marginTop: 'auto',marginBottom: '50vh' }}>
+                            <View style={{ marginTop: 'auto',marginBottom: '50%' }}>
                                 <Button bordercolor={"#3C2E54"} background={"#3C2E54"} color={"#fff"} onPress={() => formRef.current?.submitForm()}>
                                     Enviar
                                 </Button>

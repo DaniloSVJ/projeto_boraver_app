@@ -79,11 +79,10 @@ export function SignUpStep2() {
    const [valueMask, setValueMask] = useState("")
    const { navigate } = useNavigation<Nav>();
    const params = route.params as RouteParams;
-   const handleSignUpStep3 = useCallback(
-      async (data: SignUpFormData) => {
+   const handleSignUpStep3 = (data: SignUpFormData) => {
 
          formRef.current?.setErrors({});
-         console.log(data)
+ 
          if (data.instagram == "") {
             console.log("A Cidade é obrigatorio")
             Alert.alert("A Cidade é obrigatorio")
@@ -134,8 +133,8 @@ export function SignUpStep2() {
                cidades:valueCidade
             });
          }
-      },
-      [])
+      }
+   
 
 
 
@@ -260,7 +259,7 @@ export function SignUpStep2() {
     }, [uf])
    return (
       <Container >
-
+ <ScrollView>
          <DivViewTop>
             <TextStep>
                Etapa 2 de 3
@@ -295,7 +294,7 @@ export function SignUpStep2() {
 
 
                <Content>
-               <ScrollView>
+              
                   <Form ref={formRef} onSubmit={handleSignUpStep3}>
                      <Input
                         placeholder='Link do Istagram'
@@ -395,12 +394,13 @@ export function SignUpStep2() {
                         </Button>
                      </ViewButton>
                   </Form>
-                  </ScrollView>
+                  
                </Content>
                
             </KeyboardAvoidingView>
             
          </ContainerBody>
+         </ScrollView>
       </Container>
    )
 }

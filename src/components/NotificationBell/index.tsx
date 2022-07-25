@@ -89,7 +89,13 @@ const NotificationBell: React.FC<BellNotification> = ({ qtd }) => {
                     <View style={styles.Content}>
                     </View>
             }
-            <Image style={qtd>0?styles.Bell:styles.Bell0} source={qtd>0?BellW:BellR}  />
+            {
+                qtd>0?
+                (<BellW style={styles.Bell} />)
+                :
+                (<BellR style={styles.Bell0} />)
+            }
+            
         </View>
     )
 

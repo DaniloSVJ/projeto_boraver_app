@@ -139,7 +139,7 @@ export function Noti() {
         useCallback(() => {
             setService([])
             async function load() {
-                const token = localStorage.getItem('@BoraVer:token');
+                
                 const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
                 setIdin(IdInfluencers.data.id)
                 await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`, {
@@ -221,7 +221,7 @@ export function Noti() {
                                     </View>
                                     <TextNoti>
 
-                                        <View style={{ width: '90vw', marginLeft: 2, paddingRight: 54 }}>
+                                        <View style={{ width: '90%', marginLeft: 2, paddingRight: 54 }}>
                                             <TextDescription><AutorText>Trainer</AutorText>enviou uma nova mensagemem Divulgação de curso presencial.<TextTime>2d</TextTime>
                                             </TextDescription>
                                         </View>
@@ -237,7 +237,7 @@ export function Noti() {
                                     </View>
                                     <TextNoti>
 
-                                        <View style={{ width: '90vw', marginLeft: 2, paddingRight: 54 }}>
+                                        <View style={{ width: '90%', marginLeft: 2, paddingRight: 54 }}>
                                             <TextDescription><AutorText>Sérgio Henrique </AutorText>Curtiu o seu comentário:Tudo bem. Obrigado<TextTime>2d</TextTime>
                                             </TextDescription>
                                         </View>
@@ -254,7 +254,7 @@ export function Noti() {
                                     </View>
                                     <TextNoti>
 
-                                        <View style={{ width: '90vw', marginLeft: 2, paddingRight: 54 }}>
+                                        <View style={{ width: '90%', marginLeft: 2, paddingRight: 54 }}>
                                             <TextDescription><AutorText>Trainer</AutorText>enviou uma nova mensagemem Divulgação de curso presencial.<TextTime>2d</TextTime>
                                             </TextDescription>
                                         </View>
@@ -270,7 +270,7 @@ export function Noti() {
                                     </View>
                                     <TextNoti>
 
-                                        <View style={{ width: '90vw', marginLeft: 2, paddingRight: 54 }}>
+                                        <View style={{ width: '90%', marginLeft: 2, paddingRight: 54 }}>
                                             <TextDescription><AutorText>Sérgio Henrique </AutorText>Curtiu o seu comentário:Tudo bem. Obrigado<TextTime>2d</TextTime>
                                             </TextDescription>
                                         </View>

@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
-import { Text, View, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 import IconSearch from 'react-native-vector-icons/FontAwesome';
 import Button from '../../../components/Button';
 import Select from '../../../components/Select'
 import { compareAsc, endOfYesterday, format, parseISO } from 'date-fns'
 import Moment from 'moment';
+import { FontAwesome } from '@expo/vector-icons';
 
 import CalendarPicker from 'react-native-calendar-picker';
 
@@ -20,17 +21,16 @@ import DateField from 'react-native-datefield';
 import { RectButton } from 'react-native-gesture-handler';
 import NotificationBell from '../../../components/NotificationBell'
 import { useAuth } from '../../../hooks/auth'
-import { Icon, ViewIcons, ViewSearch, ContainerInput, SubTitle, TextSolicit, ViewSubTitle, ViewBell, TextFooter, ViewTime, Image, TitleItem, Ofert, Footer, Destaque, TextDestaque, Description, TextDescription, SubtitleService, ItemList, Content, HerderText2, Container, Header, WelcomeText } from './styles'
+import { Icon, ViewIcons, ViewSearch, ContainerInput, ViewLeftHerder, ViewIcone, ViewSubTitle, ViewBell, HerderText, ViewTime, Image, TitleItem, Ofert, Footer, Destaque, TextDestaque, Description, TextDescription, SubtitleService, ItemList, Content, HerderText2, Container, Header, WelcomeText } from './styles'
 import Filter from '../../../assets/controler.png'
 import { ScrollView } from 'react-native-gesture-handler';
 import Input from '../../../components/InputGeral'
-import iconDate from '../../../assets/iconDateInput.svg'
+import IconDate from '../../../assets/iconDateInput.svg'
 import IconComboBox from '../../../assets/iconComboBox.svg'
 import api from '../../../service/api'
 import { IconBase, icons } from 'react-icons/lib';
 import { useNavigation, } from '@react-navigation/native';
-import DropDownPicker from 'react-native-dropdown-picker';
-import axios from 'axios'
+
 interface IState {
     visible: boolean;
     dateStr?: string;
@@ -43,13 +43,9 @@ type Nav = {
 
 
 export function Search() {
-
-
-    
     const [cities, setCities] = useState('');
     const [listUFs, setListUFs] = useState([]);
     const [listCities, setListCities] = useState([]);
-
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const inputElementRef = useRef<any>(null);
     const [isVisible, setIsVisible] = useState(false);
@@ -70,14 +66,61 @@ export function Search() {
     const { user } = useAuth()
     const { navigate } = useNavigation<Nav>();
 
-    const formRef = useRef<FormHandles>(null);
-    const emailInputRef = useRef<TextInput>(null);
     const [qtdNote, setQtdNote] = useState(0)
     const [opt, setOpt] = useState([{}])
-    const [titleHeader, setTitleHeader] = useState("Buscar")
+    const [titleHeader, setTitleHeader] = useState("Filtrar Solicitações")
     const [displayView, setDisplayView] = useState('none')
-    const [displayViewForm, setDisplayViewForm] = useState('flex')
-  
+    const [statusIn,setStatusIn]=useState(false)
+    const [idin, setIdin] = useState(0)
+    const [dateFormatStr,setDateFormatStr]=useState('')
+    const handlerFilter =()=>{
+        async function filter() {
+            async function load() {
+                const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
+                setIdin(IdInfluencers.data.id)  
+                let status = ''  
+                if(selectedStatus=="Em Andamento"){
+                    status= 'andamento'
+                }
+                else if(selectedStatus=="Nova Oferta"){
+                    status= 'novaoferta'
+                }
+                else if(selectedStatus=="Recusado"){
+                    status= 'recusado'
+                }
+                else if(selectedStatus=="Concluído"){
+                    status= 'concluido'
+                }
+
+                console.log(dateFormatStr+' '+selectedStatus+' '+selectedRedeSociais)
+                if(valueInput=="" && selectedStatus=="" && selectedRedeSociais==""){
+                    Alert.alert('Selecione um Filtro')
+                    console.log('Selecione um Filtro')
+                }else{
+                    const filter = await api.get(`/api/v3/solicitacaofilter/${IdInfluencers.data.id}/`,
+                      { 
+                        params: {
+                            'dt': dateFormatStr==''?"":dateFormatStr,
+                            'status': status==''?"":status,
+                            'valores':selectedRedeSociais,
+                        }
+                      }
+                    )
+                    console.log(filter)
+                }
+                
+
+                const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
+                setQtdNote(note.data.count)
+               
+            }
+            load()
+       
+        }
+        filter()
+
+    }
+
 
     const styles = StyleSheet.create({
 
@@ -109,19 +152,21 @@ export function Search() {
     useFocusEffect(
         useCallback(() => {
 
-            async function load() {
-                const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
 
-                const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
-                setQtdNote(note.data.count)
-               
-            }
-            load()
         }, [])
     )
 
     const optStatus = ['Nova Oferta', 'Em Andamento', 'Recusado']
-    const optRedesSociais = ['Instagram', 'Youtube', 'Tiktok']
+    const optRedesSociais = [
+        '50---500',
+        '500---2000',
+        '2000---5000',
+        '5000---10000',
+        '10000---30000',
+        '30000---100000',
+        '100000---500000',
+        'acima de 500000',
+   ]
     const [filter, setFilter] = useState(false)
     const [valueInput, setValueInput] = useState('')
 
@@ -132,8 +177,23 @@ export function Search() {
         <Container>
             <Header>
                 <View>
+                <View>
+
+                    <ViewLeftHerder >
+                        <RectButton onPress={() => navigate("Home", {})}>
+                            <ViewIcone>
+                                <FontAwesome name="angle-left" size={24} color="white" />
+                            </ViewIcone>
+                        </RectButton>
+                        <View>
+                            <HerderText>
+                             {titleHeader}
+                            </HerderText>
+                        </View>
+                    </ViewLeftHerder>
+                    </View>
                     <WelcomeText>
-                        {titleHeader}
+                        
                     </WelcomeText>
                     <ViewSubTitle display={displayView}>
                         <View>
@@ -172,7 +232,7 @@ export function Search() {
                                 keyboardAppearance="dark"
                                 placeholderTextColor="#000"
                             />
-                            <Icon source={iconDate} />
+                            <IconDate />
                         </ContainerInput>
                     </TouchableOpacity>
 
@@ -184,9 +244,11 @@ export function Search() {
 
                                 const firstDate = parseISO(String(date));
                                 let dt = Moment(date).format('DD/MM/YYYY')
-
+                                
+                                console.log(String(date)+'>>>>')
                                 setSelectedDate(date)
                                 setValueInput(String(dt))
+                                setDateFormatStr(String(dt))
                                 setIsVisible(false)
                             }}
                         />
@@ -215,11 +277,12 @@ export function Search() {
 
 
 
-                    <View style={{ marginTop: '20vh',marginBottom:'10vh', marginLeft: 54, marginRight: 54 }}>
+                    <View style={{ marginTop: '20%',marginBottom:'10%', marginLeft: 54, marginRight: 54 }}>
                         <Button
                             color={"#FFF"}
                             background={"#3C2E54"}
                             bordercolor={"#3C2E54"}
+                            onPress={handlerFilter}
                         >
                             Fltrar
                         </Button>

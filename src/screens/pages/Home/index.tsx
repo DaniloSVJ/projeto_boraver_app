@@ -97,7 +97,7 @@ export function Home() {
                 const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
                 setIdin(IdInfluencers.data.id)
                 setStatusIn(IdInfluencers.data.ativo)
-                console.log(">>>>"+IdInfluencers.data.ativo)                // setService([response.data.results]);
+                
                 // setBookmark(response.data.results.favorite)
                 const solicitacao = await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`)
 
@@ -154,7 +154,7 @@ export function Home() {
 {/*============== CABEÇALHO*/}            
             <Header>
 
-                <View>
+                <View style={{marginTop:10}}>
                     <WelcomeText>
                         Olá, {user.name}
                     </WelcomeText>
@@ -162,7 +162,7 @@ export function Home() {
                         Confira os últimos jobs adicionados
                     </HerderText2>
                 </View>
-                <ViewIcons>
+                <ViewIcons style={{marginTop:10}}>
 {/*============== Lupa Explorer*/}
                     <RectButton onPress={() => navigate("Search", {})}>
                         <ViewSearch>
