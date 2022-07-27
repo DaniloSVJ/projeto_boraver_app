@@ -45,7 +45,7 @@ import Img from '../../../assets/avatar_user.png'
 
 import iconeFavorite from '../../../assets/marca-paginas.png'
 import iconeFavoriteTrue from '../../../assets/marca-paginas-true.png'
-import pastaVazia from '../../../assets/1-mobile-favoritos2.png'
+import PastaVazia from '../../../assets/1-mobile-favoritos2.svg'
 import { ScrollView } from 'react-native-gesture-handler';
 import styled from 'styled-components';
 import { array } from 'yup';
@@ -162,13 +162,13 @@ const Favorite: React.FC = () => {
         <Container>
             <Header>
 
-                <View>
+                <View style={{marginTop:10}}>
                     <WelcomeText>
                         Salvos
                     </WelcomeText>
 
                 </View>
-                <ViewIcons>
+                <ViewIcons style={{marginTop:10}}>
                     <RectButton onPress={() => navigate("Search", {})}>
                         <ViewSearch>
 
@@ -234,7 +234,7 @@ const Favorite: React.FC = () => {
                    )) :
                             <ViewVazio>
                                 <View>
-                                    <ImagemVazio source={pastaVazia} />
+                                    <PastaVazia width={70} height={80} />
                                 </View>
                                 <View>
                                     <TextVazioTitle>

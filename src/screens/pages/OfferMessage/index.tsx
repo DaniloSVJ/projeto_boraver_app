@@ -190,7 +190,7 @@ export function OfferAceite() {
         <Container>
             <Header>
 
-                <View>
+                <View style={{marginTop:10}}>
 
                     <ViewLeftHerder >
                         <RectButton onPress={() => navigate("OfferDetail", {})}>
@@ -205,7 +205,7 @@ export function OfferAceite() {
                         </View>
                     </ViewLeftHerder>
                 </View>
-                <ViewIcons>
+                <ViewIcons style={{marginTop:10}}>
                     <RectButton onPress={() => navigate("OfferDetail", {})}>
                         <ViewSearch>
                             <IconSearch name={'search'} size={22} color={'#fff'} />

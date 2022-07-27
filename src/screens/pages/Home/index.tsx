@@ -1,6 +1,6 @@
 
 import React, { useState, useCallback, useEffect } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity,Alert } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native';
 import IconSearch from 'react-native-vector-icons/FontAwesome';
 import { RectButton } from 'react-native-gesture-handler';
@@ -41,7 +41,7 @@ import Img from '../../../assets/avatar_user.png'
 
 import iconeFavorite from '../../../assets/marca-paginas.png'
 import iconeFavoriteTrue from '../../../assets/marca-paginas-true.png'
-import JobsVazio from '../../../assets/item-exclamacao.png'
+import JobsVazio from '../../../assets/Alert.svg'
 
 import { ScrollView } from 'react-native-gesture-handler';
 
@@ -97,7 +97,8 @@ export function Home() {
                 const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
                 setIdin(IdInfluencers.data.id)
                 setStatusIn(IdInfluencers.data.ativo)
-                
+                Alert.alert(IdInfluencers.data.ativo)
+                console.log('>>>>>>>'+IdInfluencers.data.ativo)
                 // setBookmark(response.data.results.favorite)
                 const solicitacao = await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`)
 
@@ -181,7 +182,7 @@ export function Home() {
 
             <Content>
 {/*============== CORPO DA MENSAGEM*/}                    
-                <ScrollView>
+                <ScrollView style={{backgroundColor:"#ffffff"}}>
                 
 
                     {services.length>0 && statusIn===true ? services.map((s, key) =>(
@@ -234,7 +235,7 @@ export function Home() {
                         <ViewVazio>
 
                             <View>
-                                <ImagemVazio source={JobsVazio} />
+                                <JobsVazio width={70} height={80}/>
                             </View>
                             <View>
                                 <TextVazioTitle>

@@ -177,7 +177,7 @@ export function Search() {
         <Container>
             <Header>
                 <View>
-                <View>
+                <View style={{marginTop:10}}>
 
                     <ViewLeftHerder >
                         <RectButton onPress={() => navigate("Home", {})}>
@@ -206,11 +206,11 @@ export function Search() {
                         </View>
                     </ViewSubTitle>
                 </View>
-                <ViewIcons>
+                <ViewIcons style={{marginTop:10}}>
                     <RectButton onPress={() => navigate("Search", {})}>
                         <ViewSearch>
 
-                            <IconSearch name={'search'} size={22} color={'#5E448A'} />
+                            <IconSearch name={'search'} size={10} color={'#5E448A'} />
                         </ViewSearch>
                     </RectButton>
                     <RectButton onPress={() => navigate("Notifications", {})}>
@@ -232,7 +232,7 @@ export function Search() {
                                 keyboardAppearance="dark"
                                 placeholderTextColor="#000"
                             />
-                            <IconDate />
+                            <IconDate style={{marginRight:20}} width={20} height={20}/>
                         </ContainerInput>
                     </TouchableOpacity>
 
@@ -240,6 +240,7 @@ export function Search() {
                         <CalendarPicker
                             date={selectedDate}
                             placeholder="Data de Solicitação"
+
                             onDateChange={(date: Date) => {
 
                                 const firstDate = parseISO(String(date));

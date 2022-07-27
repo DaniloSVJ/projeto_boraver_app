@@ -42,6 +42,9 @@ import IPerfilO from '../assets/iperfilorange.svg'
 import IfavoriteR from '../assets/ifavoriteroxo.svg'
 import IfavoriteO from '../assets/ifavoriteorange.svg'
 
+import IcontactO from '../assets/icontactO.svg'
+import IcontactR from '../assets/icontactR.svg'
+
 
 
 import styled from 'styled-components';
@@ -350,7 +353,12 @@ export function AppRoutes() {
             {
               focused && <View style={styles.borderActive} />
             }
-            <Ionicons style={focused ? styles.Icon : styles.IconDesactive} name="chatbubble-ellipses-sharp" size={24} color={focused? "#DF8747":"#5E448A"}/>
+            { focused?
+            (<IcontactO style={styles.Icon} />)
+            :
+            (<IcontactR style={styles.IconDesactive} />)
+            }
+            
           </View>
         ),
       }}

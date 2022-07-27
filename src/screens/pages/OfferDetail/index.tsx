@@ -232,7 +232,7 @@ export function OfferDetail() {
         <Container>
             <Header>
 
-                <View>
+                <View style={{marginTop:10}}>
 
                     <ViewLeftHerder >
                         <RectButton onPress={() => navigate("Home", {})}>
@@ -247,7 +247,7 @@ export function OfferDetail() {
                         </View>
                     </ViewLeftHerder>
                 </View>
-                <ViewIcons>
+                <ViewIcons style={{marginTop:10}}>
                     <RectButton onPress={() => navigate("Search", {})}>
                         <ViewSearch>
 

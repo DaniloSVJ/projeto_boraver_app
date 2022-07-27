@@ -57,10 +57,7 @@ export const ContainerInput = styled.View`
     background-color:#F0FFFF;
     border-radius: 12px;
 
-    border-style:"solid";
-    border-width: 1px;
   
-    border-color: #808080;
     font-size: 14px;
     margin-top: 32px; 
     margin-left: 54px;
@@ -231,11 +228,11 @@ export const ViewIcons = styled.View`
 `
 
 export const ViewSearch = styled.View`
-    margin-top: 27px;
+    margin-top: 35px;
     margin-right: 12px;
 `
 export const ViewBell = styled.View`
-    margin-top: 3px;
+    margin-top: 13px;
     margin-right: 30px;
 `
 

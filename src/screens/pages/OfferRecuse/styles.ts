@@ -238,11 +238,11 @@ export const ViewIcons = styled.View`
     margin-right: 32px;
 `
 export const ViewSearch = styled.View`
-    margin-top: 27px;
+    margin-top: 35px;
     margin-right: 12px;
 `
 export const ViewBell = styled.View`
-    margin-top: 3px;
+    margin-top: 13px;
     margin-right: 30px;
 `
 

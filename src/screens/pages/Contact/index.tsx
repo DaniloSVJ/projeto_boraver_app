@@ -11,6 +11,7 @@ import { Form } from '@unform/mobile'
 import { Picker } from '@react-native-picker/picker';
 import { FormHandles } from "@unform/core"
 import Select from '../../../components/Select'
+import Textarea from 'react-native-textarea';
 
 
 import {
@@ -121,7 +122,7 @@ export function Contact() {
         useCallback(() => {
             setService([])
             async function load() {
-              
+
                 const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
                 setIdin(IdInfluencers.data.id)
                 await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`, {
@@ -210,7 +211,31 @@ export function Contact() {
         },
         selectText: {
             textAlign: 'right'
-        }
+        },
+  container: {
+    flex: 1,
+    paddingRight:7,
+    paddingLeft:7,
+    width:"100%",
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom:"20%"
+  },
+  textareaContainer: {
+    borderRadius:5,
+    height: 180,
+    width:"100%",
+    padding: 5,
+    backgroundColor: '#F5FCFF',
+  },
+  textarea: {
+    textAlignVertical: 'top',  // hack android
+    height: 170,
+    borderRadius:5,
+    width:"100%",
+    fontSize: 14,
+    color: '#333',
+  },
 
     });
     return (
@@ -218,13 +243,13 @@ export function Contact() {
         <Container>
             <Header>
 
-                <View>
+                <View style={{ marginTop: 10 }}>
                     <WelcomeText>
                         Contato
                     </WelcomeText>
 
                 </View>
-                <ViewIcons>
+                <ViewIcons style={{ marginTop: 10 }}>
                     <RectButton onPress={() => navigate("Search", {})}>
                         <ViewSearch>
 
@@ -255,15 +280,27 @@ export function Contact() {
                                 marginR={10}
                                 marginL={10}
                             />
-                            <TextInput
-                                style={{ marginTop: 16 }}
-                                underlineColorAndroid="transparent"
-                                placeholder="Type something"
+                            {/* <TextInput
+                                style={{ paddingTop: 2, marginTop: 16, backgroundColor: "#F0FFFF", height: 150, justifyContent: "flex-start" }}
+
+                                placeholder="Digite sua mensagem"
                                 placeholderTextColor="grey"
                                 numberOfLines={10}
                                 multiline={true}
+                            /> */}
+                            <View style={styled.container}>
+                            <Textarea
+                                    containerStyle={styled.textareaContainer}
+                                    style={styled.textarea}
+                                //style={{ paddingTop: 2, marginTop: 16, backgroundColor: "#F0FFFF", height: 150, justifyContent: "flex-start" }}
+                               
+                                maxLength={1000}
+                                placeholder="Digite sua mensagem"
+                                placeholderTextColor={'#c7c7c7'}
+                                underlineColorAndroid={'transparent'}
                             />
-                            <View style={{ marginTop: 'auto',marginBottom: '50%' }}>
+                            </View>
+                            <View style={{ marginTop: 'auto', marginBottom: '50%' }}>
                                 <Button bordercolor={"#3C2E54"} background={"#3C2E54"} color={"#fff"} onPress={() => formRef.current?.submitForm()}>
                                     Enviar
                                 </Button>

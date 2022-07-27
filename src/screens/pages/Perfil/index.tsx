@@ -301,7 +301,7 @@ export function Perfil() {
         <Container>
             <Header>
                 {/* //################ Cabeçalho//################  */}
-                <View>
+                <View style={{marginTop:10}}>
                     <WelcomeText>
                         Saldo:
                     </WelcomeText>
@@ -324,7 +324,7 @@ export function Perfil() {
                     </ViewSaldo>
                 </View>
 
-                <ViewIcons>
+                <ViewIcons style={{marginTop:10}}>
 
                     <RectButton onPress={() => navigate("Search", {})}>
                         <ViewSearch>

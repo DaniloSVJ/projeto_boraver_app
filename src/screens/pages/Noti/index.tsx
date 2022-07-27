@@ -8,6 +8,7 @@ import { RectButton } from 'react-native-gesture-handler';
 import IconSearch from 'react-native-vector-icons/FontAwesome';
 import NotificationBell from '../../../components/NotificationBell'
 import { useAuth } from '../../../hooks/auth'
+
 import {
     AutorText,
     ViewContentTitleItem,
@@ -22,8 +23,6 @@ import {
 
     ViewIcone,
     TextNoti,
-    TextDestaque,
-    Description,
     TextDescription,
     TextTime,
     ItemList,
@@ -32,25 +31,16 @@ import {
     Container,
     Header,
     ViewLeftHerder,
-    ViewVazio,
-    ImagemVazio,
-    TextVazioTitle,
-    TextVazioSubTitle,
-
+  
 } from './styles'
 import { useNavigation, } from '@react-navigation/native';
 
 import Img from '../../../assets/avatar_user.png'
 
-import iconeFavorite from '../../../assets/marca-paginas.png'
-import iconeFavoriteTrue from '../../../assets/marca-paginas-true.png'
-import JobsVazio from '../../../assets/item-exclamacao.png'
 
 import { ScrollView } from 'react-native-gesture-handler';
 
 import api from '../../../service/api'
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 interface solicitationI {
@@ -173,7 +163,7 @@ export function Noti() {
             {/*============== CABEÇALHO*/}
             <Header>
                 {/*============== Icone de voltar*/}
-                <ViewLeftHerder>
+                <ViewLeftHerder style={{marginTop:10}}>
                     <RectButton onPress={() => navigate("Home", {})}>
                         <ViewIcone>
                             <FontAwesome name="angle-left" size={24} color="white" />
@@ -185,7 +175,7 @@ export function Noti() {
                         </HerderText2>
                     </View>
                 </ViewLeftHerder>
-                <ViewIcons>
+                <ViewIcons style={{marginTop:10}}>
                     {/*============== explorer*/}
                     <RectButton onPress={() => navigate("Notifications", {})}>
                         <ViewSearch>
