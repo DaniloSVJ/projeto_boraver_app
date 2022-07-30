@@ -24,8 +24,8 @@ export const ItemList = styled.View`
     width: 100%;
     margin-top: 23px;
     margin-bottom: 17px;
-    padding-right: 29;
-    padding-left: 29;
+    padding-right: 29px;
+    padding-left: 29px;
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -244,7 +244,7 @@ export function OfferRecuse() {
                         </ViewBody>
 
 
-                        <View style={{ marginTop: 252,  marginRight:36, marginBottom:68 ,marginLeft:36,}}>
+                        <View style={{ marginTop: "20%",  marginRight:36, marginBottom:68 ,marginLeft:36,}}>
                             <Button
                                 
                                 bordercolor={"#3C2E54"}

@@ -278,7 +278,16 @@ export function OfferAceite() {
                         </View>
 
                     </ItemList>
-
+                    <View>
+                        <Text> </Text>
+                        <Text> </Text>
+                        <Text> </Text>
+                        <Text> </Text>
+                        <Text> </Text>
+                        <Text> </Text>
+                        <Text> </Text>
+                        <Text> </Text>
+                    </View>
                 </ScrollView>
             </Content>
 

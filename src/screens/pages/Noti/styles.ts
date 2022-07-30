@@ -122,7 +122,7 @@ export const TextDestaque = styled.Text`
 `
 export const Description = styled.View``
 export const TextDescription = styled.Text`
-    width: 'auto;
+    width: auto;
     font-family: 'Montserrat_500Medium';
     font-style: normal;
     font-weight: 500;

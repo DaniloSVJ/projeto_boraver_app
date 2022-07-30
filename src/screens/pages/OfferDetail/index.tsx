@@ -33,6 +33,7 @@ import {
     ViewBodyPeriod,
     ViewFooter,
     ViewButton,
+    ViewButtonRec,
     TextSolicit,
     ViewLeftHerder,
     ViewIcons,
@@ -86,7 +87,7 @@ interface Solicitacao {
     status: string,
     periodo: string,
     qtddias: number,
-    inicio:string,
+    inicio: string,
     favorite: boolean,
     maiorvalor: number,
     menorvalor: number,
@@ -102,7 +103,7 @@ export function OfferDetail() {
     const { idS, idCli } = route.params as RouteParams;
     const { user } = useAuth()
     const { navigate } = useNavigation<Nav>();
-    const [soliction, setSoliction] = useState<Solicitacao>()
+    const [soliction, setSoliction] = useState<Solicitacao[]>([])
 
     const formRef = useRef<FormHandles>(null);
     const emailInputRef = useRef<TextInput>(null);
@@ -166,6 +167,7 @@ export function OfferDetail() {
             textAlign: 'right'
         },
         buttonGreen: {
+           
             paddingRight: 46,
             paddingLeft: 46,
             paddingTop: 12.25,
@@ -181,13 +183,18 @@ export function OfferDetail() {
     });
     useFocusEffect(
         useCallback(() => {
+            console.log('>>>id é :' + idCli)
+            console.log('>>>id é solicitacao:' + idS)
             async function load() {
                 const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
                 const cliente = await api.get(`/api/v1/clientes/${idCli}/`)
+
                 setDtCliRegister(cliente.data.criacao)
                 const solicitDetail = await api.get(`/api/v3/solicitacao/${idS}/`)
-                setSoliction(solicitDetail.data)
-                const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
+                console.log(solicitDetail.data)
+                setSoliction([solicitDetail.data])
+
+                const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.results[0].id}/`)
                 setQtdNote(note.data.count)
             }
             load()
@@ -216,7 +223,7 @@ export function OfferDetail() {
         }
         alterstatus()
     }
-    function direncadatas(dtContrato:string){
+    function direncadatas(dtContrato: string) {
         const now = new Date()
         const past = new Date(dtContrato)
         const diff = Math.abs(now.getTime() - past.getTime()); // Subtrai uma data pela outra
@@ -224,6 +231,9 @@ export function OfferDetail() {
 
         return days
     }
+
+
+
     // Colocar botão para alterar status para
     // concluido na oferta em andamento.
     // Criar Tela simples de Comunicação com o cliente
@@ -232,7 +242,7 @@ export function OfferDetail() {
         <Container>
             <Header>
 
-                <View style={{marginTop:10}}>
+                <View style={{ marginTop: 10 }}>
 
                     <ViewLeftHerder >
                         <RectButton onPress={() => navigate("Home", {})}>
@@ -247,7 +257,7 @@ export function OfferDetail() {
                         </View>
                     </ViewLeftHerder>
                 </View>
-                <ViewIcons style={{marginTop:10}}>
+                <ViewIcons style={{ marginTop: 10 }}>
                     <RectButton onPress={() => navigate("Search", {})}>
                         <ViewSearch>
 
@@ -265,24 +275,23 @@ export function OfferDetail() {
 
             <Content >
                 <ScrollView>
-
-                    <ItemList>
-                        <TitleItem>
+                    {soliction.map((soliction, key) => (<ItemList>
+                        <TitleItem key={key}>
                             <View>
                                 <Image style={styles.imageAvatar} source={iperfiluser} />
                             </View>
                             <View>
-                                <TitleService>{soliction?.titulo}</TitleService>
+                                <TitleService>{soliction.titulo}</TitleService>
 
                             </View>
                             <View style={{ marginLeft: 'auto', marginRight: '5%' }}>
-                                <IpreferredW style={styles.imagePrefered}  />
-
+                                {/* <IpreferredW style={styles.imagePrefered}  /> */}
+                                <Image style={styles.imagePrefered} source={IpreferredW} />
                             </View>
                         </TitleItem>
 
 
-                        <Ofert>
+                        <Ofert key={key}>
                             <View style={{ display: 'flex', flexDirection: 'row' }} >
                                 <Foundation name="star" size={12} color="#373737" />
                                 <Avaliation>
@@ -294,7 +303,7 @@ export function OfferDetail() {
 
                             <TextDescription>Membro desde {Moment(dtCliRegister).locale('pt-br').format('LL')}</TextDescription>
                         </Ofert>
-                        <ViewBody>
+                        <ViewBody key={key}>
                             <View style={styles.viewbody}>
                                 <View style={styles.imagebody}>
                                     <SimpleLineIcons name="diamond" size={19} color="black" />
@@ -312,8 +321,8 @@ export function OfferDetail() {
                             <ViewBodyPeriod>
                                 <View style={styles.viewbody}>
                                     <View style={styles.imagebody}>
-                                        <ITime style={styles.imageTime} />
-                                        
+                                        {/* <ITime style={styles.imageTime} /> */}
+                                        <Image style={styles.imageTime} source={ITime} />
                                     </View>
                                     <View>
                                         <SubtitleService>
@@ -326,7 +335,7 @@ export function OfferDetail() {
                                 </View>
                             </ViewBodyPeriod>
                         </ViewBody>
-                        <ViewFooter>
+                        <ViewFooter key={key}>
                             <SubtitleService>
                                 Detalhe
                             </SubtitleService>
@@ -348,7 +357,7 @@ export function OfferDetail() {
                                 </View>
                                 <View style={{ marginLeft: 18, marginRight: 18, paddingRight: 29 }}>
                                     <Button
-                                        style={styles.buttonRed}
+                                        style={styles.buttonGreen}
                                         bordercolor={"#C72D2D"}
                                         background={"#C72D2D"}
                                         color={"#fff"}
@@ -360,7 +369,7 @@ export function OfferDetail() {
                             </ViewButton>
                         ) : soliction?.status === 'andamento' ?
                             (
-                                <ViewButton>
+                                <ViewButtonRec>
                                     <View style={{ marginRight: 18 }}>
                                         <Text>OFERTA ACEITA</Text>
                                         <Button
@@ -374,22 +383,22 @@ export function OfferDetail() {
                                         </Button>
 
                                     </View>
-                                    {direncadatas(String(soliction?.inicio)) > soliction.qtddias ?   
-                                    (<View style={{ marginLeft: 18, marginRight: 18, paddingRight: 29 }}>
-                                        <Button
-                                            style={styles.buttonRed}
-                                            bordercolor={"#C72D2D"}
-                                            background={"#C72D2D"}
-                                            color={"#fff"}
-                                            onPress={() => handleAlterStatus('concluido')}
-                                        >
-                                            Concluir
-                                        </Button>
-                                    </View>):
-                                    <View/>
+                                    {direncadatas(String(soliction?.inicio)) > soliction.qtddias ?
+                                        (<View style={{ marginRight: 18 }}>
+                                            <Button
+                                                style={styles.buttonRed}
+                                                bordercolor={"#C72D2D"}
+                                                background={"#C72D2D"}
+                                                color={"#fff"}
+                                                onPress={() => handleAlterStatus('concluido')}
+                                            >
+                                                Concluir
+                                            </Button>
+                                        </View>) :
+                                        <View />
                                     }
-                                    
-                                </ViewButton>
+
+                                </ViewButtonRec>
                             ) : soliction?.status === 'concluido' ?
                                 (
                                     <ViewConcluded>
@@ -407,24 +416,23 @@ export function OfferDetail() {
                                         </View>
                                     </ViewConcluded>
                                 ) :
-                                (  <View>
-                                    <TextRecAndAndament>Você Recusou esta Solicitação</TextRecAndAndament>
+                                (<View>
+                                    <TextRecAndAndament> Você Recusou esta Oferta de Serviço </TextRecAndAndament>
                                 
-
-                                    <ViewButton>
+                                    <ViewButtonRec>
                                         <View style={{ marginRight: 18 }}>
-                                            
+                                        
                                             <Button
                                                 style={styles.buttonGreen}
                                                 bordercolor={"#3C2E54"}
                                                 background={"#3C2E54"}
                                                 color={"#fff"}
-                                                onPress={() => navigate("OfferRecuse", {})}
+                                                onPress={() => navigate("OfferAceite", {})}
                                             >
-                                                Mensagem do cliente
+                                                Ver nova Proposta
                                             </Button>
                                         </View>
-                                        <View style={{ marginLeft: 18, marginRight: 18, paddingRight: 29 }}>
+                                        <View style={{ marginRight: 18 }}>
                                             <Button
                                                 style={styles.buttonRed}
                                                 bordercolor={"#489D31"}
@@ -436,11 +444,12 @@ export function OfferDetail() {
                                             </Button>
                                         </View>
 
-                                    </ViewButton>
+                                    </ViewButtonRec>
                                     </View>
                                 )
                         }
                     </ItemList>
+                    ))}
                     <View>
                         <Text> </Text>
                         <Text> </Text>

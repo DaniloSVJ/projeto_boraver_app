@@ -1,4 +1,5 @@
 import styled from 'styled-components/native'
+import {generateMedia} from "styled-media-query";
 
 
 interface Display{
@@ -247,6 +248,21 @@ export const ViewButton = styled.View`
     padding-right:10vw;
     
     width:100vw;
+
+`
+export const ViewButtonRec = styled.View`
+    display:flex;
+    flex-direction: column;
+    
+    justify-content: space-between;
+    margin-top:22px;
+    margin-bottom: 40px;
+    padding-right:10vw;
+    
+    width:100vw;
+
+
+ 
 `
 
 

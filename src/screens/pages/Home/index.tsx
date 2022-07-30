@@ -13,8 +13,8 @@ import {
     ViewBell,
     TextFooter,
     ViewTime,
-    Image,
     TitleItem,
+    Image,
     ViewIcons,
     ViewSearch,
     Footer,
@@ -36,19 +36,14 @@ import {
 
 } from './styles'
 import { useNavigation, } from '@react-navigation/native';
-
 import Img from '../../../assets/avatar_user.png'
-
 import iconeFavorite from '../../../assets/marca-paginas.png'
 import iconeFavoriteTrue from '../../../assets/marca-paginas-true.png'
 import JobsVazio from '../../../assets/Alert.svg'
-
 import { ScrollView } from 'react-native-gesture-handler';
-
 import api from '../../../service/api'
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { boolean, number } from 'yup';
+
 
 
 interface solicitationI {
@@ -83,7 +78,8 @@ export function Home() {
     const [bookmark, setBookmark] = useState(false)
 
     const [idCliente,setIdCliente]=useState(0)
-    const [statusIn,setStatusIn]=useState(false)
+    const [statusIn,setStatusIn]=useState(true)
+    const [solic,setSoliction]=useState(true)
     const [qtdNote, setQtdNote] = useState(0)
     const [render, setrender] = useState(false)
     const [services, setService] = useState<solicitationI[]>([])
@@ -93,21 +89,26 @@ export function Home() {
     useCallback(() => {
             setService([])
             async function load() {
-                
+                console.log(user.id)
                 const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
-                setIdin(IdInfluencers.data.id)
-                setStatusIn(IdInfluencers.data.ativo)
-                Alert.alert(IdInfluencers.data.ativo)
-                console.log('>>>>>>>'+IdInfluencers.data.ativo)
+                setIdin(IdInfluencers.data.results[0].id)
+                console.log(IdInfluencers.data)
+                if(IdInfluencers.data.count==0){
+                    setSoliction(false)
+                }
+                setStatusIn(IdInfluencers.data.results[0].ativo)
+                Alert.alert(IdInfluencers.data.results[0].ativo)
+                console.log('>>>>>>>'+IdInfluencers.data.results[0].id)
                 // setBookmark(response.data.results.favorite)
-                const solicitacao = await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`)
-
+                const solicitacao = await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.results[0].id}/`)
+                console.log(IdInfluencers.data.id)
+                console.log(solicitacao)    
 
                 setService(solicitacao.data.results);
                 
                 
                 console.log('id cliente é'+solicitacao.data.results.cliente)
-                const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
+                const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.results[0].id}/`)
 
                 setQtdNote(note.data.count)
 
@@ -160,7 +161,7 @@ export function Home() {
                         Olá, {user.name}
                     </WelcomeText>
                     <HerderText2>
-                        Confira os últimos jobs adicionados
+                       Confira os últimos jobs adicionados
                     </HerderText2>
                 </View>
                 <ViewIcons style={{marginTop:10}}>
@@ -173,8 +174,8 @@ export function Home() {
                     </RectButton>
 {/*============== Sino Notificações*/}
                     <RectButton onPress={() => navigate("Notifications", {})}>
-                        <ViewBell >
-                            <NotificationBell qtd={qtdNote} />
+                        <ViewBell >                                
+                             <NotificationBell qtd={qtdNote} /> 
                         </ViewBell>
                     </RectButton>
                 </ViewIcons>
@@ -185,7 +186,7 @@ export function Home() {
                 <ScrollView style={{backgroundColor:"#ffffff"}}>
                 
 
-                    {services.length>0 && statusIn===true ? services.map((s, key) =>(
+                    {solic===true && statusIn===true ? services.map((s, key) =>(
                        
                         <ItemList key={key}>    
                             <TitleItem>
@@ -213,8 +214,8 @@ export function Home() {
 
                                 </View>                               
                             </TitleItem>
-
-                            <TouchableOpacity onPress={()=>navigate('OfferDetail',{idS:s.id,idCli:s.cliente})}>        
+                            {/* <Text>O id do cliente é '''{s.cliente}'</Text> */}
+                            <TouchableOpacity onPress={()=>navigate('OfferDetail',{idS:s.id, idCli:s.cliente})}>        
                             <Description>
                                 <TextDescription>{s.descricao_servico}</TextDescription>
                             </Description>
@@ -235,7 +236,8 @@ export function Home() {
                         <ViewVazio>
 
                             <View>
-                                <JobsVazio width={70} height={80}/>
+                                <Image  widthprops={'70px'} heightprops={'80px'} source={JobsVazio}  />
+                                {/* <JobsVazio width={70} height={80}/> */}
                             </View>
                             <View>
                                 <TextVazioTitle>

@@ -91,7 +91,8 @@ const Favorite: React.FC = () => {
     }])
     const { navigate } = useNavigation<Nav>();
     const [render, setrender] = useState(false)
-    
+    const [statusIn,setStatusIn]=useState(true)
+    const [solic,setSoliction]=useState(true)
     const [qtdNote, setQtdNote] = useState(0)
     const [bookmark, setBookmark] = useState(false)
     const [loadingrenderteste, setLoadingRender] = useState(false)
@@ -101,17 +102,26 @@ const Favorite: React.FC = () => {
         useCallback(() => {
           async function load() {
             const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
-            await setIdin(IdInfluencers.data.id)
+            setIdin(IdInfluencers.data.results[0].id)
+            
+            console.log(IdInfluencers.data.count)
+            console.log('ooooooo '+IdInfluencers.data.results[0].id)
+            // if(IdInfluencers.data.count==0){
+            //     setSoliction(false)
+            // }
+            
             const solicitacao = 
-                await api.get(`/api/v3/solicitacao_servico_fa/${IdInfluencers.data.id}/`)
-            console.log('ddddddddddddddddddddddddddddddddddddddddddddddddddd')
-
-            console.log(solicitacao)
-            console.log('pppppppppppppppppppppppppp')
+                await api.get(`/api/v3/solicitacao_servico_fa/${IdInfluencers.data.results[0].id}/`)
+                console.log(IdInfluencers.data)
+                console.log(solicitacao)
+            console.log('ooooooo')
+            console.log(solicitacao.data)
+            console.log('oooooo´´´´o')
+            console.log(IdInfluencers.data)
 
             setService(solicitacao.data.results);
     
-                const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
+                const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.results[0].id}/`)
 
                 setQtdNote(note.data.count)
 
@@ -186,7 +196,7 @@ const Favorite: React.FC = () => {
 
             <Content>
                 <ScrollView >
-                {services.length >0 ? services.map((s, key) =>(
+                {solic===true ? services.map((s, key) =>(
                        
                        <ItemList key={key}>    
                            <TitleItem>
@@ -234,7 +244,8 @@ const Favorite: React.FC = () => {
                    )) :
                             <ViewVazio>
                                 <View>
-                                    <PastaVazia width={70} height={80} />
+                                    <Image widthprops={'70px'} heightprops={'80px'} source={PastaVazia}/>
+                                    {/* <PastaVazia width={70} height={80} /> */}
                                 </View>
                                 <View>
                                     <TextVazioTitle>

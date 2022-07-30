@@ -19,7 +19,7 @@ export function AuthRoutes(){
   return (
   <Navigator screenOptions={{ headerShown: false }}>
    <Group>
-      <Screen name="HomeAuth" component={HomeAuth} />
+      <Screen name="HomeAuth"  component={HomeAuth} />
       <Screen name="SignIn" component={SignIn} />
       <Screen name="SignUp" component={SignUp}   />
       <Screen name="SignUpStep2" component={SignUpStep2}   />

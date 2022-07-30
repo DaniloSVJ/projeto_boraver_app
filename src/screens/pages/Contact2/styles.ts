@@ -28,7 +28,7 @@ export const Content = styled.View`
     width: 100%;
     padding: 0 32px;
     background-color: #3C2E54;
-    margin-top: 210px;
+    margin-top: 20%;
     color: #fff;
     margin-bottom: 169px;
       

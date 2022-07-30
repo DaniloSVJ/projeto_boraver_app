@@ -232,7 +232,8 @@ export function Search() {
                                 keyboardAppearance="dark"
                                 placeholderTextColor="#000"
                             />
-                            <IconDate style={{marginRight:20}} width={20} height={20}/>
+                            {/* <IconDate style={{marginRight:20}} width={20} height={20}/> */}
+                            <Image source={IconDate} style={{marginRight:20,width:20, height:20}} />
                         </ContainerInput>
                     </TouchableOpacity>
 

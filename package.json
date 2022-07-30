@@ -81,6 +81,7 @@
     "react-native-web": "0.17.7",
     "simple-react-native-datepicker": "^2.0.4",
     "styled-components": "^5.3.5",
+    "styled-media-query": "^2.1.2",
     "yarn": "^1.22.19",
     "yup": "^0.32.11"
   },

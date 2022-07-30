@@ -276,7 +276,16 @@ export function OfferAceite() {
                                 Confirmar e enviar
                             </Button>
                         </View>
-
+                        <View>
+                        <Text> </Text>
+                        <Text> </Text>
+                        <Text> </Text>
+                        <Text> </Text>
+                        <Text> </Text>
+                        <Text> </Text>
+                        <Text> </Text>
+                        <Text> </Text>
+                    </View>
                     </ItemList>
 
                 </ScrollView>

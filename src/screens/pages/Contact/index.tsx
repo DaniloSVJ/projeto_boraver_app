@@ -1,6 +1,6 @@
 
 import React, { useState, useCallback, useEffect, useRef } from 'react'
-import { View, StyleSheet, TextInput, Text } from 'react-native'
+import { View, StyleSheet, TextInput, Text ,Alert} from 'react-native'
 import Button from '../../../components/Button'
 import { useFocusEffect } from '@react-navigation/native';
 import IconSearch from 'react-native-vector-icons/FontAwesome';
@@ -36,6 +36,7 @@ import { useNavigation, } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import api from '../../../service/api'
+import { env } from 'process';
 
 
 interface solicitationI {
@@ -112,6 +113,7 @@ export function Contact() {
         load()
     }, [bookmark])
     const [qtdNote, setQtdNote] = useState(0)
+    const [messageText, setMessageText] = useState('')
     const [render, setrender] = useState(false)
     const [services, setService] = useState<solicitationI[]>([])
     const [idin, setIdin] = useState(0)
@@ -189,7 +191,16 @@ export function Contact() {
     }
     const optContact = ['Dúvida', 'Reclamação', 'Sugestão']
     async function alterar(val: boolean) {
-        navigate("Contact2", {})
+
+        if(selectedData=='' && messageText==''){
+            Alert.alert('Selecione o tipo de menssagem')
+        }else if(messageText==''){
+            Alert.alert('Digite uma menssagem')
+        }else{
+            navigate("Contact2", {})
+        }    
+
+       
 
     }
     const styled = StyleSheet.create({
@@ -212,30 +223,30 @@ export function Contact() {
         selectText: {
             textAlign: 'right'
         },
-  container: {
-    flex: 1,
-    paddingRight:7,
-    paddingLeft:7,
-    width:"100%",
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom:"20%"
-  },
-  textareaContainer: {
-    borderRadius:5,
-    height: 180,
-    width:"100%",
-    padding: 5,
-    backgroundColor: '#F5FCFF',
-  },
-  textarea: {
-    textAlignVertical: 'top',  // hack android
-    height: 170,
-    borderRadius:5,
-    width:"100%",
-    fontSize: 14,
-    color: '#333',
-  },
+        container: {
+            flex: 1,
+            // paddingRight:7,
+            // paddingLeft:7,
+            width: "100%",
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: "20%"
+        },
+        textareaContainer: {
+            borderRadius: 5,
+            height: 180,
+            width: "100%",
+            padding: 5,
+            backgroundColor: '#F5FCFF',
+        },
+        textarea: {
+            textAlignVertical: 'top',  // hack android
+            height: 170,
+            borderRadius: 5,
+            width: "100%",
+            fontSize: 14,
+            color: '#333',
+        },
 
     });
     return (
@@ -288,8 +299,8 @@ export function Contact() {
                                 numberOfLines={10}
                                 multiline={true}
                             /> */}
-                            <View style={styled.container}>
-                            <Textarea
+                            <View >
+                                {/* <Textarea
                                     containerStyle={styled.textareaContainer}
                                     style={styled.textarea}
                                 //style={{ paddingTop: 2, marginTop: 16, backgroundColor: "#F0FFFF", height: 150, justifyContent: "flex-start" }}
@@ -298,7 +309,16 @@ export function Contact() {
                                 placeholder="Digite sua mensagem"
                                 placeholderTextColor={'#c7c7c7'}
                                 underlineColorAndroid={'transparent'}
-                            />
+                            /> */}
+                                <TextInput
+                                    style={{ backgroundColor: '#F0FFFF' }}
+                                    underlineColorAndroid="transparent"
+                                    placeholder="Digite sua mensagem"
+                                    placeholderTextColor="#373737"
+                                    numberOfLines={15}
+                                    onChangeText={text => setMessageText(text)}
+                                    multiline={true}
+                                />
                             </View>
                             <View style={{ marginTop: 'auto', marginBottom: '50%' }}>
                                 <Button bordercolor={"#3C2E54"} background={"#3C2E54"} color={"#fff"} onPress={() => formRef.current?.submitForm()}>

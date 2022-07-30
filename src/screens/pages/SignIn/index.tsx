@@ -159,19 +159,25 @@ export function SignIn() {
                         autoCapitalize="none"
                         keyboardType="email-address"
                         name="email"
-
+                        onSubmitEditing={() => passwordInputRef.current?.focus}
+                     
                         placeholder="E-mail"
                         returnKeyType="next"
-                     />
+                        />
                      <InputIcon
                         ref={passwordInputRef}
+            
+                        
+
                         name='password'
                         sendData={alterar}
-
+                        
+                        onSubmitEditing={()=>handleSignIn}
                         icon="eye-off-outline"
                         placeholder="Senha"
                         secureTextEntry={seePassword}
                         returnKeyType="send"
+                       
                      />
                      <ViewButton>
                         <Button bordercolor={"#3C2E54"} background={"#3C2E54"} color={"#fff"} onPress={() => formRef.current?.submitForm()}>

@@ -304,12 +304,14 @@ export function AppRoutes() {
 
               </View>
             }
-            { focused?
+            {/* { focused?
             (<IHomeO style={styles.Icon} />)
             :
             (<IHomeR style={styles.IconDesactive} />)
             }
-           
+
+            */}
+            <Image style={focused?styles.Icon :styles.IconDesactive} source={focused?IHomeO :IHomeR} />
           </View>
         ),
       }}
@@ -321,12 +323,12 @@ export function AppRoutes() {
             {
               focused && <View style={styles.borderActive} />
             }
-            { focused?
+            {/* { focused?
             (<IfavoriteO style={styles.Icon} />)
             :
             (<IfavoriteR style={styles.IconDesactive} />)
-            }
-            
+            } */}
+            <Image style={focused?styles.Icon :styles.IconDesactive} source={focused?IfavoriteO :IfavoriteR} />
           </View>
         ),
       }}
@@ -337,12 +339,12 @@ export function AppRoutes() {
             {
               focused && <View style={styles.borderActivePerfil} />
             }
-            { focused?
+            {/* { focused?
             (<IPerfilO style={styles.IconPerfilA} />)
             :
             (<IPerfilR style={styles.IconPerfilD} />)
-            }
-           
+            } */}
+           <Image style={focused?styles.IconPerfilA :styles.IconPerfilD} source={focused?IPerfilO :IPerfilR} />
           </View>
         ),
       }}
@@ -353,12 +355,12 @@ export function AppRoutes() {
             {
               focused && <View style={styles.borderActive} />
             }
-            { focused?
+            {/* { focused?
             (<IcontactO style={styles.Icon} />)
             :
             (<IcontactR style={styles.IconDesactive} />)
-            }
-            
+            } */}
+             <Image style={focused?styles.Icon :styles.IconDesactive} source={focused?IcontactO :IcontactR} />
           </View>
         ),
       }}

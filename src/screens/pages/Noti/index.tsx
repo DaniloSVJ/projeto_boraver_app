@@ -130,21 +130,21 @@ export function Noti() {
             setService([])
             async function load() {
                 
-                const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
-                setIdin(IdInfluencers.data.id)
-                await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`, {
+                // const IdInfluencers = await api.get(`/api/v3/influenciador/${user.id}/`)
+                // setIdin(IdInfluencers.data.id)
+                // await api.get(`/api/v3/solicitacao_servico/${IdInfluencers.data.id}/`, {
 
-                }).then((response) => {
-                    setService([response.data]);
-                    setBookmark(response.data.favorite)
-                    console.log(services)
-                }).catch(function (error) {
-                    setService([])
-                });
+                // }).then((response) => {
+                //     setService([response.data]);
+                //     setBookmark(response.data.favorite)
+                //     console.log(services)
+                // }).catch(function (error) {
+                //     setService([])
+                // });
 
-                const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
+                // const note = await api.get(`/api/v3/listanotificacao_influencer/${IdInfluencers.data.id}/`)
 
-                setQtdNote(note.data.count)
+                // setQtdNote(note.data.count)
 
             }
             load()

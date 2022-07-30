@@ -12,7 +12,7 @@ import React, {
   import { useField } from '@unform/core';
   
   import { Container,  Icon,TextInput } from './styles';
-  import iconDateInput from '../../assets/iconDateInput.svg'
+  import IconDateInput from '../../assets/iconDateInput.svg'
   interface InputProps extends TextInputProps {
     name: string;
    
@@ -100,7 +100,7 @@ import React, {
      
         />
         <Image
-          source={iconDateInput}
+          source={IconDateInput}
          
         />
       </Container>
